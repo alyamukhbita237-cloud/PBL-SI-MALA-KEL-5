@@ -37,7 +37,7 @@
                 <p>Daftar untuk mulai menggunakan layanan laundry</p>
             </div>
 
-            <form action="#" method="POST">
+            <form action="proses/signup_process.php" method="POST">
                
 
                 <!-- password -->

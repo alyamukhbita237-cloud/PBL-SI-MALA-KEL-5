@@ -38,7 +38,7 @@
                 <p>Masuk kembali ke akunmu</p>
             </div>
 
-            <form action="#" method="POST">
+            <form action="proses/login_process.php" method="POST">
                 <!-- email -->
                 <div class="form-group">
                     <label for="email">Email</label>
