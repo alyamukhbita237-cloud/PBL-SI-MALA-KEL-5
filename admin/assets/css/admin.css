@@ -399,3 +399,33 @@ a{
         padding: 15px;
     }
 }
+
+
+.judul-dengan-panah {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+}
+
+.judul-dengan-panah h1 {
+    margin: 0;
+}
+
+.btn-kembali {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #005374;
+    text-decoration: none;
+}
+
+.panah-kembali {
+    font-size: 35px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.btn-kembali:hover {
+    color: #4289BD;
+}
