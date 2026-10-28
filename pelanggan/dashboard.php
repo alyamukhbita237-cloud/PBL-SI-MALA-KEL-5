@@ -1,7 +1,22 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['id_user']) || ($_SESSION['role'] ?? '') !== 'Pelanggan') {
+    header('Location: ../login.php');
+    exit;
+}
+
+require_once '../includes/koneksi.php';
+$id_user = $_SESSION['id_user'];
+$query = "SELECT * FROM pesanan WHERE id_user = :id_user";
+
+$stmt = $pdo->prepare($query);
+$stmt->execute(['id_user' => $id_user]);
+$pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $page_title = "Dashboard";
 $active_page = "dashboard";
-
+$nama = $_SESSION['nama'] ?? 'Pelanggan';
 include 'includes/header.php';
 include 'includes/sidebar.php';
 ?>
@@ -11,7 +26,7 @@ include 'includes/sidebar.php';
 <!-- hero -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Halo, Athia!</h1>
+            <h1>Halo, <?= htmlspecialchars($nama, ENT_QUOTES, 'UTF-8')?>!</h1>
             <p>Kelola kebutuhan laundry kamu dengan mudah</p>
             <div class="hero-buttons">  
                 <a href="antar-jemput.php">+ &nbsp; Pesan Layanan</a>
