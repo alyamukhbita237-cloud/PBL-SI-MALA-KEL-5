@@ -39,7 +39,6 @@ a{
 }
 
 /* ====sidebar=== */
-
 .sidebar{
     position: fixed;
     
@@ -352,8 +351,7 @@ a{
     color: #777;
 }
 
-/* ====TAMPILAN RESPONSIF==== */
-
+/* Responsif halaman Kelola Pesanan */
 @media (max-width: 1000px) {
     .toolbar-pesanan {
         align-items: flex-start;
@@ -370,62 +368,564 @@ a{
     }
 }
 
-@media (max-width: 600px) {
+
+/* ===== HALAMAN TAMBAH PESANAN ===== */
+
+.halaman-tambah {
+    padding: 30px;
+}
+
+/* Judul */
+.halaman-tambah .judul-halaman {
+    margin-bottom: 28px;
+}
+
+.halaman-tambah .judul-halaman h1 {
+    color: #005374;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.halaman-tambah .judul-halaman p {
+    color: #526575;
+    font-size: 14px;
+}
+
+/* Kartu utama */
+.halaman-tambah .form-pesanan-card {
+    width: 100%;
+    max-width: 1000px;
+    padding: 28px;
+    background-color: #FFFFFF;
+    border: 1px solid #C1D9EC;
+    border-radius: 14px;
+}
+
+/* Bagian formulir */
+.halaman-tambah .bagian-form h2 {
+    color: #005374;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.halaman-tambah .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.halaman-tambah .form-group label {
+    color: #1F4C6D;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.halaman-tambah .form-group input,
+.halaman-tambah .form-group select {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid #D5DFE8;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+    color: #263746;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.halaman-tambah .form-group input[readonly] {
+    background-color: #F0F3F6;
+    color: #526575;
+}
+
+.halaman-tambah .pelanggan-baris {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.halaman-tambah .pelanggan-baris .form-group {
+    width: min(100%, 300px);
+}
+
+.halaman-tambah .btn-tambah-pelanggan {
+    padding: 11px 15px;
+    border: none;
+    border-radius: 7px;
+    background-color: #4289BD;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.halaman-tambah .btn-tambah-pelanggan:hover {
+    background-color: #005374;
+}
+
+.halaman-tambah .pelanggan-detail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 650px;
+}
+
+/* Garis pemisah */
+.halaman-tambah .garis-form {
+    border: none;
+    height: 1px;
+    background-color: #A7D0EC;
+    margin: 25px 0;
+}
+
+/* Tabel layanan */
+.halaman-tambah .tabel-layanan-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.halaman-tambah .tabel-layanan {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.halaman-tambah .tabel-layanan thead {
+    background-color: #5687B5;
+    color: #FFFFFF;
+}
+
+.halaman-tambah .tabel-layanan th {
+    padding: 13px 10px;
+    text-align: left;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+.halaman-tambah .tabel-layanan th:first-child {
+    border-radius: 7px 0 0 7px;
+}
+
+.halaman-tambah .tabel-layanan th:last-child {
+    border-radius: 0 7px 7px 0;
+}
+
+.halaman-tambah .tabel-layanan td {
+    padding: 10px 8px;
+    color: #1F4C6D;
+    vertical-align: middle;
+}
+
+.halaman-tambah .tabel-layanan td:first-child {
+    text-align: center;
+}
+
+.halaman-tambah .tabel-layanan select,
+.halaman-tambah .tabel-layanan input {
+    max-width: 170px;
+    padding: 8px;
+    border: 1px solid #D5DFE8;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+    color: #263746;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.halaman-tambah .input-jumlah {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.halaman-tambah .input-jumlah input {
+    width: 65px;
+}
+
+.halaman-tambah .satuan-layanan {
+    color: #5687B5;
+    font-size: 11px;
+}
+
+.halaman-tambah .harga-layanan,
+.halaman-tambah .subtotal-layanan {
+    white-space: nowrap;
+}
+
+.halaman-tambah .subtotal-layanan {
+    font-weight: 700;
+}
+
+.halaman-tambah .btn-hapus-layanan {
+    padding: 6px 9px;
+    border: 1px solid #E5B8B8;
+    border-radius: 6px;
+    background-color: #FFF5F5;
+    color: #A83232;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.halaman-tambah .btn-hapus-layanan:hover {
+    background-color: #FCE2E2;
+}
+
+.halaman-tambah .btn-tambah-layanan {
+    width: calc(100% - 70px);
+    margin: 12px 35px 0;
+    padding: 11px;
+    border: 1px dashed #8BB9DE;
+    border-radius: 8px;
+    background-color: #E2F0FC;
+    color: #1F4C6D;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.halaman-tambah .btn-tambah-layanan:hover {
+    background-color: #C1D9EC;
+}
+
+/* Total pembayaran */
+.halaman-tambah .total-tagihan {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 18px;
+    border: 1px solid #8BB9DE;
+    border-radius: 8px;
+    background-color: #E8F3FC;
+    color: #1F4C6D;
+    font-size: 13px;
+}
+
+.halaman-tambah .total-tagihan strong {
+    color: #263F75;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+/* Pilihan pembayaran */
+.halaman-tambah .pilihan-pembayaran {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.halaman-tambah .opsi-pembayaran {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 16px;
+    border: 1px solid #D5DFE8;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #1F4C6D;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.halaman-tambah .opsi-pembayaran:has(input:checked) {
+    border-color: #5687B5;
+    background-color: #E8F3FC;
+}
+
+.halaman-tambah input[type="radio"] {
+    accent-color: #005374;
+}
+
+.halaman-tambah .metode-pembayaran {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid #8BB9DE;
+    border-radius: 8px;
+    background-color: #E8F3FC;
+    color: #1F4C6D;
+    font-size: 13px;
+}
+
+.halaman-tambah .metode-pembayaran p {
+    font-weight: 700;
+}
+
+.halaman-tambah .metode-pembayaran label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.halaman-tambah .metode-nonaktif {
+    opacity: 0.5;
+}
+
+/* Tombol bawah */
+.halaman-tambah .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.halaman-tambah .btn-batal,
+.halaman-tambah .btn-simpan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 20px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.halaman-tambah .btn-batal {
+    border: 1px solid #8BB9DE;
+    background-color: #FFFFFF;
+    color: #1F4C6D;
+}
+
+.halaman-tambah .btn-batal:hover {
+    background-color: #E8F3FC;
+}
+
+.halaman-tambah .btn-simpan {
+    border: 1px solid #4289BD;
+    background-color: #4289BD;
+    color: #FFFFFF;
+}
+
+.halaman-tambah .btn-simpan:hover {
+    background-color: #005374;
+}
+
+/* Tampilan HP */
+@media (max-width: 700px) {
+    .halaman-tambah {
+        padding: 20px 14px;
+    }
+
+    .halaman-tambah .form-pesanan-card {
+        padding: 18px;
+    }
+
+    .halaman-tambah .pelanggan-detail,
+    .halaman-tambah .pilihan-pembayaran {
+        grid-template-columns: 1fr;
+    }
+
+    .halaman-tambah .total-tagihan strong {
+        font-size: 19px;
+    }
+
+    .halaman-tambah .form-actions {
+        flex-wrap: wrap;
+    }
+
+    .halaman-tambah .btn-tambah-layanan {
+        width: 100%;
+        margin: 12px 0 0;
+    }
+}
+
+/* ========================================
+   TOMBOL MENU MOBILE
+   ======================================== */
+
+.tombol-menu {
+    display: none;
+    border: 0;
+    padding: 5px 10px;
+    background: transparent;
+    color: #005374;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
     .topbar {
         padding: 0 18px;
     }
 
+    .tombol-menu {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* Sidebar tersembunyi sampai tombol menu ditekan */
     .sidebar {
-        width: 170px;
-        padding: 20px 10px;
+        display: none;
+        position: fixed;
+        top: 72px;
+        left: 0;
+        bottom: 0;
+        width: 250px;
+        max-width: 85vw;
+        height: auto;
+        padding: 20px 12px;
+        overflow-y: auto;
+        background-color: #FFFFFF;
+        border-right: 1px solid #E9EDF2;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.12);
+        z-index: 1000;
+    }
+
+    .sidebar.menu-terbuka {
+        display: block;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .sidebar-link {
-        padding: 10px;
-        font-size: 12px;
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        font-size: 14px;
+        white-space: normal;
     }
 
+    /* Konten tidak menyisakan ruang untuk sidebar desktop */
     .main-content {
-        margin-left: 170px;
-        padding: 22px 12px;
+        width: 100%;
+        margin-left: 0;
+        padding: 22px 16px;
+        box-sizing: border-box;
+        min-height: calc(100vh - 72px);
     }
 
     .judul-halaman {
         align-items: flex-start;
         flex-direction: column;
+        gap: 12px;
     }
 
+    /* Halaman Tambah Pesanan */
+    .halaman-tambah {
+        padding: 20px 14px;
+    }
+
+    .halaman-tambah .form-pesanan-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px;
+        box-sizing: border-box;
+    }
+
+    .halaman-tambah .pelanggan-baris {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .halaman-tambah .pelanggan-baris .form-group {
+        width: 100%;
+    }
+
+    .halaman-tambah .pelanggan-detail,
+    .halaman-tambah .pilihan-pembayaran {
+        grid-template-columns: 1fr;
+    }
+
+    .halaman-tambah .tabel-layanan-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .halaman-tambah .tabel-layanan {
+        min-width: 650px;
+    }
+
+    .halaman-tambah .btn-tambah-layanan {
+        width: 100%;
+        margin: 12px 0 0;
+    }
+
+    .halaman-tambah .total-tagihan strong {
+        font-size: 19px;
+    }
+
+    .halaman-tambah .form-actions {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .halaman-tambah .btn-batal,
+    .halaman-tambah .btn-simpan {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Halaman Kelola Pesanan */
     .kartu-pesanan {
         padding: 15px;
     }
+
+    .toolbar-pesanan {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-cari {
+        width: 100%;
+    }
+
+    .form-cari input {
+        flex: 1;
+        min-width: 0;
+    }
 }
 
+@media (max-width: 400px) {
+    .topbar {
+        padding: 0 10px;
+    }
 
-.judul-dengan-panah {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 7px;
-}
+    .logo {
+        font-size: 23px;
+    }
 
-.judul-dengan-panah h1 {
-    margin: 0;
-}
+    .main-content {
+        padding: 16px 10px;
+    }
 
-.btn-kembali {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #005374;
-    text-decoration: none;
-}
+    .halaman-tambah .form-pesanan-card {
+        padding: 13px;
+    }
 
-.panah-kembali {
-    font-size: 35px;
-    font-weight: 300;
-    line-height: 1;
-}
+    .halaman-tambah .judul-dengan-panah h1 {
+        font-size: 21px;
+    }
 
-.btn-kembali:hover {
-    color: #4289BD;
+    .halaman-tambah .total-tagihan strong {
+        font-size: 18px;
+    }
 }
