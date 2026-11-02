@@ -29,7 +29,7 @@ include 'includes/sidebar.php';
             <h1>Halo, <?= htmlspecialchars($nama, ENT_QUOTES, 'UTF-8')?>!</h1>
             <p>Kelola kebutuhan laundry kamu dengan mudah</p>
             <div class="hero-buttons">  
-                <a href="antar-jemput.php">+ &nbsp; Pesan Layanan</a>
+                <a href="antar_jemput.php">+ &nbsp; Pesan Layanan</a>
                 <a href="pesanan.php">Lihat Pesananmu</a>
             </div>
         </div>

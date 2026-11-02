@@ -8,14 +8,16 @@ $password = "SI-MALA123#";
 
 try {
     $pdo = new PDO(
-        "pgsql:host=$host;port=$port;dbname=$dbname",
+        "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require",
         $user,
         $password
     );
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(
+        PDO::ATTR_ERRMODE, 
+        PDO::ERRMODE_EXCEPTION);
 
-    echo "Koneksi database berhasil!";
+    // echo "Koneksi database berhasil!";
 } catch (PDOException $e) {
     echo "Koneksi database gagal: " . $e->getMessage();
 }

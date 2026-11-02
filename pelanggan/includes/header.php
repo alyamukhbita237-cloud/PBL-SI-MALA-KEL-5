@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -26,6 +27,8 @@
             <div class="profile-icon">
                 <i data-lucide="user"></i>
             </div>
-            <span class="profile-name">Athia</span>
+            <span class="profile-name">
+                <?= htmlspecialchars($_SESSION['nama'] ?? 'Pelanggan', ENT_QUOTES, 'UTF-8') ?>
+            </span>
         </div>
     </header>

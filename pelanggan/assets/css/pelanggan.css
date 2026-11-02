@@ -16,9 +16,15 @@ a{
 }
 
 /* ===topbar=== */
-.topbar{
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
     height: 72px;
-    background-color: white;
+
+    background-color: #ffffff;
     border-bottom: 1px solid #e9edf2;
 
     display: flex;
@@ -26,6 +32,8 @@ a{
     justify-content: space-between;
 
     padding: 0 40px;
+
+    z-index: 1000;
 }
 
 .logo{
@@ -62,25 +70,27 @@ a{
 .profile-name{
     font-size: 14px;
     font-weight: 600;
-    color: 005374;
+    color: #005374;
 }
 
 
 /* ====sidebar=== */
 
-.sidebar{
+.sidebar {
     position: fixed;
-    
+
     left: 0;
     top: 72px;
     bottom: 0;
 
     width: 230px;
-    
-    background-color: white;
+
+    background-color: #ffffff;
     border-right: 1px solid #e9edf2;
 
-    padding: 30px 18px;
+    padding: 30px 13px;
+
+    z-index: 900;
 }
 
 .sidebar-menu{
@@ -93,12 +103,12 @@ a{
     display: flex;
     align-items: center;
 
-    padding: 12px 15px;
+    padding: 13px 20px;
 
-    border-radius: 8px;
+    border-radius: 17px;
 
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
 
     color: #1F4C6D;
 
@@ -113,16 +123,21 @@ a{
 .sidebar-link.active{
     background-color: #C1D9EC;
     color: #153b56;
-    font-weight: 800;
+    
 }
 
 /* ====main content=== */
 
-.main-content{
+.main-content {
     margin-left: 230px;
+    padding: 90px 25px 40px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
 
-    padding: 20px 25px;
-    min-height: calc(100vh-72px);
+.dashboard-content {
+    padding-top: 160px;
 }
 
 .hero{
@@ -501,8 +516,9 @@ a{
     background-color: #edf0f3;
 }
 
-
+/* ================================ */
 /* ====== KATALOG.PHP ======== */
+/* ================================ */
 .service-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -580,6 +596,419 @@ a{
     background: #3475a8;
 }
 
+.remove-service-button {
+    border: none;
+    border-radius: 4px;
+    background: #fde7ed;
+    color: #dc2626;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-service-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+.remove-service-button:hover {
+    opacity: 0.7;
+}
+
+/* ================================ */
+/* ====== ANTAR_JEMPUT.PHP ======== */
+/* ================================ */
+
+.pickup-card {
+    background: #ffffff;
+
+    border: 1px solid #4388bd;
+    border-radius: 18px;
+
+    padding: 30px 25px 38px;
+}
+
+.form-section {
+    margin-bottom: 38px;
+}
+
+.form-section h2 {
+    color: #005879;
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.form-divider {
+    width: 100%;
+    height: 2px;
+
+    background: #6faee0;
+
+    margin: 10px 0 20px;
+}
+
+
+/* LAYANAN */
+
+.selected-services {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.selected-service {
+    display: grid;
+    grid-template-columns: 30px 1fr auto 35px;
+
+    align-items: center;
+
+    color: #005879;
+    font-size: 15px;
+}
+
+.service-number {
+    font-weight: 700;
+}
+
+.selected-service-name {
+    font-weight: 700;
+}
+
+.selected-service-price {
+    font-weight: 700;
+}
+
+
+/* TAMBAH LAYANAN */
+
+.add-service-button {
+    width: 100%;
+    height: 44px;
+
+    margin-top: 20px;
+
+    border: 1px dashed #4388bd;
+    border-radius: 9px;
+
+    background: #d8e9f8;
+    color: #244c73;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.add-service-button span {
+    font-size: 17px;
+    margin-right: 8px;
+}
+
+
+/* SERVICE PICKER */
+
+.service-picker {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.service-picker.hidden {
+    display: none;
+}
+
+.service-picker select {
+    flex: 1;
+}
+
+.service-picker button {
+    border: none;
+    border-radius: 8px;
+
+    height: 42px;
+    padding: 0 18px;
+
+    background: #4388bd;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+/* INPUT */
+
+.form-section label {
+    display: block;
+
+    color: #005879;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    margin: 0 0 8px;
+}
+
+.form-section input,
+.form-section select {
+    width: 100%;
+    height: 41px;
+
+    border: 1px solid #b9b9b9;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #244c73;
+
+    padding: 0 11px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    margin-bottom: 19px;
+}
+
+.form-section input::placeholder {
+    color: #8c8c8c;
+}
+
+.form-section input:focus,
+.form-section select:focus {
+    border-color: #4388bd;
+
+    box-shadow:
+        0 0 0 2px rgba(67, 136, 189, 0.12);
+}
+
+
+/* JADWAL */
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+}
+
+/* KALENDER PICK TANGGAL */
+
+.schedule-grid input[type="date"] {
+    width: 100%;
+    height: 45px;
+    padding: 0 14px;
+
+    border: 1px solid #d5dce3;
+    border-radius: 10px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #333;
+
+    background-color: #ffffff;
+}
+
+.schedule-grid input[type="date"]:focus {
+    outline: none;
+    border-color: #438fca;
+}
+
+
+/* BUTTON KONFIRMASI */
+
+.confirm-order-button {
+    width: 100%;
+    height: 48px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #4388bd;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.confirm-order-button:hover {
+    background: #3475a8;
+}
+
+/* ================================ */
+/* ====== PESANAN.PHP ======== */
+/* ================================ */
+
+
+.orders-card {
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 34px 40px 38px;
+}
+
+.orders-card h2 {
+    color: #005879;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    margin: 0 0 30px;
+}
+
+.orders-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+}
+
+
+/* HEADER TABLE */
+
+.orders-table thead {
+    background: #5687b5;
+    color: #ffffff;
+}
+
+.orders-table th {
+    height: 47px;
+
+    padding: 0 20px;
+
+    text-align: left;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.orders-table th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.orders-table th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+
+/* ISI TABLE */
+
+.orders-table td {
+    height: 60px;
+    padding: 0 20px;
+    color: #111111;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.order-code {
+    font-weight: 800;
+}
+
+
+/* STATUS */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 79px;
+    height: 26px;
+
+    padding: 0 11px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-menunggu {
+    background: #fff0b8;
+
+    border: 1px solid #f0c53d;
+
+    color: #8a6500;
+}
+
+.status-diproses {
+    background: #ffcaca;
+
+    border: 1px solid #ff5555;
+
+    color: #b30000;
+}
+
+.status-diantar {
+    background: #a8cff5;
+
+    border: 1px solid #4388bd;
+
+    color: #17578a;
+}
+
+.status-selesai {
+    background: #bfe3ad;
+
+    border: 1px solid #68a94b;
+
+    color: #346e20;
+}
+
+
+/* DETAIL BUTTON */
+
+.detail-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    height: 31px;
+
+    padding: 0 11px;
+
+    border: 1px solid #0d6fd7;
+    border-radius: 4px;
+
+    color: #174f83;
+
+    background: #ffffff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.detail-button:hover {
+    background: #eef7ff;
+}
+
+.detail-button span {
+    font-size: 18px;
+    line-height: 1;
+}
 
 /* responsive */
 @media (max-width: 900px) {
@@ -607,6 +1036,7 @@ a{
         font-size: 24px;
     }
 }
+
 
 
 @media (max-width: 700px) {
@@ -677,4 +1107,21 @@ a{
     .history-price {
         font-size: 13px;
     }
+}
+
+/* FIX CONTENT DI BAWAH HEADER FIXED */
+.main-content {
+    margin-left: 230px !important;
+    padding-top: 110px !important;
+    padding-right: 25px !important;
+    padding-bottom: 40px !important;
+    padding-left: 25px !important;
+
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-content {
+    padding-top: 20px !important;
 }

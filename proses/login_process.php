@@ -25,16 +25,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_regenerate_id(true);
 
             $_SESSION['id_user'] = $user['id_user'];
-            $_SESSION['nama'] = $user['nama'];
+            $_SESSION['nama'] = $user['nama_user'];
             $_SESSION['role'] = $user['role'];
-        }
 
-        if ($user['role'] === 'Pelanggan') {
-            header('Location: ../pelanggan/dashboard.php');
-            exit;
-        } else {
+            if ($user['role'] === 'Pelanggan') {
+                header('Location: ../pelanggan/dashboard.php');
+                exit;
+            
+            } elseif ($user['role'] === 'Admin') {
+                header('Location: ../admin/dashboard.php');
+                exit;
+
+            } else {
+                echo "Role user tidak ditemukan";
+            }
+        } else{
             echo "Email atau password salah!";
         }
+
+        
 
     } catch (PDOException $e) {
         error_log($e->getMessage());
