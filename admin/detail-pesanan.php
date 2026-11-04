@@ -159,10 +159,9 @@ if ($progressAktif === false) {
                 <strong><?= htmlspecialchars($pesanan['metode_pembayaran']) ?></strong>
             </div>
 
-            <a href="pembayaran.php?kode=<?= urlencode($pesanan['kode_pesanan']) ?>"
-               class="btn-kelola-pembayaran">
+            <button type="button" class="btn-kelola-pembayaran" id="bukaModalPembayaran">
                 Kelola Pembayaran
-            </a>
+            </button>
         </section>
 
         <!-- Rincian layanan -->
@@ -237,8 +236,121 @@ if ($progressAktif === false) {
 
     </div>
 
+    <!-- MODAL KELOLA PEMBAYARAN -->
+<div class="modal-overlay"
+     id="modalPembayaran"
+     data-total="<?= (int) $pesanan['total'] ?>">
+
+    <div class="modal-pembayaran">
+
+        <!-- Judul modal -->
+        <div class="modal-header">
+            <h2>Kelola Pembayaran</h2>
+        </div>
+
+        <form id="formPembayaran">
+
+            <!-- Ringkasan pesanan -->
+            <div class="ringkasan-pembayaran">
+                <h4>Rincian Pesanan</h4>
+
+                <div class="ringkasan-grid">
+
+                    <div>
+                        <span>Kode Pesanan</span>
+                        <strong>
+                            #<?= htmlspecialchars($pesanan['kode_pesanan']) ?>
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Nama Pelanggan</span>
+                        <strong>
+                            <?= htmlspecialchars($pesanan['nama_pelanggan']) ?>
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Total Tagihan</span>
+                        <strong>
+                            Rp<?= number_format($pesanan['total'], 0, ',', '.') ?>
+                        </strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Metode pembayaran -->
+            <div class="form-modal">
+                <label class="label-modal">Metode Pembayaran</label>
+
+                <div class="pilihan-metode">
+
+                    <label>
+                        <input type="radio" name="metode_pembayaran"
+                               value="Cash" checked>
+                        <span>Cash</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="metode_pembayaran"
+                               value="QRIS">
+                        <span>QRIS</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="metode_pembayaran"
+                               value="Transfer Bank">
+                        <span>Transfer Bank</span>
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- Jumlah pembayaran -->
+            <div class="form-modal">
+                <label for="jumlahDibayar" class="label-modal">
+                    Jumlah Dibayar
+                </label>
+
+                <div class="input-rupiah">
+                    <span>Rp</span>
+
+                    <input
+                        type="number"
+                        id="jumlahDibayar"
+                        name="jumlah_dibayar"
+                        min="1"
+                        max="<?= (int) $pesanan['total'] ?>"
+                        value="<?= (int) $pesanan['total'] ?>"
+                        required
+                    >
+                </div>
+
+                <small id="pesanPembayaran" class="pesan-pembayaran"></small>
+            </div>
+
+            <!-- Tombol modal -->
+            <div class="modal-actions">
+
+                <button type="button" class="btn-modal-batal"
+                        id="tutupModalPembayaran">
+                    Batal
+                </button>
+
+                <button type="submit" class="btn-modal-simpan">
+                    Simpan Pembayaran
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
 </main>
+
+<script src="assets/js/detail-pesanan.js"></script>
 
 </body>
 </html>
-```
