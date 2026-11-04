@@ -12,8 +12,8 @@
             Data Pelanggan
         </a>
 
-        <a href="katalog-layanan.php" class="sidebar-link <?= $active_page === 'katalog-layanan' ? 'active' : ''?>">
-            Katalog Layanan
+        <a href="kelola-layanan.php" class="sidebar-link <?= $active_page === 'kelola-layanan' ? 'active' : ''?>">
+            Kelola Layanan
         </a>
 
         <a href="laporan-pesanan.php" class="sidebar-link <?= $active_page === 'laporan-pesanan' ? 'active' : ''?>">

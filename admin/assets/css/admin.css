@@ -1292,3 +1292,722 @@ a{
     }
 }
 
+
+/* ========================================
+   MODAL KELOLA PEMBAYARAN
+   ======================================== */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-sizing: border-box;
+    background: rgba(20, 35, 48, 0.40);
+}
+
+.modal-overlay.aktif {
+    display: flex;
+}
+
+.modal-pembayaran {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 25px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Header modal */
+.modal-header h2 {
+    margin: 0 0 17px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #A8CDE5;
+    color: #005374;
+    font-size: 20px;
+}
+
+/* Ringkasan pesanan */
+.ringkasan-pembayaran {
+    margin-bottom: 18px;
+}
+
+.ringkasan-pembayaran h4 {
+    margin: 0 0 10px 8px;
+    color: #005374;
+    font-size: 14px;
+}
+
+.ringkasan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 15px;
+    background: #E7F3FB;
+    border-radius: 10px;
+}
+
+.ringkasan-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.ringkasan-grid span {
+    color: #526475;
+    font-size: 11px;
+}
+
+.ringkasan-grid strong {
+    color: #005374;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* Form modal */
+.form-modal {
+    margin-bottom: 15px;
+}
+
+.label-modal {
+    display: block;
+    margin: 0 0 9px 8px;
+    color: #005374;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Pilihan metode pembayaran */
+.pilihan-metode {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid #A8CDE5;
+    border-radius: 10px;
+}
+
+.pilihan-metode label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #1F4C6D;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pilihan-metode input {
+    accent-color: #005374;
+}
+
+/* Input jumlah pembayaran */
+.input-rupiah {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #A8CDE5;
+    border-radius: 10px;
+}
+
+.input-rupiah span {
+    padding: 10px 16px;
+    border-right: 1px solid #A8CDE5;
+    color: #005374;
+    font-weight: 700;
+}
+
+.input-rupiah input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    color: #005374;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Pesan validasi */
+.pesan-pembayaran {
+    display: block;
+    margin: 7px 5px 0;
+    color: #B42318;
+    font-size: 11px;
+}
+
+/* Tombol */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn-modal-batal,
+.btn-modal-simpan {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-modal-batal {
+    border: 1px solid #4289BD;
+    background: white;
+    color: #4289BD;
+}
+
+.btn-modal-simpan {
+    border: 1px solid #4289BD;
+    background: #4289BD;
+    color: white;
+}
+
+.btn-modal-batal:hover {
+    background: #EAF4FB;
+}
+
+.btn-modal-simpan:hover {
+    background: #005374;
+}
+
+/* Tombol pembayaran di halaman detail */
+.btn-kelola-pembayaran {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #4289BD;
+    background: white;
+    cursor: pointer;
+}
+
+/* Responsive HP */
+@media (max-width: 500px) {
+    .modal-pembayaran {
+        padding: 18px;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+    }
+
+    .ringkasan-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .btn-modal-batal,
+    .btn-modal-simpan {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   HALAMAN DATA PELANGGAN
+   ======================================== */
+
+.halaman-pelanggan {
+    box-sizing: border-box;
+}
+
+/* Judul halaman */
+.halaman-pelanggan .judul-halaman {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.halaman-pelanggan .judul-halaman h1 {
+    margin: 0 0 7px;
+    color: #005374;
+    font-size: 25px;
+}
+
+.halaman-pelanggan .judul-halaman p {
+    margin: 0;
+    color: #526475;
+    font-size: 13px;
+}
+
+/* Tombol tambah pelanggan */
+.btn-tambah-pelanggan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border-radius: 8px;
+    background: #4289BD;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.btn-tambah-pelanggan span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.btn-tambah-pelanggan:hover {
+    background: #005374;
+}
+
+/* Kartu tabel */
+.kartu-tabel-pelanggan {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 13px;
+}
+
+/* Pencarian */
+.pencarian-pelanggan {
+    margin-bottom: 17px;
+}
+
+.pencarian-pelanggan input {
+    width: 220px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #D0D7DE;
+    border-radius: 7px;
+    outline: none;
+    background: #FFFFFF;
+    color: #1F4C6D;
+    font-size: 12px;
+}
+
+.pencarian-pelanggan input:focus {
+    border-color: #4289BD;
+    box-shadow: 0 0 0 2px rgba(66, 137, 189, 0.12);
+}
+
+.pencarian-pelanggan input::placeholder {
+    color: #A0AAB4;
+}
+
+/* Tabel */
+.tabel-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabel-pelanggan {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabel-pelanggan thead {
+    background: #4F83B4;
+    color: #FFFFFF;
+}
+
+.tabel-pelanggan th {
+    padding: 13px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tabel-pelanggan th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.tabel-pelanggan th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.tabel-pelanggan td {
+    padding: 15px 12px;
+    color: #20262E;
+    font-size: 12px;
+    border-bottom: 1px solid #F0F2F4;
+}
+
+.tabel-pelanggan tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabel-pelanggan tbody tr:hover {
+    background: #F5F9FC;
+}
+
+/* Tombol edit */
+.btn-edit-pelanggan {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid #4289BD;
+    border-radius: 5px;
+    color: #005374;
+    font-size: 11px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.btn-edit-pelanggan:hover {
+    background: #4289BD;
+    color: #FFFFFF;
+}
+
+/* Pesan pencarian kosong */
+.pesan-kosong {
+    padding: 20px;
+    color: #526475;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* ========================================
+   RESPONSIVE DATA PELANGGAN
+   ======================================== */
+
+@media (max-width: 768px) {
+
+    .halaman-pelanggan .judul-halaman {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .halaman-pelanggan .judul-halaman h1 {
+        font-size: 22px;
+    }
+
+    .btn-tambah-pelanggan {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .kartu-tabel-pelanggan {
+        padding: 15px;
+    }
+
+    .pencarian-pelanggan input {
+        width: 100%;
+    }
+
+    .tabel-pelanggan {
+        min-width: 750px;
+    }
+
+}
+
+
+/* ========================================
+   MODAL TAMBAH PELANGGAN
+   ======================================== */
+
+.modal-pelanggan {
+    width: 100%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 25px 22px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Judul modal */
+.modal-header-pelanggan h2 {
+    margin: 0 0 18px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #A8CDE5;
+    color: #005374;
+    font-size: 19px;
+}
+
+/* Form */
+.form-pelanggan {
+    margin-bottom: 14px;
+}
+
+.form-pelanggan label {
+    display: block;
+    margin-bottom: 7px;
+    color: #005374;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.form-pelanggan label span {
+    color: #D93636;
+}
+
+.form-pelanggan input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 11px;
+    border: 1px solid #C8D0D8;
+    border-radius: 8px;
+    outline: none;
+    background: #FFFFFF;
+    color: #20262E;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.form-pelanggan input:focus {
+    border-color: #4289BD;
+    box-shadow: 0 0 0 2px rgba(66, 137, 189, 0.12);
+}
+
+.form-pelanggan input::placeholder {
+    color: #929BA4;
+}
+
+/* Tombol modal */
+.aksi-modal-pelanggan {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    margin-top: 28px;
+}
+
+.btn-batal-pelanggan,
+.btn-simpan-pelanggan {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-batal-pelanggan {
+    border: 1px solid #4289BD;
+    background: #FFFFFF;
+    color: #4289BD;
+}
+
+.btn-simpan-pelanggan {
+    border: 1px solid #4289BD;
+    background: #4289BD;
+    color: #FFFFFF;
+}
+
+.btn-batal-pelanggan:hover {
+    background: #EAF4FB;
+}
+
+.btn-simpan-pelanggan:hover {
+    background: #005374;
+}
+
+/* Tombol tambah berbentuk button */
+button.btn-tambah-pelanggan {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* Responsive HP */
+@media (max-width: 500px) {
+    .modal-pelanggan {
+        padding: 20px 16px;
+    }
+
+    .modal-header-pelanggan h2 {
+        font-size: 17px;
+    }
+
+    .aksi-modal-pelanggan {
+        flex-direction: column-reverse;
+    }
+
+    .btn-batal-pelanggan,
+    .btn-simpan-pelanggan {
+        width: 100%;
+    }
+}
+
+button.btn-edit-pelanggan {
+    background: #FFFFFF;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button.btn-edit-pelanggan:hover {
+    background: #4289BD;
+    color: #FFFFFF;
+}
+
+
+/* ========================================
+   HALAMAN KELOLA LAYANAN
+   ======================================== */
+
+.halaman-katalog {
+    box-sizing: border-box;
+}
+
+/* Judul halaman */
+.halaman-katalog .judul-halaman {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.halaman-katalog .judul-halaman h1 {
+    margin: 0 0 7px;
+    color: #005374;
+    font-size: 25px;
+}
+
+.halaman-katalog .judul-halaman p {
+    margin: 0;
+    color: #526475;
+    font-size: 13px;
+}
+
+/* Tombol tambah layanan */
+.btn-tambah-layanan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #4289BD;
+    color: white;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-tambah-layanan:hover {
+    background: #005374;
+}
+
+.btn-tambah-layanan span {
+    font-size: 18px;
+}
+
+/* Grid layanan */
+.grid-layanan {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Kartu layanan */
+.kartu-layanan {
+    box-sizing: border-box;
+    padding: 18px;
+    background: #FFFFFF;
+    border: 1px solid #8CB8D9;
+    border-radius: 13px;
+    transition: 0.2s ease;
+}
+
+.kartu-layanan:hover {
+    box-shadow: 0 4px 12px rgba(0, 83, 116, 0.08);
+    transform: translateY(-2px);
+}
+
+.kartu-layanan h3 {
+    margin: 0 0 12px;
+    color: #005374;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.harga-layanan {
+    margin: 0 0 10px;
+    color: #005374;
+}
+
+.harga-layanan small {
+    font-size: 10px;
+}
+
+.harga-layanan strong {
+    font-size: 18px;
+}
+
+.estimasi-layanan {
+    margin: 0 0 13px;
+    color: #39789E;
+    font-size: 11px;
+}
+
+/* Tombol pesan layanan */
+.btn-pesan-layanan {
+    width: 100%;
+    padding: 9px;
+    border: none;
+    border-radius: 7px;
+    background: #4289BD;
+    color: white;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-pesan-layanan:hover {
+    background: #005374;
+}
+
+/* Responsive tablet */
+@media (max-width: 1000px) {
+    .grid-layanan {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Responsive HP */
+@media (max-width: 600px) {
+    .halaman-katalog .judul-halaman {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .halaman-katalog .judul-halaman h1 {
+        font-size: 22px;
+    }
+
+    .btn-tambah-layanan {
+        width: 100%;
+    }
+
+    .grid-layanan {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .kartu-layanan {
+        padding: 16px;
+    }
+}
+
+
+
