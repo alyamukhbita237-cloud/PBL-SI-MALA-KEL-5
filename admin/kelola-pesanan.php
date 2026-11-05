@@ -2,38 +2,9 @@
 $page_title = "Kelola Pesanan";
 $active_page = "kelola-pesanan";
 
-// DATA DUMMY
-$pesanan = [
-    [
-        'kode' => 'LD-004',
-        'nama' => 'Athia',
-        'tanggal' => '15 Sept 2026, 19.30',
-        'layanan' => 'Walk-in',
-        'status' => 'Menunggu'
-    ],
-    [
-        'kode' => 'LD-003',
-        'nama' => 'Budi Santoso',
-        'tanggal' => '10 Sept 2026, 08.25',
-        'layanan' => 'Antar-Jemput',
-        'status' => 'Diproses'
-    ],
-    [
-        'kode' => 'LD-002',
-        'nama' => 'Cindy Callista',
-        'tanggal' => '4 Sept 2026, 10.00',
-        'layanan' => 'Antar-Jemput',
-        'status' => 'Diantar'
-    ],
-    [
-        'kode' => 'LD-001',
-        'nama' => 'Raka Putra',
-        'tanggal' => '28 Ags 2026, 12.20',
-        'layanan' => 'Walk-in',
-        'status' => 'Selesai'
-    ]
-];
+require_once __DIR__ . '/../includes/koneksi.php';
 
+// Daftar status pesanan
 $statusList = [
     'Semua',
     'Menunggu',
@@ -52,6 +23,24 @@ if (!in_array($filter, $statusList, true)) {
     $filter = 'Semua';
 }
 
+// Mengambil data pesanan dan pelanggan dari database
+$sql = "
+    SELECT
+        p.id_pesanan,
+        p.id_user,
+        p.jenis_pesanan,
+        p.tgl_masuk,
+        p.status_pesanan,
+        p.total_harga,
+        u.nama_user
+    FROM pesanan p
+    JOIN users u ON p.id_user = u.id_user
+    ORDER BY p.tgl_masuk DESC
+";
+
+$stmt = $pdo->query($sql);
+$pesanan = $stmt->fetchAll();
+
 // Menghitung jumlah pesanan per status
 $jumlah = [];
 
@@ -61,21 +50,24 @@ foreach ($statusList as $status) {
     } else {
         $jumlah[$status] = count(array_filter(
             $pesanan,
-            fn($p) => $p['status'] === $status
+            fn($p) => $p['status_pesanan'] === $status
         ));
     }
 }
 
 // Filter dan pencarian
 $hasil = array_filter($pesanan, function ($p) use ($filter, $cari) {
+
     $sesuaiStatus = (
         $filter === 'Semua' ||
-        $p['status'] === $filter
+        $p['status_pesanan'] === $filter
     );
 
+    $kode = 'LD-' . str_pad($p['id_pesanan'], 3, '0', STR_PAD_LEFT);
+
     $sesuaiCari = (
-        stripos($p['kode'], $cari) !== false ||
-        stripos($p['nama'], $cari) !== false
+        stripos($kode, $cari) !== false ||
+        stripos($p['nama_user'], $cari) !== false
     );
 
     return $sesuaiStatus && $sesuaiCari;
@@ -84,6 +76,7 @@ $hasil = array_filter($pesanan, function ($p) use ($filter, $cari) {
 // Memanggil header dan sidebar
 include 'includes/header.php';
 include 'includes/sidebar.php';
+
 ?>
 
 <main class="main-content">
@@ -149,26 +142,38 @@ include 'includes/sidebar.php';
 
             <tbody>
                 <?php if (count($hasil) > 0): ?>
-
+                    
                     <?php foreach ($hasil as $p): ?>
+
                         <?php
-                        $classStatus = 'status-' .
-                            strtolower($p['status']);
+                        // Membuat kode tampilan, misalnya LD-004
+                        $kode = 'LD-' . str_pad(
+                            $p['id_pesanan'], 3, '0', STR_PAD_LEFT);
+
+                        $classStatus = 'status-' . strtolower(
+                            str_replace(' ', '-', $p['status_pesanan']));
+
+                        // Format tanggal
+                        $tanggal = date('d M Y, H.i', strtotime($p['tgl_masuk']));
                         ?>
 
                         <tr>
-                            <td class="kode-pesanan">#<?= htmlspecialchars($p['kode']) ?></td>
-                            <td><?= htmlspecialchars($p['nama']) ?></td>
-                            <td><?= htmlspecialchars($p['tanggal']) ?></td>
-                            <td><?= htmlspecialchars($p['layanan']) ?></td>
-                            <td><span class="label-status <?= htmlspecialchars($classStatus) ?>">
-                                    <?= htmlspecialchars($p['status']) ?>
+                            <td class="kode-pesanan"> #<?= htmlspecialchars($kode) ?></td>
+                            <td><?= htmlspecialchars($p['nama_user']) ?></td>
+                            <td><?= htmlspecialchars($tanggal) ?></td>
+                            <td><?= htmlspecialchars($p['jenis_pesanan']) ?></td>
+                            <td>
+                                <span class="label-status <?= htmlspecialchars($classStatus) ?>">
+                                    <?= htmlspecialchars($p['status_pesanan']) ?>
                                 </span>
                             </td>
 
                             <td style="text-align: center;">
-                                <a href="detail-pesanan.php?kode=<?= urlencode($p['kode']) ?>"
-                                   class="btn-detail"> Lihat Detail &gt;
+                                <a
+                                    href="detail-pesanan.php?id=<?= urlencode($p['id_pesanan']) ?>"
+                                    class="btn-detail"
+                                >
+                                    Lihat Detail &gt;
                                 </a>
                             </td>
                         </tr>

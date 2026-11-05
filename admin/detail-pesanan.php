@@ -1,54 +1,62 @@
 <?php
 $page_title = "Detail Pesanan";
 $active_page = "kelola-pesanan";
+require_once __DIR__ . '/../includes/koneksi.php';
+
+// Mengambil ID dari URL
+$id = $_GET['id'] ?? '';
+
+// Mengambil data pesanan dan pelanggan
+$sql = "
+    SELECT
+        p.*,
+        u.nama_user,
+        u.no_hp,
+        u.email,
+        u.alamat AS alamat_pelanggan
+    FROM pesanan p
+    JOIN users u
+        ON p.id_user = u.id_user
+    WHERE p.id_pesanan = :id
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['id' => $id]);
+$pesanan = $stmt->fetch();
+
+// Jika pesanan tidak ditemukan
+if (!$pesanan) {
+    die("Pesanan tidak ditemukan.");
+}
+
+// Mengambil rincian layanan
+$sqlDetail = "
+    SELECT
+        l.jenis_layanan,
+        l.harga_per_layanan,
+        l.satuan,
+        d.jumlah,
+        d.subtotal
+    FROM detail_pesanan d
+    JOIN layanan l
+        ON d.id_layanan = l.id_layanan
+    WHERE d.id_pesanan = :id
+";
+
+$stmtDetail = $pdo->prepare($sqlDetail);
+$stmtDetail->execute(['id' => $id]);
+$detailLayanan = $stmtDetail->fetchAll();
+
+// Mengambil informasi pembayaran
+$sqlBayar = " SELECT * FROM pembayaran WHERE id_pesanan = :id ";
+
+$stmtBayar = $pdo->prepare($sqlBayar);
+$stmtBayar->execute(['id' => $id]);
+$pembayaran = $stmtBayar->fetch();
 
 include 'includes/header.php';
 include 'includes/sidebar.php';
 
-// Data dummy pesanan
-$pesanan = [
-    'kode_pesanan' => 'LD-003',
-    'nama_pelanggan' => 'Budi Santoso',
-    'no_hp' => '0812-3459-3334',
-    'jenis_layanan' => 'Antar-Jemput',
-    'status' => 'Dijemput',
-
-    'alamat' => 'Jl Danau Sentani No 51',
-    'tanggal_masuk' => '10 Sept 2026, 10.00',
-    'jadwal_jemput' => '10 Sept 2026, 10.00',
-    'estimasi_antar' => '13 Sept 2026, 10.00',
-    'estimasi_selesai' => '13 Sept 2026, 10.00',
-
-    'total' => 33000,
-    'status_pembayaran' => 'Belum Lunas',
-    'tanggal_bayar' => '-',
-    'metode_pembayaran' => '-'
-];
-
-// Data layanan pesanan
-$layanan = [
-    [
-        'nama' => 'Cuci Kering Setrika',
-        'jumlah' => '5.5 kg',
-        'harga' => 6000,
-        'subtotal' => 33000
-    ]
-];
-
-// Tahapan progress pesanan
-$tahapan = [
-    'Konfirmasi',
-    'Dijemput',
-    'Diproses',
-    'Selesai',
-    'Diantar'
-];
-
-$progressAktif = array_search($pesanan['status'], $tahapan);
-
-if ($progressAktif === false) {
-    $progressAktif = 0;
-}
 ?>
 
 <main class="main-content halaman-detail">
@@ -62,13 +70,13 @@ if ($progressAktif === false) {
                 </a>
 
                 <h1>
-                    Detail Pesanan #<?= htmlspecialchars($pesanan['kode_pesanan']) ?>
+                    Detail Pesanan #<?= htmlspecialchars($pesanan['id_pesanan']) ?>
                 </h1>
             </div>
             <p>Pantau pesanan dan aktivitas laundry hari ini</p>
         </div>
 
-        <a href="edit-pesanan.php?kode=<?= urlencode($pesanan['kode_pesanan']) ?>"
+        <a href="edit-pesanan.php?kode=<?= urlencode($pesanan['id_pesanan']) ?>"
            class="btn-edit-pesanan">
             Edit Pesanan
         </a>
@@ -78,13 +86,13 @@ if ($progressAktif === false) {
     <section class="kartu-pelanggan">
         <div class="foto-pelanggan">
             <span>
-                <?= strtoupper(substr($pesanan['nama_pelanggan'], 0, 1)) ?>
+                <?= strtoupper(substr($pesanan['nama_user'], 0, 1)) ?>
             </span>
         </div>
 
         <div class="data-pelanggan">
             <h3>
-                <?= htmlspecialchars($pesanan['nama_pelanggan']) ?>
+                <?= htmlspecialchars($pesanan['nama_user']) ?>
                 <span>|</span>
                 <?= htmlspecialchars($pesanan['no_hp']) ?>
             </h3>
@@ -92,7 +100,7 @@ if ($progressAktif === false) {
             <p>
                 <?= htmlspecialchars($pesanan['jenis_layanan']) ?>
                 <span>•</span>
-                <?= htmlspecialchars($pesanan['tanggal_masuk']) ?>
+                <?= htmlspecialchars($pesanan['tgl_masuk']) ?>
             </p>
         </div>
     </section>
@@ -126,7 +134,7 @@ if ($progressAktif === false) {
 
             </div>
 
-            <a href="proses-pesanan.php?kode=<?= urlencode($pesanan['kode_pesanan']) ?>"
+            <a href="proses-pesanan.php?kode=<?= urlencode($pesanan['id_pesanan']) ?>"
                class="btn-lanjut-proses">
                 Lanjut Proses →
             </a>
@@ -168,19 +176,19 @@ if ($progressAktif === false) {
         <section class="kartu-detail">
             <h3>Rincian Layanan</h3>
 
-            <?php foreach ($layanan as $item) : ?>
+            <?php foreach ($detailLayanan as $layanan): ?>
+                <div class="item-layanan">
+                    <strong>
+                        <?= htmlspecialchars($layanan['jenis_layanan']) ?>
+                    </strong>
 
-                <div class="rincian-layanan">
-                    <div>
-                        <strong><?= htmlspecialchars($item['nama']) ?></strong>
-                        <p>
-                            <?= htmlspecialchars($item['jumlah']) ?>
-                            × Rp<?= number_format($item['harga'], 0, ',', '.') ?>
-                        </p>
-                    </div>
+                    <span>
+                        <?= htmlspecialchars($layanan['jumlah']) ?>
+                        <?= htmlspecialchars($layanan['satuan']) ?>
+                    </span>
 
                     <strong>
-                        Rp<?= number_format($item['subtotal'], 0, ',', '.') ?>
+                        Rp<?= number_format($layanan['subtotal'], 0, ',', '.') ?>
                     </strong>
                 </div>
 
@@ -259,14 +267,14 @@ if ($progressAktif === false) {
                     <div>
                         <span>Kode Pesanan</span>
                         <strong>
-                            #<?= htmlspecialchars($pesanan['kode_pesanan']) ?>
+                            #<?= htmlspecialchars($pesanan['id_pesanan']) ?>
                         </strong>
                     </div>
 
                     <div>
                         <span>Nama Pelanggan</span>
                         <strong>
-                            <?= htmlspecialchars($pesanan['nama_pelanggan']) ?>
+                            <?= htmlspecialchars($pesanan['nama_user']) ?>
                         </strong>
                     </div>
 
