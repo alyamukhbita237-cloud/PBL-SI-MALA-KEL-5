@@ -48,10 +48,10 @@ $stmtDetail->execute(['id' => $id]);
 $detailLayanan = $stmtDetail->fetchAll();
 
 // Mengambil informasi pembayaran
-$sqlBayar = " SELECT * FROM pembayaran WHERE id_pesanan = :id ";
+$sqlBayar = " SELECT * FROM pembayaran WHERE id_pesanan = :id_pesanan";
 
 $stmtBayar = $pdo->prepare($sqlBayar);
-$stmtBayar->execute(['id' => $id]);
+$stmtBayar->execute(['id_pesanan' => $id]);
 $pembayaran = $stmtBayar->fetch();
 
 include 'includes/header.php';
@@ -98,7 +98,7 @@ include 'includes/sidebar.php';
             </h3>
 
             <p>
-                <?= htmlspecialchars($pesanan['jenis_layanan']) ?>
+                <?= htmlspecialchars($pesanan['jenis_pesanan']) ?>
                 <span>•</span>
                 <?= htmlspecialchars($pesanan['tgl_masuk']) ?>
             </p>
@@ -112,6 +112,34 @@ include 'includes/sidebar.php';
         <section class="kartu-detail">
             <h3>Progress Pesanan</h3>
 
+            <?php $tahapan = [
+                'Menunggu', 'Dijemput', 'Diambil', 
+                'Diproses', 'Selesai', 'Diantar'];
+
+                $status = $pesanan['status_pesanan'];
+                switch ($status) {
+                    case 'Menunggu':
+                        $progressAktif = 0;
+                        break;
+                    case 'Dijemput':
+                        $progressAktif = 1;
+                        break;
+                    case 'Diproses':
+                        $progressAktif = 2;
+                        break;
+                    case 'Selesai':
+                        $progressAktif = 3;
+                        break;
+                    case 'Diantar':
+                        $progressAktif = 4;
+                        break;
+                    case 'Diambil':
+                        $progressAktif = 5;
+                        break;
+                    default:
+                        $progressAktif = 0;
+                        break;
+                } ?>
             <div class="progress-pesanan">
 
                 <?php foreach ($tahapan as $index => $namaTahapan) : ?>
@@ -146,25 +174,25 @@ include 'includes/sidebar.php';
                 <h3>Pembayaran</h3>
 
                 <span class="status-belum-lunas">
-                    <?= htmlspecialchars($pesanan['status_pembayaran']) ?>
+                    <?= htmlspecialchars($pembayaran['status_pembayaran'] ?? 'Belum Dibayar') ?>
                 </span>
             </div>
 
             <div class="baris-info">
                 <span>Total</span>
                 <strong>
-                    Rp<?= number_format($pesanan['total'], 0, ',', '.') ?>
+                    Rp<?= number_format((float)($pembayaran['jml_bayar'] ?? 0), 0, ',', '.') ?>
                 </strong>
             </div>
 
             <div class="baris-info">
                 <span>Tanggal Bayar</span>
-                <strong><?= htmlspecialchars($pesanan['tanggal_bayar']) ?></strong>
+                <strong><?= htmlspecialchars($pembayaran['tgl_pembayaran'] ?? '-') ?></strong>
             </div>
 
             <div class="baris-info">
                 <span>Metode Pembayaran</span>
-                <strong><?= htmlspecialchars($pesanan['metode_pembayaran']) ?></strong>
+                <strong><?= htmlspecialchars($pembayaran['metode_pembayaran'] ?? '-') ?></strong>
             </div>
 
             <button type="button" class="btn-kelola-pembayaran" id="bukaModalPembayaran">
@@ -178,17 +206,20 @@ include 'includes/sidebar.php';
 
             <?php foreach ($detailLayanan as $layanan): ?>
                 <div class="item-layanan">
-                    <strong>
-                        <?= htmlspecialchars($layanan['jenis_layanan']) ?>
-                    </strong>
+                    <div class="info-layanan">
+                        <strong>
+                            <?= htmlspecialchars($layanan['jenis_layanan']) ?>
+                        </strong>
 
-                    <span>
-                        <?= htmlspecialchars($layanan['jumlah']) ?>
-                        <?= htmlspecialchars($layanan['satuan']) ?>
-                    </span>
+                        <span>
+                            <?= htmlspecialchars($layanan['jumlah']) ?>
+                            <?= htmlspecialchars($layanan['satuan']) ?> x Rp
+                            <?= htmlspecialchars($layanan['harga_per_layanan']) ?>
+                        </span>
+                    </div>
 
                     <strong>
-                        Rp<?= number_format($layanan['subtotal'], 0, ',', '.') ?>
+                        Rp<?= number_format((float)($layanan['subtotal'] ?? 0), 0, ',', '.') ?>
                     </strong>
                 </div>
 
@@ -197,7 +228,7 @@ include 'includes/sidebar.php';
             <div class="total-bayar">
                 <strong>Total Bayar</strong>
                 <strong>
-                    Rp<?= number_format($pesanan['total'], 0, ',', '.') ?>
+                    Rp<?= number_format((float)($pesanan['total_harga'] ?? 0), 0, ',', '.') ?>
                 </strong>
             </div>
         </section>
@@ -205,23 +236,23 @@ include 'includes/sidebar.php';
         <!-- Informasi berdasarkan jenis pesanan -->
         <section class="kartu-detail kartu-info-pesanan">
 
-            <?php if ($pesanan['jenis_layanan'] === 'Antar-Jemput') : ?>
+            <?php if ($pesanan['jenis_pesanan'] === 'Antar-Jemput') : ?>
 
                 <h3>Informasi Pengantaran</h3>
 
                 <div class="baris-info">
                     <span>Alamat</span>
-                    <strong><?= htmlspecialchars($pesanan['alamat']) ?></strong>
+                    <strong><?= htmlspecialchars($pesanan['alamat_antar_jemput']) ?></strong>
                 </div>
 
                 <div class="baris-info">
                     <span>Jadwal Jemput</span>
-                    <strong><?= htmlspecialchars($pesanan['jadwal_jemput']) ?></strong>
+                    <strong><?= htmlspecialchars($pesanan['tgl_selesai'] ?? '-') ?></strong>
                 </div>
 
                 <div class="baris-info">
                     <span>Estimasi Antar</span>
-                    <strong><?= htmlspecialchars($pesanan['estimasi_antar']) ?></strong>
+                    <strong><?= htmlspecialchars($pesanan['estimasi_selesai']) ?></strong>
                 </div>
 
             <?php else : ?>
@@ -230,7 +261,7 @@ include 'includes/sidebar.php';
 
                 <div class="baris-info">
                     <span>Tanggal Masuk</span>
-                    <strong><?= htmlspecialchars($pesanan['tanggal_masuk']) ?></strong>
+                    <strong><?= htmlspecialchars($pesanan['tgl_masuk']) ?></strong>
                 </div>
 
                 <div class="baris-info">
@@ -247,7 +278,7 @@ include 'includes/sidebar.php';
     <!-- MODAL KELOLA PEMBAYARAN -->
 <div class="modal-overlay"
      id="modalPembayaran"
-     data-total="<?= (int) $pesanan['total'] ?>">
+     data-total="<?= (int) $pesanan['total_harga'] ?>">
 
     <div class="modal-pembayaran">
 
@@ -281,7 +312,7 @@ include 'includes/sidebar.php';
                     <div>
                         <span>Total Tagihan</span>
                         <strong>
-                            Rp<?= number_format($pesanan['total'], 0, ',', '.') ?>
+                            Rp<?= number_format((float)($pesanan['total_harga'] ?? 0), 0, ',', '.') ?>
                         </strong>
                     </div>
 
@@ -329,8 +360,8 @@ include 'includes/sidebar.php';
                         id="jumlahDibayar"
                         name="jumlah_dibayar"
                         min="1"
-                        max="<?= (int) $pesanan['total'] ?>"
-                        value="<?= (int) $pesanan['total'] ?>"
+                        max="<?= (int) $pesanan['total_harga'] ?>"
+                        value="<?= (int) $pesanan['total_harga'] ?>"
                         required
                     >
                 </div>

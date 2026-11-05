@@ -290,39 +290,39 @@ a{
 }
 
 .status-menunggu {
-    background-color: #FFF0B8;
-    border: 1px solid #FFC83D;
-    color: #8A6200;
-}
-
-.status-diproses {
-    background-color: #FFD9D9;
-    border: 1px solid #FF8888;
-    color: #B00000;
-}
-
-.status-diantar {
-    background-color: #C8E2FA;
-    border: 1px solid #80B8EE;
-    color: #15518B;
-}
-
-.status-selesai {
-    background-color: #D2EDC5;
-    border: 1px solid #8CC77A;
-    color: #285C1D;
+    background: #fff0b8;
+    border: 1px solid #f0c53d;
+    color: #8a6500;
 }
 
 .status-dijemput {
-    background-color: #E7DCFF;
-    border: 1px solid #BCA0F4;
-    color: #5834A0;
+    background-color: #dbeafe;
+    border: 1px solid #2d3e6e;
+    color: #1d4ed8;
+}
+
+.status-diproses {
+    background: #ffcaca;
+    border: 1px solid #ff5555;
+    color: #b30000;
+}
+
+.status-diantar {
+    background: #a8cff5;
+    border: 1px solid #2d3e6e;
+    color: #1d4ed8;
+}
+
+.status-selesai {
+    background: #bfe3ad;
+    border: 1px solid #68a94b;
+    color: #346e20;
 }
 
 .status-diambil {
-    background-color: #D4EEE9;
-    border: 1px solid #8BCFC1;
-    color: #176B5D;
+    background: #a8cff5;
+    border: 1px solid #2d3e6e;
+    color: #1d4ed8;
 }
 
 /* ====TOMBOL DETAIL==== */
@@ -1076,6 +1076,47 @@ a{
     border-bottom: 1px solid #A8CDE5;
     color: #005374;
     font-size: 16px;
+}
+
+.item-layanan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px 28px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #A8CDE5;
+    gap: 15px;
+}
+
+.info-layanan {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-layanan strong {
+    color: #222;
+    font-size: 15px;
+}
+
+.info-layanan span {
+    color: #333;
+    font-size: 13px;
+}
+
+.subtotal {
+    color: #285777;
+    font-size: 22px;
+    white-space: nowrap;
+}
+
+.total-bayar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    color: #285777;
+    font-size: 26px;
 }
 
 /* Progress */
