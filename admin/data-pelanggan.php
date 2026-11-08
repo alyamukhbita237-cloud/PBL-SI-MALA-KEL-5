@@ -1,4 +1,10 @@
 <?php
+session_start;
+require '../includes/koneksi.php';
+
+$sql = 'SELECT u.id_user, u.nama_user, u.no_hp
+        u.emai, u.alamat
+        from users u';
 $page_title = "Data Pelanggan";
 $active_page = "data-pelanggan";
 
