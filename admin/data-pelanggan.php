@@ -1,5 +1,5 @@
 <?php
-session_start;
+session_start();
 require '../includes/koneksi.php';
 
 $sql = 'SELECT u.id_user, u.nama_user, u.no_hp

@@ -1,4 +1,3 @@
-
 <?php
 $page_title = "Kelola Layanan";
 $active_page = "kelola-layanan";
@@ -6,91 +5,94 @@ $active_page = "kelola-layanan";
 include 'includes/header.php';
 include 'includes/sidebar.php';
 
-// Data dummy layanan
+// DATA DUMMY LAYANAN
 $layanan = [
     [
-        'id' => 1,
-        'nama' => 'Cuci Setrika Kering',
-        'harga' => 6000,
+        'id_layanan' => 1,
+        'jenis_layanan' => 'Cuci Setrika Kering',
+        'harga_per_layanan' => 6000,
         'satuan' => 'kg',
-        'estimasi' => 3
+        'estimasi_hari' => 3
     ],
     [
-        'id' => 2,
-        'nama' => 'Cuci Kering',
-        'harga' => 5000,
+        'id_layanan' => 2,
+        'jenis_layanan' => 'Cuci Kering',
+        'harga_per_layanan' => 5000,
         'satuan' => 'kg',
-        'estimasi' => 3
+        'estimasi_hari' => 3
     ],
     [
-        'id' => 3,
-        'nama' => 'Setrika',
-        'harga' => 5000,
+        'id_layanan' => 3,
+        'jenis_layanan' => 'Setrika',
+        'harga_per_layanan' => 5000,
         'satuan' => 'kg',
-        'estimasi' => 3
+        'estimasi_hari' => 3
     ],
     [
-        'id' => 4,
-        'nama' => 'Xpress',
-        'harga' => 20000,
+        'id_layanan' => 4,
+        'jenis_layanan' => 'Xpress',
+        'harga_per_layanan' => 20000,
         'satuan' => 'pcs',
-        'estimasi' => 1
+        'estimasi_hari' => 1
     ],
     [
-        'id' => 5,
-        'nama' => 'Bedcover',
-        'harga' => 6000,
+        'id_layanan' => 5,
+        'jenis_layanan' => 'Bedcover',
+        'harga_per_layanan' => 6000,
         'satuan' => 'kg',
-        'estimasi' => 1
+        'estimasi_hari' => 1
     ],
     [
-        'id' => 6,
-        'nama' => 'Mukena/Sajadah',
-        'harga' => 6000,
+        'id_layanan' => 6,
+        'jenis_layanan' => 'Mukena/Sajadah',
+        'harga_per_layanan' => 6000,
         'satuan' => 'kg',
-        'estimasi' => 1
+        'estimasi_hari' => 1
     ],
     [
-        'id' => 7,
-        'nama' => 'Selimut',
-        'harga' => 20000,
+        'id_layanan' => 7,
+        'jenis_layanan' => 'Selimut',
+        'harga_per_layanan' => 20000,
         'satuan' => 'pcs',
-        'estimasi' => 1
+        'estimasi_hari' => 1
     ],
     [
-        'id' => 8,
-        'nama' => 'Boneka',
-        'harga' => 6000,
+        'id_layanan' => 8,
+        'jenis_layanan' => 'Boneka',
+        'harga_per_layanan' => 6000,
         'satuan' => 'kg',
-        'estimasi' => 1
+        'estimasi_hari' => 1
     ],
     [
-        'id' => 9,
-        'nama' => 'Sepatu',
-        'harga' => 6000,
+        'id_layanan' => 9,
+        'jenis_layanan' => 'Sepatu',
+        'harga_per_layanan' => 6000,
         'satuan' => 'kg',
-        'estimasi' => 1
+        'estimasi_hari' => 1
     ]
 ];
 ?>
 
 <main class="main-content halaman-katalog">
 
+    <!-- JUDUL HALAMAN -->
     <section class="judul-halaman">
         <div>
             <h1>Kelola Layanan</h1>
-            <p>Lihat katalog layanan kami dan mulai pesan</p>
+            <p>Kelola daftar layanan dan harga laundry Si-Mala</p>
         </div>
 
-        <button type="button"
-                class="btn-tambah-layanan"
-                id="bukaModalLayanan">
+        <button
+            type="button"
+            class="btn-tambah-layanan"
+            id="bukaModalLayanan"
+        >
             <span>+</span>
             Tambah Layanan
         </button>
     </section>
 
-    <!-- Daftar layanan -->
+    <!-- DAFTAR LAYANAN -->
     <section class="grid-layanan">
 
         <?php foreach ($layanan as $data) : ?>
@@ -98,26 +100,41 @@ $layanan = [
             <div class="kartu-layanan">
 
                 <h3>
-                    <?= htmlspecialchars($data['nama']) ?>
+                    <?= htmlspecialchars($data['jenis_layanan']) ?>
                 </h3>
 
                 <p class="harga-layanan">
                     <small>Rp</small>
+
                     <strong>
-                        <?= number_format($data['harga'], 0, ',', '.') ?>
+                        <?= number_format(
+                            $data['harga_per_layanan'],
+                            0,
+                            ',',
+                            '.'
+                        ) ?>
                     </strong>
-                    <small>/<?= htmlspecialchars($data['satuan']) ?></small>
+
+                    <small>
+                        /<?= htmlspecialchars($data['satuan']) ?>
+                    </small>
                 </p>
 
                 <p class="estimasi-layanan">
-                    Estimasi Selesai: <?= $data['estimasi'] ?> hari
+                    Estimasi Selesai:
+                    <?= htmlspecialchars((string) $data['estimasi_hari']) ?>
+                    hari
                 </p>
 
                 <button
                     type="button"
                     class="btn-pesan-layanan"
-                    data-id="<?= $data['id'] ?>"
-                    data-nama="<?= htmlspecialchars($data['nama'], ENT_QUOTES) ?>"
+                    data-id="<?= $data['id_layanan'] ?>"
+                    data-nama="<?= htmlspecialchars(
+                        $data['jenis_layanan'],
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
                 >
                     Pesan Layanan
                 </button>
@@ -131,6 +148,10 @@ $layanan = [
 </main>
 
 <script src="assets/js/kelola-layanan.js"></script>
+
+<script>
+    lucide.createIcons();
+</script>
 
 </body>
 </html>
