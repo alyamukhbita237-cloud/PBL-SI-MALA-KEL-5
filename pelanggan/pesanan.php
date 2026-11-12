@@ -60,7 +60,6 @@ include 'includes/sidebar.php';
                             $status = strtolower(trim($item['status_pesanan'] ?? ''));
                             $status_class = match ($status) {
                                 'menunggu' => 'status-menunggu',
-                                'menunggu_konfirmasi' => 'status-menunggu-konfirmasi',
                                 'dijemput' => 'status-dijemput',
                                 'diproses' => 'status-diproses',
                                 'selesai' => 'status-selesai',
@@ -86,7 +85,7 @@ include 'includes/sidebar.php';
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="detail-pesanan.php?id=<?= htmlspecialchars($item['id_pesanan']) ?>" class="detail-button">
+                                    <a href="progress.php?id=<?= htmlspecialchars($item['id_pesanan']) ?>" class="detail-button">
                                         Lihat Detail
                                         <span>›</span>
                                     </a>

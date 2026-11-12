@@ -8,7 +8,7 @@ if (!isset($_SESSION['id_user']) || ($_SESSION['role'] ?? '') !== 'Pelanggan') {
 
 require_once '../includes/koneksi.php';
 $id_user = $_SESSION['id_user'];
-$sql = "SELECT p.id_pesanan, p.tgl_masuk, p.status_pesanan, p.total_harga,
+$sql = "SELECT p.id_pesanan, p.jenis_pesanan, p.tgl_masuk, p.status_pesanan, p.total_harga,
                 l.jenis_layanan, dp.jumlah, l.satuan
         FROM pesanan p
         LEFT JOIN detail_pesanan dp on p.id_pesanan = dp.id_pesanan
@@ -79,14 +79,26 @@ include 'includes/sidebar.php';
             <?php foreach (array_slice($pesanan_berjalan, 0, 1) as $p): ?>
                 <?php 
                     $status = strtolower(trim($p['status_pesanan'] ?? ''));
-                    $tahap = 1;
-                    if (in_array($status, ['pesanan dikonfirmasi'])) {
-                        $tahap = 2;
-                    } elseif (in_array($status, ['pesanan dikerjakan'])) {
-                        $tahap = 3;
-                    } elseif (in_array($status, ['pesanan selesai'])) {
-                        $tahap = 4;
+                    $jenis_pesanan = strtolower(trim($p['jenis_pesanan'] ?? ''));
+
+                    if ($jenis_pesanan === 'antar-jemput') {
+                        $progress_status = [
+                            'menunggu' => 1,
+                            'dijemput' => 2,
+                            'diproses' => 3,
+                            'selesai' => 4,
+                            'diantar' => 5
+                        ];
+                    } else {
+                        $progress_status = [
+                            'menunggu' => 1,
+                            'diproses' => 2,
+                            'selesai' => 3,
+                            'diambil' => 4
+                        ];
                     }
+
+                    $tahap = $progress_status[$status] ?? 1;
         ?>
         <div class="order-card">
             <div class="order-top">
@@ -112,37 +124,73 @@ include 'includes/sidebar.php';
 
             <!-- progress -->
 
+            <!-- progress -->
+
             <div class="progress-wrapper">
-                <div class="progress-line">
-                    <div class="progress-line-active" style="width: <?= (($tahap - 1) / 3) * 100?>%;"></div>
-                </div>
 
                 <?php
-                    $tahapan = ['Pesanan Dibuat', 'Pesanan Dikonfirmasi', 'Pesanan Dikerjakan', 'Pesanan Selesai']; 
+                    // Menentukan tahapan sesuai jenis pesanan
+                    if ($jenis_pesanan === 'antar-jemput') {
+                        $tahapan = [
+                            'Menunggu',
+                            'Dijemput',
+                            'Diproses',
+                            'Selesai',
+                            'Diantar'
+                        ];
+                    } else {
+                        $tahapan = [
+                            'Menunggu',
+                            'Diproses',
+                            'Selesai',
+                            'Diambil'
+                        ];
+                    }
+
+                    // Menghitung persentase garis progress
+                    $total_tahapan = count($tahapan);
+                    $persentase = (($tahap - 1) / ($total_tahapan - 1)) * 100;
                 ?>
 
+                <!-- GARIS PROGRESS -->
+                <div class="progress-line">
+                    <div class="progress-line-active"
+                        style="width: <?= $persentase ?>%;">
+                    </div>
+                </div>
+
+                <!-- TAHAPAN PROGRESS -->
                 <?php foreach ($tahapan as $i => $label): ?>
-                    <?php $nomor = $i + 1;
+
+                    <?php
+                        $nomor = $i + 1;
                         $kelas = '';
+
                         if ($nomor < $tahap) {
                             $kelas = 'completed';
                         } elseif ($nomor === $tahap) {
                             $kelas = 'current';
                         }
-                ?>
-                <div class="progress-step <?= $kelas ?>">
-                    <div class="step-circle">
-                        <?php if ($nomor < $tahap): ?>
-                            <i data-lucide="circle-check"></i>
-                        <?php elseif ($nomor === $tahap): ?>
-                            <i data-lucide="loader-circle"></i>
-                        <?php else: ?>
-                            <i data-lucide="circle"></i>
-                        <?php endif; ?>
+                    ?>
+
+                    <div class="progress-step <?= $kelas ?>">
+
+                        <div class="step-circle">
+                            <?php if ($nomor < $tahap): ?>
+                                <i data-lucide="circle-check"></i>
+                            <?php elseif ($nomor === $tahap): ?>
+                                <i data-lucide="loader-circle"></i>
+                            <?php else: ?>
+                                <i data-lucide="circle"></i>
+                            <?php endif; ?>
+                        </div>
+
+                        <span><?= htmlspecialchars($label) ?></span>
+
                     </div>
-                    <span><?= htmlspecialchars($label) ?></span>
-                </div>
+
                 <?php endforeach; ?>
+
             </div>
 
             <!-- lihat detail progress -->

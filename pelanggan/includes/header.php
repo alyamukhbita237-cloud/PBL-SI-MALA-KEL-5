@@ -23,12 +23,13 @@
             Si-Mala
         </div>
 
-        <div class="profile">
+        <a href="profile.php" class="profile">
             <div class="profile-icon">
                 <i data-lucide="user"></i>
             </div>
+
             <span class="profile-name">
                 <?= htmlspecialchars($_SESSION['nama'] ?? 'Pelanggan', ENT_QUOTES, 'UTF-8') ?>
             </span>
-        </div>
+        </a>
     </header>
