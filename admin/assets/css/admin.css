@@ -15,18 +15,15 @@ a{
     color: inherit;
 }
 
-/* ===topbar=== */
+/* === topbar === */
 .topbar{
     height: 72px;
     background-color: white;
     border-bottom: 1px solid #e9edf2;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 40px;
-
     position: sticky;
     top: 0;
     z-index: 100;
@@ -38,19 +35,15 @@ a{
     color: #005374;
 }
 
-/* ====sidebar=== */
+/* ==== sidebar === */
 .sidebar{
     position: fixed;
-    
     left: 0;
     top: 72px;
     bottom: 0;
-
     width: 230px;
-    
     background-color: white;
     border-right: 1px solid #e9edf2;
-
     padding: 30px 18px;
 }
 
@@ -63,16 +56,11 @@ a{
 .sidebar-link{
     display: flex;
     align-items: center;
-
     padding: 12px 15px;
-
     border-radius: 8px;
-
     font-size: 14px;
     font-weight: 700;
-
     color: #1F4C6D;
-
     transition: 0.2s ease;
 }
 
@@ -89,9 +77,7 @@ a{
 
 .main-content {
     margin-left: 230px;
-
     padding: 38px 24px;
-
     min-height: calc(100vh - 72px);
 }
 
@@ -100,7 +86,6 @@ a{
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-
     margin-bottom: 32px;
 }
 
@@ -116,24 +101,18 @@ a{
     font-size: 12px;
 }
 
-
-/* ====tambah pesanan==== */
-
+/* ==== tambah pesanan ==== */
 .btn-tambah {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-
     padding: 11px 20px;
-
     border-radius: 9px;
     background-color: #4385B8;
-
     color: white;
     font-size: 13px;
     font-weight: 700;
-
     white-space: nowrap;
     transition: 0.2s ease;
 }
@@ -142,9 +121,7 @@ a{
     background-color: #286B9E;
 }
 
-
-/* ====KARTU PESANAN==== */
-
+/* ==== kartu pesanan ==== */
 .kartu-pesanan {
     background-color: #FBFAF8;
     padding: 25px 27px;
@@ -161,8 +138,7 @@ a{
 }
 
 
-/* ====FILTER STATUS==== */
-
+/* ==== filter status ==== */
 .filter-status {
     display: flex;
     flex-wrap: wrap;
@@ -189,8 +165,7 @@ a{
 }
 
 
-/* ====PENCARIAN==== */
-
+/* ==== pencarian ==== */
 .form-cari {
     display: flex;
     gap: 6px;
@@ -227,9 +202,7 @@ a{
     background-color: #286B9E;
 }
 
-
-/* ====TABEL PESANAN==== */
-
+/* ==== tabel pesanan ==== */
 .tabel-pesanan {
     width: 100%;
     min-width: 700px;
@@ -279,8 +252,7 @@ a{
     font-weight: 700;
 }
 
-/* ====LABEL STATUS PESANAN==== */
-
+/* ==== label status pesanan ==== */
 .label-status {
     display: inline-block;
     padding: 5px 9px;
@@ -343,8 +315,7 @@ a{
     color: white;
 }
 
-/* ====DATA KOSONG==== */
-
+/* ==== data kosong ==== */
 .data-kosong {
     padding: 30px !important;
     text-align: center;
@@ -369,8 +340,7 @@ a{
 }
 
 
-/* ===== HALAMAN TAMBAH PESANAN ===== */
-
+/* ===== halaman tambah layanan ===== */
 .halaman-tambah {
     padding: 30px;
 }
@@ -395,7 +365,7 @@ a{
 /* Kartu utama */
 .halaman-tambah .form-pesanan-card {
     width: 100%;
-    max-width: 1000px;
+    max-width: none;
     padding: 28px;
     background-color: #FFFFFF;
     border: 1px solid #C1D9EC;
@@ -749,7 +719,6 @@ a{
 /* ========================================
    TOMBOL MENU MOBILE
    ======================================== */
-
 .tombol-menu {
     display: none;
     border: 0;
@@ -763,7 +732,6 @@ a{
 /* ========================================
    RESPONSIVE
    ======================================== */
-
 @media (max-width: 768px) {
     .topbar {
         padding: 0 18px;
@@ -961,7 +929,6 @@ a{
 /* ========================================
    HALAMAN DETAIL PESANAN
    ======================================== */
-
 .halaman-detail {
     box-sizing: border-box;
 }
@@ -1339,7 +1306,6 @@ a{
 /* ========================================
    MODAL KELOLA PEMBAYARAN
    ======================================== */
-
 .modal-overlay {
     display: none;
     position: fixed;
@@ -1561,7 +1527,6 @@ a{
 /* ========================================
    HALAMAN DATA PELANGGAN
    ======================================== */
-
 .halaman-pelanggan {
     box-sizing: border-box;
 }
@@ -1725,9 +1690,7 @@ a{
 /* ========================================
    RESPONSIVE DATA PELANGGAN
    ======================================== */
-
 @media (max-width: 768px) {
-
     .halaman-pelanggan .judul-halaman {
         align-items: flex-start;
         flex-direction: column;
@@ -1753,14 +1716,12 @@ a{
     .tabel-pelanggan {
         min-width: 750px;
     }
-
 }
 
 
 /* ========================================
    MODAL TAMBAH PELANGGAN
    ======================================== */
-
 .modal-pelanggan {
     width: 100%;
     max-width: 450px;
@@ -1902,7 +1863,6 @@ button.btn-edit-pelanggan:hover {
 /* ========================================
    HALAMAN KELOLA LAYANAN
    ======================================== */
-
 .halaman-katalog {
     box-sizing: border-box;
 }
@@ -2052,11 +2012,9 @@ button.btn-edit-pelanggan:hover {
     }
 }
 
-
 /* ==========================================
    DASHBOARD ADMIN SI-MALA
 ========================================== */
-
 .dashboard-admin {
     background: #F3F7FA;
 }
@@ -2116,7 +2074,6 @@ button.btn-edit-pelanggan:hover {
 /* ==========================================
    STATISTIK
 ========================================== */
-
 .dashboard-statistik {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2192,7 +2149,6 @@ button.btn-edit-pelanggan:hover {
 /* ==========================================
    GRID DASHBOARD
 ========================================== */
-
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1.25fr;
@@ -2213,9 +2169,7 @@ button.btn-edit-pelanggan:hover {
     margin-bottom: 0;
 }
 
-
-/* HEADING CARD */
-
+/* Heading Card */
 .card-heading {
     display: flex;
     justify-content: space-between;
@@ -2249,11 +2203,9 @@ button.btn-edit-pelanggan:hover {
     color: #005374;
 }
 
-
 /* ==========================================
    AKSES CEPAT
 ========================================== */
-
 .akses-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2297,7 +2249,6 @@ button.btn-edit-pelanggan:hover {
 /* ==========================================
    DAFTAR PESANAN
 ========================================== */
-
 .daftar-pesanan {
     display: flex;
     flex-direction: column;
@@ -2392,11 +2343,9 @@ button.btn-edit-pelanggan:hover {
     background: #4289BD;
 }
 
-
 /* ==========================================
    EMPTY STATE
 ========================================== */
-
 .dashboard-kosong {
     display: flex;
     flex-direction: column;
@@ -2422,7 +2371,6 @@ button.btn-edit-pelanggan:hover {
 /* ==========================================
    PESANAN TERBARU
 ========================================== */
-
 .dashboard-grid-bawah {
     grid-template-columns: 2fr 0.8fr;
 }
@@ -2485,11 +2433,9 @@ button.btn-edit-pelanggan:hover {
     color: #82909D !important;
 }
 
-
 /* ==========================================
    NILAI PESANAN HARI INI
 ========================================== */
-
 .pendapatan-card {
     display: flex;
     flex-direction: column;
@@ -2535,13 +2481,10 @@ button.btn-edit-pelanggan:hover {
     color: #4289BD;
 }
 
-
 /* ==========================================
    RESPONSIVE
 ========================================== */
-
 @media (max-width: 1100px) {
-
     .dashboard-statistik {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -2550,11 +2493,9 @@ button.btn-edit-pelanggan:hover {
     .dashboard-grid-bawah {
         grid-template-columns: 1fr;
     }
-
 }
 
 @media (max-width: 600px) {
-
     .dashboard-welcome {
         flex-direction: column;
         align-items: flex-start;
@@ -2608,20 +2549,16 @@ button.btn-edit-pelanggan:hover {
     .pendapatan-card > strong {
         font-size: 22px;
     }
-
 }
-
 
 /* ==========================================
    HALAMAN LAPORAN PESANAN
 ========================================== */
-
 .halaman-laporan {
     padding-bottom: 40px;
 }
 
-/* JUDUL HALAMAN */
-
+/* Judul Halaman */
 .halaman-laporan .judul-halaman {
     display: flex;
     justify-content: space-between;
@@ -2641,9 +2578,7 @@ button.btn-edit-pelanggan:hover {
     font-size: 14px;
 }
 
-
-/* TOMBOL EXPORT */
-
+/* Tombol Export */
 .btn-export {
     display: inline-flex;
     align-items: center;
@@ -2668,11 +2603,9 @@ button.btn-edit-pelanggan:hover {
     height: 17px;
 }
 
-
 /* ==========================================
    STATISTIK LAPORAN
 ========================================== */
-
 .laporan-statistik {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2746,7 +2679,6 @@ button.btn-edit-pelanggan:hover {
 /* ==========================================
    FILTER LAPORAN
 ========================================== */
-
 .filter-laporan {
     background: #FFFFFF;
     border: 1px solid #C1D9EC;
@@ -2868,11 +2800,9 @@ button.btn-edit-pelanggan:hover {
     height: 17px;
 }
 
-
 /* ==========================================
    RIWAYAT TRANSAKSI
 ========================================== */
-
 .riwayat-transaksi {
     background: #FFFFFF;
     border: 1px solid #C1D9EC;
@@ -2905,9 +2835,7 @@ button.btn-edit-pelanggan:hover {
     font-weight: 800;
 }
 
-
-/* PENCARIAN */
-
+/* Pencarian */
 .form-cari-riwayat {
     display: flex;
     align-items: center;
@@ -2949,11 +2877,9 @@ button.btn-edit-pelanggan:hover {
     cursor: pointer;
 }
 
-
 /* ==========================================
    TABEL RIWAYAT
 ========================================== */
-
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -3006,9 +2932,7 @@ button.btn-edit-pelanggan:hover {
     border-right: 1px solid #E1EAF2;
 }
 
-
 /* PEMISAH TANGGAL */
-
 .tabel-riwayat .baris-tanggal td {
     background: #F0F7FC;
     color: #174B70;
@@ -3027,9 +2951,7 @@ button.btn-edit-pelanggan:hover {
     color: #4289BD;
 }
 
-
 /* KODE DAN HARGA */
-
 .kode-laporan {
     color: #005374;
     font-weight: 700;
@@ -3040,11 +2962,9 @@ button.btn-edit-pelanggan:hover {
     color: #263B50;
 }
 
-
 /* ==========================================
    BADGE STATUS
 ========================================== */
-
 .badge-laporan {
     display: inline-flex;
     align-items: center;
@@ -3086,9 +3006,7 @@ button.btn-edit-pelanggan:hover {
     color: #20943C;
 }
 
-
 /* STATUS PEMBAYARAN */
-
 .bayar-lunas,
 .bayar-berhasil {
     background: #DDF5E2;
@@ -3106,11 +3024,9 @@ button.btn-edit-pelanggan:hover {
     color: #0875CE;
 }
 
-
 /* ==========================================
    TOMBOL DETAIL
 ========================================== */
-
 .btn-detail-laporan {
     display: inline-flex;
     align-items: center;
@@ -3135,9 +3051,7 @@ button.btn-edit-pelanggan:hover {
     height: 16px;
 }
 
-
 /* DATA KOSONG */
-
 .laporan-kosong {
     text-align: center;
     padding: 40px !important;
@@ -3150,11 +3064,9 @@ button.btn-edit-pelanggan:hover {
     margin-bottom: 10px;
 }
 
-
 /* ==========================================
    PAGINATION
 ========================================== */
-
 .pagination-laporan {
     display: flex;
     align-items: center;
@@ -3210,13 +3122,10 @@ button.btn-edit-pelanggan:hover {
     height: 17px;
 }
 
-
 /* ==========================================
    RESPONSIVE
 ========================================== */
-
 @media (max-width: 1200px) {
-
     .laporan-statistik {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -3228,11 +3137,9 @@ button.btn-edit-pelanggan:hover {
     .btn-tampilkan {
         grid-column: span 2;
     }
-
 }
 
 @media (max-width: 768px) {
-
     .halaman-laporan .judul-halaman {
         align-items: flex-start;
         gap: 15px;
@@ -3297,9 +3204,4 @@ button.btn-edit-pelanggan:hover {
     .riwayat-transaksi {
         padding: 13px;
     }
-
 }
-
-
-
-

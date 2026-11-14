@@ -15,13 +15,19 @@ if (!in_array($filter, $statusList, true)) {
     $filter = 'Semua';
 }
 
-// Mengambil data pesanan dan pelanggan dari database
-$sql = "SELECT p.id_pesanan, p.id_user, p.jenis_pesanan, p.tgl_masuk, p.status_pesanan, p.total_harga, u.nama_user
+// Mengambil data pesanan, pelanggan, dan jenis layanan dari database
+$sql = "SELECT p.id_pesanan, p.id_user, p.jenis_pesanan, p.tgl_masuk, p.status_pesanan, p.total_harga, u.nama_user, COALESCE(d.nama_layanan, '-') AS jenis_layanan
         FROM pesanan p
-        JOIN users u ON p.id_user = u.id_user
-        ORDER BY p.tgl_masuk DESC";
+        LEFT JOIN users u ON p.id_user = u.id_user
+        LEFT JOIN (SELECT dp.id_pesanan, STRING_AGG(l.jenis_layanan, ', ') AS nama_layanan
+        FROM detail_pesanan dp
+        JOIN layanan l ON dp.id_layanan = l.id_layanan
+        GROUP BY dp.id_pesanan) d
+        ON p.id_pesanan = d.id_pesanan
+        ORDER BY p.tgl_masuk DESC, p.id_pesanan DESC";
 
 $stmt = $pdo->prepare($sql);
+$stmt->execute();
 $pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Menghitung jumlah pesanan per status
@@ -111,7 +117,7 @@ include 'includes/sidebar.php';
                             <td class="kode-pesanan"> #<?= htmlspecialchars($kode) ?></td>
                             <td><?= htmlspecialchars($p['nama_user']) ?></td>
                             <td><?= htmlspecialchars($tanggal) ?></td>
-                            <td><?= htmlspecialchars($p['jenis_pesanan']) ?></td>
+                            <td><?= htmlspecialchars($p['jenis_layanan']) ?></td>
                             <td>
                                 <span class="label-status <?= htmlspecialchars($classStatus) ?>"><?= htmlspecialchars($p['status_pesanan']) ?></span>
                             </td>

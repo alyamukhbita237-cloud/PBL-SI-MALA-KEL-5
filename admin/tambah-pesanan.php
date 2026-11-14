@@ -56,6 +56,8 @@ include 'includes/sidebar.php';
     <!-- FORM TAMBAH PESANAN -->
         <section class="form-pesanan-card">
             <form id="formTambahPesanan" method="POST" action="simpan-pesanan.php">
+                <input type="hidden" name="jenis_pesanan" id="jenisPesanan" value="Walk-in">
+                <input type="hidden" name="layanan_json" id="layananJson">
 
                 <!-- DATA PELANGGAN -->
                 <div class="bagian-form">
