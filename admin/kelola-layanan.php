@@ -39,10 +39,8 @@ include 'includes/sidebar.php';
                         <strong><?= number_format($data['harga_per_layanan'], 0, ',', '.') ?></strong>
                         <small>/<?= htmlspecialchars($data['satuan']) ?></small>
                     </p>
-
-                    <p class="estimasi-layanan">Estimasi Selesai: <?= htmlspecialchars((string) $data['estimasi_hari']) ?> hari</p>
-
-                    <button type="button" class="btn-pesan-layanan" data-id="<?= $data['id_layanan'] ?>" data-nama="<?= htmlspecialchars($data['jenis_layanan'], ENT_QUOTES, 'UTF-8') ?>">Pesan Layanan</button>
+                    <p class="estimasi-layanan">Estimasi Selesai:<?= htmlspecialchars((string) $data['estimasi_hari']) ?> hari</p>
+                    <a href="tambah-pesanan.php?layanan=<?= urlencode((string) $data['id_layanan']) ?>" class="btn-pesan-layanan" data-id="<?= htmlspecialchars((string) $data['id_layanan']) ?>" data-nama="<?= htmlspecialchars($data['jenis_layanan'], ENT_QUOTES, 'UTF-8') ?>">Pesan Layanan</a>
                 </div>
             <?php endforeach; ?>
         <?php else : ?>

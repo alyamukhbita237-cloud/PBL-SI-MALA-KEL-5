@@ -1,6 +1,4 @@
-
 document.addEventListener('DOMContentLoaded', function () {
-
     const modal = document.getElementById('modalPembayaran');
     const tombolBuka = document.getElementById('bukaModalPembayaran');
     const tombolTutup = document.getElementById('tutupModalPembayaran');
@@ -38,9 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Validasi pembayaran
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-
         const jumlah = Number(jumlahDibayar.value);
-
         if (jumlah <= 0 || !Number.isFinite(jumlah)) {
             pesan.textContent = 'Jumlah pembayaran harus lebih dari 0.';
             return;
@@ -81,5 +77,4 @@ document.addEventListener('DOMContentLoaded', function () {
             pesan.textContent = '';
         }
     });
-
 });

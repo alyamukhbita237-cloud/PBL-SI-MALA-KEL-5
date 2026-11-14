@@ -1,10 +1,7 @@
-
 document.addEventListener('DOMContentLoaded', function () {
-
     const tombolTambah = document.getElementById('bukaModalLayanan');
-
     const tombolPesan = document.querySelectorAll('.btn-pesan-layanan');
-
+    
     // Tombol tambah layanan
     if (tombolTambah) {
         tombolTambah.addEventListener('click', function () {
@@ -14,23 +11,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Tombol pesan layanan
     tombolPesan.forEach(function (tombol) {
-
-        tombol.addEventListener('click', function () {
-
+        tombol.addEventListener('click', function (event) {
+            const idLayanan = tombol.dataset.id;
             const namaLayanan = tombol.dataset.nama;
 
-            const konfirmasi = confirm(
-                'Apakah kamu ingin memesan layanan ' + namaLayanan + '?'
-            );
-
-            if (konfirmasi) {
-                window.location.href =
-                    'tambah-pesanan.php?layanan=' +
-                    encodeURIComponent(namaLayanan);
+            if (!idLayanan || !namaLayanan) {
+                event.preventDefault();
+                alert('Data layanan tidak ditemukan. Silakan periksa kembali.');
+                return;
             }
 
+            const konfirmasi = confirm('Apakah kamu ingin memesan layanan ' + namaLayanan + '?');
+
+            if (!konfirmasi) {
+                event.preventDefault();
+            }
         });
-
     });
-
 });
