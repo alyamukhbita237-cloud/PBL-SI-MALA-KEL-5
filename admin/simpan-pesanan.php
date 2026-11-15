@@ -7,92 +7,92 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// mengambil data dari form
 try {
-    $idUser = filter_input(INPUT_POST, 'pelanggan', FILTER_VALIDATE_INT);
-    $jenisPesanan = $_POST['jenis_pesanan'] ?? 'Walk-in';
+    $idUser = $_POST['pelanggan'] ?? '';
+    $jenisPesanan = $_POST['jenis_pesanan'] ?? '';
     $layananJson = $_POST['layanan_json'] ?? '';
     $waktuBayar = $_POST['waktu_bayar'] ?? '';
     $metodeBayar = $_POST['metode_bayar'] ?? '';
 
-    if (!$idUser) {
+    if ($idUser == '') {
         throw new Exception('Silakan pilih pelanggan.');
     }
 
-    if (!in_array($jenisPesanan, ['Walk-in', 'Antar-Jemput'], true)) {
+    if (!in_array($jenisPesanan, ['Walk-in', 'Antar-Jemput'])) {
         throw new Exception('Jenis pesanan tidak valid.');
     }
 
-    if (!in_array($waktuBayar, ['sekarang', 'nanti'], true)) {
-        throw new Exception('Pilihan waktu pembayaran tidak valid.');
+    if (!in_array($waktuBayar, ['sekarang', 'nanti'])) {
+        throw new Exception('Pilihan pembayaran tidak valid.');
     }
 
-    if (!in_array($metodeBayar, ['Tunai', 'QRIS', 'Transfer Bank'], true)) {
+    if (!in_array($metodeBayar, ['Tunai', 'QRIS', 'Transfer Bank'])) {
         throw new Exception('Metode pembayaran tidak valid.');
     }
 
     $layananDipilih = json_decode($layananJson, true);
 
-    if (!is_array($layananDipilih) || count($layananDipilih) === 0) {
+    if (!is_array($layananDipilih) || empty($layananDipilih)) {
         throw new Exception('Silakan pilih minimal satu layanan.');
     }
 
     $pdo->beginTransaction();
 
-    // Memastikan pelanggan tersedia
-    $queryPelanggan = "SELECT id_user, alamat
-                       FROM users
-                       WHERE id_user = :id_user
-                       AND LOWER(role) = 'pelanggan'";
+    $sql = "SELECT id_user, alamat
+            FROM users
+            WHERE id_user = :id_user
+            AND LOWER(role) = 'pelanggan'";
 
-    $stmtPelanggan = $pdo->prepare($queryPelanggan);
-    $stmtPelanggan->execute(['id_user' => $idUser]);
-    $dataPelanggan = $stmtPelanggan->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id_user' => $idUser]);
+    $pelanggan = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$dataPelanggan) {
+    if (!$pelanggan) {
         throw new Exception('Data pelanggan tidak ditemukan.');
     }
 
     $alamat = null;
 
-    if ($jenisPesanan === 'Antar-Jemput') {
-        $alamat = trim($dataPelanggan['alamat'] ?? '');
-
-        if ($alamat === '') {
+    if ($jenisPesanan == 'Antar-Jemput') {
+        $alamat = trim($pelanggan['alamat'] ?? '');
+        if ($alamat == '') {
             throw new Exception('Alamat pelanggan belum tersedia.');
         }
     }
 
-    // Mengambil harga dan estimasi layanan dari database
     $totalHarga = 0;
     $estimasiHari = 0;
     $detailLayanan = [];
 
-    $queryLayanan = "SELECT id_layanan, harga_per_layanan, estimasi_hari
-                     FROM layanan
-                     WHERE id_layanan = :id_layanan";
-
-    $stmtLayanan = $pdo->prepare($queryLayanan);
-
     foreach ($layananDipilih as $item) {
-        $idLayanan = filter_var($item['id_layanan'] ?? null, FILTER_VALIDATE_INT);
-        $jumlah = filter_var($item['jumlah'] ?? null, FILTER_VALIDATE_INT);
-        if (!$idLayanan || !$jumlah || $jumlah < 1) {
+        $idLayanan = $item['id_layanan'] ?? 0;
+        $jumlah = $item['jumlah'] ?? 0;
+
+        if (!filter_var($idLayanan, FILTER_VALIDATE_INT) ||
+            !filter_var($jumlah, FILTER_VALIDATE_INT) ||
+            $jumlah < 1) {
             throw new Exception('Data layanan atau jumlah tidak valid.');
         }
 
-        $stmtLayanan->execute(['id_layanan' => $idLayanan]);
-        $dataLayanan = $stmtLayanan->fetch(PDO::FETCH_ASSOC);
-        
-        if (!$dataLayanan) {
-            throw new Exception('Salah satu layanan tidak ditemukan.');
+        $sql = "SELECT harga_per_layanan, estimasi_hari
+                FROM layanan
+                WHERE id_layanan = :id_layanan";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['id_layanan' => $idLayanan]);
+        $layanan = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$layanan) {
+            throw new Exception('Layanan tidak ditemukan.');
         }
 
-        $harga = (float) $dataLayanan['harga_per_layanan'];
+        $harga = (float) $layanan['harga_per_layanan'];
         $subtotal = $harga * $jumlah;
-
         $totalHarga += $subtotal;
-        $estimasiHari = max($estimasiHari, (int) $dataLayanan['estimasi_hari']);
+
+        if ($layanan['estimasi_hari'] > $estimasiHari) {
+            $estimasiHari = (int) $layanan['estimasi_hari'];
+        }
 
         $detailLayanan[] = [
             'id_layanan' => $idLayanan,
@@ -101,34 +101,40 @@ try {
         ];
     }
 
-    // Menghitung tanggal estimasi selesai
-    $tanggalMasuk = new DateTime('today');
-    $tanggalEstimasi = clone $tanggalMasuk;
-    $tanggalEstimasi->modify('+' . $estimasiHari . ' days');
+    $tanggalMasuk = date('Y-m-d');
+    $tanggalEstimasi = date('Y-m-d', strtotime('+' . $estimasiHari . ' days'));
 
-    // Menyimpan pesanan
-    $queryPesanan = "INSERT INTO pesanan (id_user, jenis_pesanan, tgl_masuk, estimasi_selesai, alamat_antar_jemput, status_pesanan, waktu_update_status, total_harga) VALUES (:id_user, :jenis_pesanan, :tgl_masuk, :estimasi_selesai, :alamat, :status_pesanan, CURRENT_TIMESTAMP, :total_harga) RETURNING id_pesanan";
+    $sql = "INSERT INTO pesanan
+            (id_user, jenis_pesanan, tgl_masuk, estimasi_selesai,
+             alamat_antar_jemput, status_pesanan, waktu_update_status, total_harga)
+            VALUES
+            (:id_user, :jenis_pesanan, :tgl_masuk, :estimasi_selesai,
+             :alamat, :status_pesanan, CURRENT_TIMESTAMP, :total_harga)
+            RETURNING id_pesanan";
 
-    $stmtPesanan = $pdo->prepare($queryPesanan);
-    $stmtPesanan->execute([
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([
         'id_user' => $idUser,
         'jenis_pesanan' => $jenisPesanan,
-        'tgl_masuk' => $tanggalMasuk->format('Y-m-d'),
-        'estimasi_selesai' => $tanggalEstimasi->format('Y-m-d'),
+        'tgl_masuk' => $tanggalMasuk,
+        'estimasi_selesai' => $tanggalEstimasi,
         'alamat' => $alamat,
         'status_pesanan' => 'Menunggu',
         'total_harga' => $totalHarga
     ]);
 
-    $idPesanan = $stmtPesanan->fetchColumn();
+    $idPesanan = $stmt->fetchColumn();
 
-    // Menyimpan detail layanan pesanan
-    $queryDetail = "INSERT INTO detail_pesanan (id_pesanan, id_layanan, jumlah, subtotal) VALUES (:id_pesanan, :id_layanan, :jumlah, :subtotal)";
+    $sql = "INSERT INTO detail_pesanan
+            (id_pesanan, id_layanan, jumlah, subtotal)
+            VALUES
+            (:id_pesanan, :id_layanan, :jumlah, :subtotal)";
 
-    $stmtDetail = $pdo->prepare($queryDetail);
+    $stmt = $pdo->prepare($sql);
 
     foreach ($detailLayanan as $detail) {
-        $stmtDetail->execute([
+        $stmt->execute([
             'id_pesanan' => $idPesanan,
             'id_layanan' => $detail['id_layanan'],
             'jumlah' => $detail['jumlah'],
@@ -136,15 +142,24 @@ try {
         ]);
     }
 
-    // Menyimpan pembayaran
-    $statusPembayaran = ($waktuBayar === 'sekarang') ? 'Lunas' : 'Belum Lunas';
-    $jumlahBayar = ($waktuBayar === 'sekarang') ? $totalHarga : 0;
-    $tanggalPembayaran = ($waktuBayar === 'sekarang') ? date('Y-m-d') : null;
+    if ($waktuBayar == 'sekarang') {
+        $statusPembayaran = 'Lunas';
+        $jumlahBayar = $totalHarga;
+        $tanggalPembayaran = date('Y-m-d');
+    } else {
+        $statusPembayaran = 'Belum Lunas';
+        $jumlahBayar = 0;
+        $tanggalPembayaran = null;
+    }
 
-    $queryPembayaran = "INSERT INTO pembayaran (id_pesanan, metode_pembayaran, status_pembayaran, tgl_pembayaran, jml_bayar) VALUES (:id_pesanan, :metode_pembayaran, :status_pembayaran, :tgl_pembayaran, :jml_bayar)";
+    $sql = "INSERT INTO pembayaran
+            (id_pesanan, metode_pembayaran, status_pembayaran, tgl_pembayaran, jml_bayar)
+            VALUES
+            (:id_pesanan, :metode_pembayaran, :status_pembayaran, :tgl_pembayaran, :jml_bayar)";
 
-    $stmtPembayaran = $pdo->prepare($queryPembayaran);
-    $stmtPembayaran->execute([
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([
         'id_pesanan' => $idPesanan,
         'metode_pembayaran' => $metodeBayar,
         'status_pembayaran' => $statusPembayaran,
@@ -157,11 +172,10 @@ try {
     header('Location: kelola-pesanan.php?berhasil=1');
     exit;
 
-} catch (Exception $e) {
+} catch (Throwable $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
-
     die('Gagal menyimpan pesanan: ' . htmlspecialchars(
         $e->getMessage(),
         ENT_QUOTES,

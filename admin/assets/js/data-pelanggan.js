@@ -1,28 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const inputCari = document.getElementById('cariPelanggan');
-    const tabel = document.getElementById('tabelPelanggan');
-    const baris = tabel.querySelectorAll('tbody tr');
+    const cariPelanggan = document.getElementById('cariPelanggan');
+    const tabelPelanggan = document.getElementById('tabelPelanggan');
     const pesanKosong = document.getElementById('pesanKosong');
 
-    inputCari.addEventListener('input', function () {
+    if (cariPelanggan && tabelPelanggan && pesanKosong) {
+        cariPelanggan.addEventListener('input', function () {
+            const kataKunci = cariPelanggan.value.toLowerCase().trim();
+            const baris = tabelPelanggan.querySelectorAll('tbody tr');
 
-        const kataKunci = inputCari.value.toLowerCase();
-        let jumlahData = 0;
+            let jumlahDitemukan = 0;
 
-        baris.forEach(function (row) {
-            const isiBaris = row.textContent.toLowerCase();
-            if (isiBaris.includes(kataKunci)) {
-                row.style.display = '';
-                jumlahData++;
-            } else {
-                row.style.display = 'none';
-            }
+            baris.forEach(function (tr) {
+                if (tr.cells.length < 2) {
+                    return;
+                }
+
+                const namaPelanggan = tr.cells[1].textContent.toLowerCase();
+
+                if (namaPelanggan.startsWith(kataKunci)) {
+                    tr.style.display = '';
+                    jumlahDitemukan++;
+                } else {
+                    tr.style.display = 'none';
+                }
+            });
+            pesanKosong.style.display = jumlahDitemukan === 0 ? 'block' : 'none';
         });
-        pesanKosong.style.display = jumlahData === 0 ? 'block' : 'none';
-    });
-});
+    }
 
-document.addEventListener('DOMContentLoaded', function () {
     // ==================================
     // MODAL TAMBAH PELANGGAN
     // ==================================
@@ -31,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tombolTutupTambah = document.getElementById('tutupModalPelanggan');
     const formTambah = document.getElementById('formTambahPelanggan');
 
-    if (modalTambah && tombolBukaTambah && tombolTutupTambah) {
+    if (modalTambah && tombolBukaTambah && tombolTutupTambah && formTambah) {
         tombolBukaTambah.addEventListener('click', function () {
             modalTambah.classList.add('aktif');
         });
@@ -47,17 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         formTambah.addEventListener('submit', function (event) {
-            event.preventDefault();
-
             const nama = document.getElementById('namaPelanggan').value.trim();
-
-            if (confirm('Apakah data pelanggan sudah benar?\n\nNama: ' + nama)) {
-                alert('Data berhasil divalidasi. Fitur ini masih berupa simulasi dan belum disimpan ke database.');
-                modalTambah.classList.remove('aktif');
-                formTambah.reset();
+            if (!confirm('Simpan data pelanggan ' + nama + '?')) {
+                event.preventDefault();
             }
         });
+
     }
+
     // ==================================
     // MODAL EDIT PELANGGAN
     // ==================================
