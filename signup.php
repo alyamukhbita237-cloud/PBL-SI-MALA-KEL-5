@@ -61,7 +61,15 @@
                 <!-- password -->
                 <div class="form-group">
                     <label for="password">Kata Sandi</label>
-                    <input type="password" id="password" name="password" placeholder="Masukkan kata sandi kamu" required>
+
+                    <div class="password-container">
+                        <input type="password" id="password" name="password"
+                            placeholder="Masukkan kata sandi kamu" required>
+
+                        <button type="button" id="togglePassword">
+                            <i data-lucide="eye" id="iconPassword"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- button -->
@@ -74,5 +82,7 @@
     </section>
     
 </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="assets/js/login-signup.js"></script>
 </body>
 </html>
