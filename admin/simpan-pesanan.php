@@ -36,6 +36,82 @@ try {
         throw new Exception('Silakan pilih minimal satu layanan.');
     }
 
+    // TAMBAH PESANAN KE YANG SUDAH ADA
+    $idPesananLama = $_POST['id_pesanan'] ?? '';
+    
+    if ($idPesananLama !== '') {
+    $pdo->beginTransaction();
+
+    // Pastikan pesanan tersedia
+    $stmt = $pdo->prepare(
+        "SELECT id_pesanan
+         FROM pesanan
+         WHERE id_pesanan = ?"
+    );
+    $stmt->execute([$idPesananLama]);
+
+    if (!$stmt->fetch()) {
+        throw new Exception('Pesanan tidak ditemukan.');
+    }
+    $totalTambahan = 0;
+
+    // Siapkan query layanan
+    $stmtLayanan = $pdo->prepare(
+        "SELECT harga_per_layanan
+         FROM layanan
+         WHERE id_layanan = ?"
+    );
+
+    // Siapkan query tambah detail
+    $stmtDetail = $pdo->prepare(
+        "INSERT INTO detail_pesanan
+         (id_pesanan, id_layanan, jumlah, subtotal)
+         VALUES (?, ?, ?, ?)"
+    );
+
+    foreach ($layananDipilih as $item) {
+        $idLayanan = $item['id_layanan'] ?? 0;
+        $jumlah = $item['jumlah'] ?? 0;
+        if (!filter_var($idLayanan, FILTER_VALIDATE_INT) ||!is_numeric($jumlah) ||
+            (float)$jumlah <= 0
+        ) {
+            throw new Exception('Data layanan atau jumlah tidak valid.');
+        }
+        $stmtLayanan->execute([$idLayanan]);
+        $layanan = $stmtLayanan->fetch(PDO::FETCH_ASSOC);
+
+        if (!$layanan) {
+            throw new Exception('Layanan tidak ditemukan.');
+        }
+        $jumlah = (float)$jumlah;
+        $harga = (float)$layanan['harga_per_layanan'];
+        $subtotal = $jumlah * $harga;
+        $totalTambahan += $subtotal;
+        $stmtDetail->execute([$idPesananLama, $idLayanan, $jumlah, $subtotal]);
+    }
+
+    // Perbarui total pesanan lama
+    $stmtTotal = $pdo->prepare(
+        "UPDATE pesanan
+         SET total_harga = (
+             SELECT COALESCE(SUM(subtotal), 0)
+             FROM detail_pesanan
+             WHERE id_pesanan = ?
+         )
+         WHERE id_pesanan = ?"
+    );
+
+    $stmtTotal->execute([
+        $idPesananLama,
+        $idPesananLama
+    ]);
+    $pdo->commit();
+
+    // Kembali ke halaman edit pesanan yang sama
+    header('Location: edit-pesanan.php?id_pesanan=' . urlencode($idPesananLama));
+    exit;
+}
+
     $pdo->beginTransaction();
 
     $sql = "SELECT id_user, alamat

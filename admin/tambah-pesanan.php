@@ -4,6 +4,23 @@ $active_page = "kelola-pesanan";
 
 require_once __DIR__ . '/../includes/koneksi.php';
 
+$id_pesanan = $_GET['id_pesanan'] ?? '';
+$mode_edit = !empty($id_pesanan);
+if ($mode_edit) {
+    $stmt = $pdo->prepare(
+        "SELECT p.id_pesanan, u.nama_user
+         FROM pesanan p
+         JOIN users u ON u.id_user = p.id_user
+         WHERE p.id_pesanan = ?"
+    );
+
+    $stmt->execute([$id_pesanan]);
+    $pesanan_lama = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$pesanan_lama) {
+        die("Pesanan tidak ditemukan.");
+    }
+}
+
 // Mengambil data pelanggan dari database
 $queryPelanggan = "SELECT id_user, nama_user, no_hp, alamat
                 FROM users
@@ -44,10 +61,11 @@ include 'includes/sidebar.php';
     <section class="judul-halaman">
         <div>
             <div class="judul-dengan-panah">
-                <a href="kelola-pesanan.php" class="btn-kembali">
+                <a href="<?= $mode_edit ? 'edit-pesanan.php?id_pesanan=' . urlencode($id_pesanan)
+                    : 'kelola-pesanan.php' ?>" class="btn-kembali">
                     <span class="panah-kembali">&lsaquo;</span>
                 </a>
-                <h1>Tambah Pesanan</h1>
+                <h1><?= $mode_edit ? 'Tambah layanan ke pesanan yang sudah ada' : 'Tambah Pesanan' ?></h1>
             </div>
             <p>Lengkapi data pelanggan dan data pesanan</p>
         </div>
@@ -56,43 +74,72 @@ include 'includes/sidebar.php';
     <!-- FORM TAMBAH PESANAN -->
         <section class="form-pesanan-card">
             <form id="formTambahPesanan" method="POST" action="simpan-pesanan.php">
+                <?php if (!empty($id_pesanan)): ?>
+                    <input type="hidden" name="id_pesanan" value="<?= htmlspecialchars($id_pesanan) ?>">
+                <?php endif; ?>
                 <input type="hidden" name="jenis_pesanan" id="jenisPesanan" value="Walk-in">
                 <input type="hidden" name="layanan_json" id="layananJson">
 
                 <!-- DATA PELANGGAN -->
                 <div class="bagian-form">
                     <h2>Data Pelanggan</h2>
-                    <div class="pelanggan-baris">
-                        <div class="form-group">
-                            <label for="pelanggan">Nama Pelanggan</label>
 
-                            <select id="pelanggan" name="pelanggan" required>
-                                <option value="">Pilih pelanggan</option>
+                    <?php if ($mode_edit): ?>
+                        <div class="pelanggan-detail">
+                            <div class="form-group">
+                                <label>ID Pesanan</label>
+                                <input type="text"
+                                    value="<?= htmlspecialchars($pesanan_lama['id_pesanan']) ?>"
+                                    readonly>
+                            </div>
 
-                                <?php foreach ($pelanggan as $p): ?>
-                                    <option
-                                        value="<?= htmlspecialchars((string) $p['id_user']) ?>"
-                                        data-hp="<?= htmlspecialchars($p['no_hp'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                                        data-alamat="<?= htmlspecialchars($p['alamat'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
-                                        <?= htmlspecialchars($p['nama_user']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <button type="button" class="btn-tambah-pelanggan" id="btnTambahPelanggan">+ Tambah Pelanggan</button>
-                    </div>
-
-                    <div class="pelanggan-detail">
-                        <div class="form-group">
-                            <label for="noHp">No HP</label>
-                            <input type="text" id="noHp" name="no_hp" placeholder="Nomor HP" readonly>
+                            <div class="form-group">
+                                <label>Nama Pelanggan</label>
+                                <input type="text"
+                                    value="<?= htmlspecialchars($pesanan_lama['nama_user']) ?>"
+                                    readonly>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <input type="text" id="alamat" name="alamat" placeholder="Alamat pelanggan" readonly>
+                    <?php else: ?>
+                        <!-- Bagian pelanggan untuk pesanan baru -->
+                        <div class="pelanggan-baris">
+                            <div class="form-group">
+                                <label for="pelanggan">Nama Pelanggan</label>
+
+                                <select id="pelanggan" name="pelanggan" required>
+                                    <option value="">Pilih pelanggan</option>
+
+                                    <?php foreach ($pelanggan as $p): ?>
+                                        <option
+                                            value="<?= htmlspecialchars((string) $p['id_user']) ?>"
+                                            data-hp="<?= htmlspecialchars($p['no_hp'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                            data-alamat="<?= htmlspecialchars($p['alamat'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                            <?= htmlspecialchars($p['nama_user']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn-tambah-pelanggan" id="btnTambahPelanggan">
+                                + Tambah Pelanggan
+                            </button>
                         </div>
-                    </div>
+
+                        <div class="pelanggan-detail">
+                            <div class="form-group">
+                                <label for="noHp">No HP</label>
+                                <input type="text" id="noHp" name="no_hp"
+                                    placeholder="Nomor HP" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="alamat">Alamat</label>
+                                <input type="text" id="alamat" name="alamat"
+                                    placeholder="Alamat pelanggan" readonly>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <hr class="garis-form">
@@ -120,6 +167,7 @@ include 'includes/sidebar.php';
 
                 <hr class="garis-form">
 
+                <?php if (!$mode_edit): ?>
                 <!-- PEMBAYARAN -->
                 <div class="bagian-form">
                     <h2>Pembayaran</h2>
@@ -154,11 +202,12 @@ include 'includes/sidebar.php';
                         </label>
                     </div>
                 </div>
-
+                <?php endif; ?>
 
                 <!-- TOMBOL AKSI -->
                 <div class="form-actions">
-                    <a href="kelola-pesanan.php" class="btn-batal">Batal</a>
+                    <a href="<?= $mode_edit ? 'edit-pesanan.php?id_pesanan=' . urlencode($id_pesanan)
+                        : 'kelola-pesanan.php' ?>" class="btn-batal">Batal</a>
                     <button type="submit" class="btn-simpan">Simpan Pesanan</button>
                 </div>
             </form>
@@ -166,6 +215,7 @@ include 'includes/sidebar.php';
     </main>
 
     <script>
+        const modeEdit = <?= $mode_edit ? 'true' : 'false' ?>;
         // Data layanan dari PHP ke JavaScript
         const dataLayanan = <?= $dataLayananJson ?: '[]' ?>;
 
@@ -179,11 +229,13 @@ include 'includes/sidebar.php';
         }
 
         // Mengisi nomor HP dan alamat pelanggan
-        pelangganSelect.addEventListener('change', function () {
+        if (pelangganSelect) {
+            pelangganSelect.addEventListener('change', function () {
             const pilihan = this.options[this.selectedIndex];
             document.getElementById('noHp').value = pilihan.dataset.hp || '';
             document.getElementById('alamat').value = pilihan.dataset.alamat || '';
-        });
+            });
+        }
 
         // Membuat satu baris layanan 
         function tambahBarisLayanan(jumlah = 1, idLayanan = '') {
@@ -266,14 +318,19 @@ include 'includes/sidebar.php';
                 baris.querySelector('.subtotal-layanan').textContent = formatRupiah(subtotal);
                 total += subtotal;
             });
-            document.getElementById('totalTagihan').textContent = formatRupiah(total);
+            const totalTagihan = document.getElementById('totalTagihan');
+            if (totalTagihan) {
+                totalTagihan.textContent = formatRupiah(total);
+            }
         }
 
         // Tombol tambah layanan
-        document.getElementById('btnTambahLayanan')
-            .addEventListener('click', function () {
-                tambahBarisLayanan();
+        const btnTambahPelanggan = document.getElementById('btnTambahPelanggan');
+        if (btnTambahPelanggan) {
+            btnTambahPelanggan.addEventListener('click', function () {
+                alert('Fitur tambah pelanggan akan dibuat pada halaman Data Pelanggan.');
             });
+        }
 
         // Tombol tambah pelanggan (masih dummy)
         document.getElementById('btnTambahPelanggan')
@@ -291,67 +348,66 @@ include 'includes/sidebar.php';
             });
 
         // Konfirmasi simpan pesanan
-        document.getElementById('formTambahPesanan')
-            .addEventListener('submit', function (event) {
-                event.preventDefault();
+        formPesanan.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-                if (!pelangganSelect.value) {
-                    alert('Silakan pilih pelanggan terlebih dahulu.');
-                    pelangganSelect.focus();
-                    return;
-                }
+        // Validasi pelanggan hanya untuk pesanan baru
+        if (!modeEdit) {
+            if (!pelangganSelect || !pelangganSelect.value) {
+                alert('Silakan pilih pelanggan terlebih dahulu.');
+                pelangganSelect.focus();
+                return;
+            }
 
-                const jenisPesanan = document.getElementById('jenisPesanan');
+            const jenisPesanan = document.getElementById('jenisPesanan');
+            if (!jenisPesanan.value) {
+                alert('Silakan pilih jenis pesanan.');
+                jenisPesanan.focus();
+                return;
+            }
+        }
 
-                if (!jenisPesanan.value) {
-                    alert('Silakan pilih jenis pesanan.');
-                    jenisPesanan.focus();
-                    return;
-                }
-                
-                const layananDipilih = [];
+        const layananDipilih = [];
+        Array.from(daftarLayanan.rows).forEach(function (baris) {
+        const idLayanan = baris.querySelector('.pilih-layanan').value;
+        const jumlah = Number(baris.querySelector('.jumlah-layanan').value);
 
-                Array.from(daftarLayanan.rows).forEach(function (baris) {
-                    const idLayanan = baris.querySelector('.pilih-layanan').value;
-                    const jumlah = Number(
-                        baris.querySelector('.jumlah-layanan').value
-                    );
-
-                    if (idLayanan && jumlah > 0) {
-                        layananDipilih.push({
-                            id_layanan: Number(idLayanan),
-                            jumlah: jumlah
-                        });
-                    }
-                });
-
-                if (layananDipilih.length === 0) {
-                    alert('Silakan pilih minimal satu layanan.');
-                    return;
-                }
-
-                const waktuBayar = document.querySelector(
-                    'input[name="waktu_bayar"]:checked'
-                );
-
-                const metodeBayar = document.querySelector(
-                    'input[name="metode_bayar"]:checked'
-                );
-
-                if (!waktuBayar || !metodeBayar) {
-                    alert('Silakan lengkapi pilihan pembayaran.');
-                    return;
-                }
-
-                const yakin = confirm('Apakah data pesanan sudah benar?');
-
-                if (yakin) {
-                    document.getElementById('layananJson').value =
-                        JSON.stringify(layananDipilih);
-
-                    formPesanan.submit();
-                }
+        if (idLayanan && jumlah > 0) {
+            layananDipilih.push({
+                id_layanan: Number(idLayanan),
+                jumlah: jumlah
             });
+        }
+    });
+
+    if (layananDipilih.length === 0) {
+        alert('Silakan pilih minimal satu layanan.');
+        return;
+    }
+
+    // Validasi pembayaran hanya untuk pesanan baru
+    if (!modeEdit) {
+        const waktuBayar = document.querySelector(
+            'input[name="waktu_bayar"]:checked'
+        );
+
+        const metodeBayar = document.querySelector(
+            'input[name="metode_bayar"]:checked'
+        );
+
+        if (!waktuBayar || !metodeBayar) {
+            alert('Silakan lengkapi pilihan pembayaran.');
+            return;
+        }
+    }
+
+    const pesan = modeEdit ? 'Apakah layanan yang ditambahkan sudah benar?' : 'Apakah data pesanan sudah benar?';
+    if (confirm(pesan)) {
+        document.getElementById('layananJson').value =
+            JSON.stringify(layananDipilih);
+        formPesanan.submit();
+    }
+});
             
         // Tampilkan satu baris layanan kosong saat halaman dibuka
         const parameterURL = new URLSearchParams(window.location.search);

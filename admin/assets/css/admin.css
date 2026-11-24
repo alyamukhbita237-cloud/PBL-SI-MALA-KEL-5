@@ -716,6 +716,238 @@ a{
     }
 }
 
+/* =================================
+   HALAMAN EDIT PESANAN
+================================= */
+.halaman-edit-pesanan {
+    padding: 25px;
+    background: #FBFAF8;
+}
+
+/* =================================
+   JUDUL HALAMAN
+================================= */
+.halaman-edit-pesanan .judul-halaman {
+    margin-bottom: 25px;
+}
+
+.halaman-edit-pesanan .judul-halaman p {
+    color: #555555;
+    margin-top: 8px;
+}
+
+/* =================================
+   KARTU INFORMASI DAN TOTAL
+================================= */
+.halaman-edit-pesanan .kartu-detail {
+    background: #FFFFFF;
+    border: 1px solid #C1D9EC;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.halaman-edit-pesanan .kartu-detail h3 {
+    color: #005374;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #C1D9EC;
+}
+
+/* INOFRMASI PESANAN */
+.edit-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* DETAIL LAYANAN */
+.edit-item-layanan {
+    background: #FBFAF8;
+    border: 1px solid #C1D9EC;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+/* Judul setiap kotak */
+.edit-item-layanan h4 {
+    color: #005374;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #C1D9EC;
+}
+
+.edit-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* LABEL DAN INPUT */
+.edit-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.edit-group label {
+    color: #005374;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.edit-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #C1D9EC;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #333333;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.edit-input:focus {
+    border-color: #4289BD;
+    box-shadow: 0 0 0 2px rgba(66, 137, 189, 0.12);
+}
+
+/* Input readonly */
+.edit-input[readonly] {
+    background: #F3F6F8;
+    color: #555555;
+    cursor: default;
+}
+
+/* DROPDOWN SATUAN */
+.edit-group select.edit-input {
+    width: 100%;
+    height: 48px;
+    padding: 11px 12px;
+    appearance: none;
+    -webkit-appearance: auto;
+    background-color: #FFFFFF;
+    border: 1px solid #C1D9EC;
+    border-radius: 8px;
+    color: #333333;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* TOMBOL TAMBAH PESANAN */
+.edit-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    margin-top: 5px;
+    background: #FFFFFF;
+    border: 1px dashed #4289BD;
+    border-radius: 10px;
+    color: #005374;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.edit-add:hover {
+    background: #C1D9EC;
+    border-color: #005374;
+}
+
+.edit-add span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+/* TOTAL KESELURUHAN */
+
+.edit-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    color: #005374;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.edit-total strong {
+    color: #005374;
+    font-size: 21px;
+}
+
+/* TOMBOL AKSI */
+.edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.edit-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* FIELD OTOMATIS */
+.edit-input[readonly] {
+    background-color: #F3F6F8;
+    color: #555555;
+    cursor: default;
+}
+
+/* FIELD YANG BISA DIEDIT */
+.edit-input:not([readonly]):not(select) {
+    background-color: #FFFFFF;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: #4289BD;
+}
+
+/* Batal */
+.edit-cancel {
+    background: #C1D9EC;
+    color: #005374;
+}
+
+.edit-cancel:hover {
+    background: #A9C9E2;
+}
+
+/* Simpan */
+.edit-save {
+    background: #005374;
+    color: #FFFFFF;
+}
+
+.edit-save:hover {
+    background: #4289BD;
+}
+
 /* ========================================
    TOMBOL MENU MOBILE
    ======================================== */
@@ -2978,15 +3210,17 @@ button.btn-edit-pelanggan:hover {
 
 .status-menunggu,
 .status-menunggu-konfirmasi {
-    background: #FFF0D1;
-    color: #D47A00;
+    background: #FFE8A1;
+    border: 1px solid #E8B206;
+    color: #7D5D16;
 }
 
 .status-dijemput,
 .status-diproses,
 .status-sedang-diproses {
-    background: #DCEEFF;
-    color: #0875CE;
+    background: #9DC6F2;
+    border: 1px solid #3882D1;
+    color: #1E5188;
 }
 
 .status-siap-diambil,
@@ -3003,6 +3237,7 @@ button.btn-edit-pelanggan:hover {
 .status-diambil,
 .status-selesai {
     background: #DDF5E2;
+    border: 1px solid #4E8E32;
     color: #20943C;
 }
 
@@ -3010,18 +3245,21 @@ button.btn-edit-pelanggan:hover {
 .bayar-lunas,
 .bayar-berhasil {
     background: #DDF5E2;
+    border: 1px solid #4E8E32;
     color: #20943C;
 }
 
 .bayar-belum-dibayar,
 .bayar-belum-lunas {
-    background: #FFF0D1;
-    color: #D47A00;
+    background: #F9C8C8;
+    border: 1px solid #FF5757;
+    color: #A43A3A;
 }
 
 .bayar-pending {
-    background: #DCEEFF;
-    color: #0875CE;
+    background: #9DC6F2;
+    border: 1px solid #3882D1;
+    color: #1E5188;
 }
 
 /* ==========================================

@@ -76,7 +76,7 @@ include 'includes/sidebar.php';
             <p>Pantau pesanan dan aktivitas laundry hari ini</p>
         </div>
 
-        <a href="edit-pesanan.php?kode=<?= urlencode($pesanan['id_pesanan']) ?>"
+        <a href="edit-pesanan.php?id_pesanan=<?= urlencode($pesanan['id_pesanan']) ?>"
            class="btn-edit-pesanan">
             Edit Pesanan
         </a>
@@ -174,7 +174,7 @@ include 'includes/sidebar.php';
                 <h3>Pembayaran</h3>
 
                 <span class="status-belum-lunas">
-                    <?= htmlspecialchars($pembayaran['status_pembayaran'] ?? 'Belum Dibayar') ?>
+                    <?= htmlspecialchars($pembayaran['status_pembayaran'] ?? 'Belum Lunas') ?>
                 </span>
             </div>
 

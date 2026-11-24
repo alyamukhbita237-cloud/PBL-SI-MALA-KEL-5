@@ -147,7 +147,7 @@ $sqlData = "
         ) AS nama_layanan,
         COALESCE(
             pb.status_pembayaran,
-            'Belum Dibayar'
+            'Belum Lunas'
         ) AS status_pembayaran
     $sqlDasar
     ORDER BY
