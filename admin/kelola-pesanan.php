@@ -10,6 +10,7 @@ $statusList = ['Semua', 'Menunggu', 'Dijemput', 'Diproses', 'Selesai', 'Diantar'
 // Mengambil filter dari URL
 $filter = $_GET['status'] ?? 'Semua';
 $cari = trim($_GET['cari'] ?? '');
+$jenis = $_GET['jenis'] ?? '';
 
 if (!in_array($filter, $statusList, true)) {
     $filter = 'Semua';
@@ -42,13 +43,14 @@ foreach ($statusList as $status) {
 }
 
 // Filter dan pencarian
-$hasil = array_filter($pesanan, function ($p) use ($filter, $cari) {
+$hasil = array_filter($pesanan, function ($p) use ($filter, $cari, $jenis) {
     $sesuaiStatus = ($filter === 'Semua' || $p['status_pesanan'] === $filter);
+    $sesuaiJenis = ($jenis === '' || strcasecmp(trim($p['jenis_pesanan']), trim($jenis)) === 0);
     $kode = 'LD-' . str_pad($p['id_pesanan'], 3, '0', STR_PAD_LEFT);
     $namaPelanggan = $p['nama_user'] ?? '';
     $jenisLayanan = $p['jenis_layanan'] ?? '';
     $sesuaiCari = (stripos($kode, $cari) !== false || stripos($namaPelanggan, $cari) !== false || stripos($jenisLayanan, $cari) !== false);
-    return $sesuaiStatus && $sesuaiCari;
+    return $sesuaiStatus && $sesuaiJenis && $sesuaiCari;
 });
 
 // Memanggil header dan sidebar

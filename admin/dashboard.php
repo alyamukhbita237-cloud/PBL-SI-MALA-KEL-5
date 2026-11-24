@@ -15,40 +15,40 @@ $active_page = "dashboard";
 include 'includes/header.php';
 include 'includes/sidebar.php';
 
-$sql = "
-    SELECT
-        p.id_pesanan,
-        p.id_user,
-        p.jenis_pesanan,
-        p.tgl_masuk,
-        p.tgl_selesai,
-        p.estimasi_selesai,
-        p.alamat_antar_jemput,
-        p.status_pesanan,
-        p.waktu_update_status,
-        p.total_harga,
-        u.nama_user,
-        COALESCE(l.nama_layanan, '-') AS nama_layanan
-    FROM pesanan p
-    JOIN users u
-        ON p.id_user = u.id_user
-    LEFT JOIN (
-        SELECT
-            dp.id_pesanan,
-            STRING_AGG(DISTINCT ly.jenis_layanan, ', ') AS nama_layanan
-        FROM detail_pesanan dp
-        JOIN layanan ly
-            ON dp.id_layanan = ly.id_layanan
-        GROUP BY dp.id_pesanan
-    ) l
-        ON p.id_pesanan = l.id_pesanan
-    ORDER BY p.tgl_masuk DESC
-";
+$sqlDashboard = "WITH dashboard AS (
+    SELECT COUNT(p.id_pesanan) AS total_pesanan, 
+        COUNT(p.id_pesanan) FILTER (
+            WHERE p.status_pesanan ILIKE '%menunggu%'
+            OR p.status_pesanan ILIKE '%menunggu konfirmasi%') AS perlu_konfirmasi,
+        COUNT(p.id_pesanan) FILTER (
+            WHERE p.status_pesanan ILIKE '%diproses%'
+            OR p.status_pesanan ILIKE '%dijemput%') AS sedang_dikerjakan,
+        COUNT(p.id_pesanan) FILTER (
+            WHERE p.status_pesanan ILIKE '%selesai%'
+            OR p.status_pesanan ILIKE '%diambil'
+            OR p.status_pesanan ILIKE '%diantar%') AS siap_diambil,
+        COUNT(p.id_pesanan) FILTER (
+            WHERE p.tgl_masuk::date = CURRENT_DATE) AS pesanan_hari_ini,
+        COALESCE(SUM(p.total_harga) FILTER (
+            WHERE p.tgl_masuk::date = CURRENT_DATE), 0) AS total_hari_ini
+    FROM pesanan p)
+    SELECT * FROM dashboard";
 
-$stmt = $pdo->query($sql);
-$pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmtDashboard = $pdo->query($sqlDashboard);
+$statistik = $stmtDashboard->fetch(PDO::FETCH_ASSOC);
 
+$sqlPesanan = "WITH data_pesanan AS (
+    SELECT p.id_pesanan, u.nama_user, p.status_pesanan AS status, p.jenis_pesanan,
+        STRING_AGG(DISTINCT l.jenis_layanan, ', ') AS layanan
+    FROM users u
+    LEFT JOIN pesanan p ON p.id_user = u.id_user
+    LEFT JOIN detail_pesanan dp ON dp.id_pesanan = p.id_pesanan
+    LEFT JOIN layanan l ON l.id_layanan = dp.id_layanan
+    GROUP BY p.id_pesanan, u.nama_user, p.status_pesanan, p.jenis_pesanan)
+    SELECT * FROM data_pesanan dt ORDER BY dt.id_pesanan ASC";
 
+$stmtPesanan = $pdo->query($sqlPesanan);
+$pesanan = $stmtPesanan->fetchAll(PDO::FETCH_ASSOC);
 // ========================================
 // FUNGSI BANTU
 // ========================================
@@ -118,69 +118,52 @@ $selesai = [];
 $antarJemput = [];
 $pesananHariIni = [];
 
-$totalNilaiHariIni = 0;
-
-$tanggalHariIni = date('Y-m-d');
-
 foreach ($pesanan as $p) {
 
     $status = $p['status_pesanan'] ?? '';
     $jenis = $p['jenis_pesanan'] ?? '';
 
     // Pesanan perlu konfirmasi
-    if (
+    if (in_array($status, [
         cekStatus($status, 'menunggu') ||
         cekStatus($status, 'konfirmasi')
-    ) {
+    ])) {
         $menunggu[] = $p;
     }
 
     // Pesanan sedang dikerjakan
-    elseif (
+    elseif (in_array($status, [
         cekStatus($status, 'diproses') ||
         cekStatus($status, 'proses') ||
         cekStatus($status, 'dijemput')
-    ) {
+    ])) {
         $diproses[] = $p;
     }
 
     // Pesanan siap diambil atau diantar
-    if (
+    if (in_array($status, [
         cekStatus($status, 'siap') ||
         cekStatus($status, 'diantar')
-    ) {
+    ])) {
         $siap[] = $p;
     }
 
     // Pesanan selesai
-    if (
+    if (in_array($status, [
         cekStatus($status, 'selesai') ||
         cekStatus($status, 'diambil')
-    ) {
+    ])) {
         $selesai[] = $p;
     }
 
     // Pesanan antar-jemput yang masih aktif
     if (
-        cekStatus($jenis, 'antar') &&
+        strcasecmp(trim($jenis), 'Antar-Jemput') === 0 &&
         !cekStatus($status, 'selesai') &&
+        !cekStatus($status, 'diantar') &&
         !cekStatus($status, 'diambil')
     ) {
         $antarJemput[] = $p;
-    }
-
-    // Pesanan yang masuk hari ini
-    if (!empty($p['tgl_masuk'])) {
-
-        $tanggalMasuk = date(
-            'Y-m-d',
-            strtotime($p['tgl_masuk'])
-        );
-
-        if ($tanggalMasuk === $tanggalHariIni) {
-            $pesananHariIni[] = $p;
-            $totalNilaiHariIni += (float) $p['total_harga'];
-        }
     }
 }
 
@@ -229,7 +212,7 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
             </div>
 
             <div>
-                <h3><?= count($pesanan) ?></h3>
+                <h3><?= $statistik['total_pesanan'] ?></h3>
                 <p>Total Pesanan</p>
             </div>
 
@@ -242,7 +225,7 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
             </div>
 
             <div>
-                <h3><?= count($menunggu) ?></h3>
+                <h3><?= $statistik['perlu_konfirmasi'] ?></h3>
                 <p>Perlu Konfirmasi</p>
             </div>
 
@@ -255,7 +238,7 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
             </div>
 
             <div>
-                <h3><?= count($diproses) ?></h3>
+                <h3><?= $statistik['sedang_dikerjakan'] ?></h3>
                 <p>Sedang Dikerjakan</p>
             </div>
 
@@ -268,7 +251,7 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
             </div>
 
             <div>
-                <h3><?= count($siap) ?></h3>
+                <h3><?= $statistik['siap_diambil'] ?></h3>
                 <p>Siap Diambil/Diantar</p>
             </div>
 
@@ -353,7 +336,7 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
                             </div>
 
                             <span class="label-status-dashboard status-menunggu">
-                                <?= htmlspecialchars($p['status_pesanan']) ?>
+                                <?= htmlspecialchars($p['status']) ?>
                             </span>
 
                             <a href="detail-pesanan.php?id=<?= urlencode($p['id_pesanan']) ?>"
@@ -455,7 +438,7 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
                     <p>Pesanan delivery yang masih aktif</p>
                 </div>
 
-                <a href="kelola-pesanan.php">
+                <a href="kelola-pesanan.php?jenis=Antar-Jemput">
                     Lihat Semua →
                 </a>
             </div>
@@ -564,12 +547,12 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($p['nama_layanan']) ?>
+                                        <?= htmlspecialchars($p['layanan']) ?>
                                     </td>
 
                                     <td>
-                                        <span class="label-status-dashboard <?= warnaStatus($p['status_pesanan']) ?>">
-                                            <?= htmlspecialchars($p['status_pesanan']) ?>
+                                        <span class="label-status-dashboard <?= warnaStatus($p['status']) ?>">
+                                            <?= htmlspecialchars($p['status']) ?>
                                         </span>
                                     </td>
 
@@ -613,12 +596,12 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
             </div>
 
             <strong>
-                <?= rupiah($totalNilaiHariIni) ?>
+                <?= rupiah($statistik['total_hari_ini']) ?>
             </strong>
 
             <div class="pendapatan-info">
                 <i data-lucide="calendar-days"></i>
-                <?= count($pesananHariIni) ?> pesanan masuk hari ini
+                <?= $statistik['pesanan_hari_ini'] ?> pesanan masuk hari ini
             </div>
 
         </div>
