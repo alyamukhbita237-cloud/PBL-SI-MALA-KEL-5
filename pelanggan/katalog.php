@@ -9,13 +9,11 @@ if (!isset($_SESSION['id_user']) || ($_SESSION['role'] ?? '') !== 'Pelanggan') {
     exit;
 }
 
-
 $page_title = "Katalog Layanan";
 $active_page = "katalog";
 
 include 'includes/header.php';
 include 'includes/sidebar.php';
-
 
 $query = "SELECT 
         id_layanan,
@@ -27,9 +25,7 @@ $query = "SELECT
 ";
 
 $stmt = $pdo->query($query);
-
 $layanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 <main class="main-content">
@@ -40,18 +36,11 @@ $layanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <section class="service-grid">
-
         <?php foreach($layanan as $item): ?>
-
             <article class="service-card">
-
-                <h2>
-                    <?= htmlspecialchars($item['jenis_layanan']) ?>
-                </h2>
-
+                <h2><?= htmlspecialchars($item['jenis_layanan']) ?></h2>
                 <div class="service-price">
                     <span>Rp</span>
-
                     <strong>
                         <?= number_format($item['harga_per_layanan'],
                         0,
