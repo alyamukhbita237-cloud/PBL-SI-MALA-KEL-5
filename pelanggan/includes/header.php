@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -19,6 +18,9 @@
 </head>
 <body>
     <header class="topbar">
+        <button type="button" class="hamburger" id="hamburger">
+            <i data-lucide="menu"></i>
+        </button>
         <div class="logo">
             Si-Mala
         </div>
@@ -33,3 +35,4 @@
             </span>
         </a>
     </header>
+    

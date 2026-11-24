@@ -169,7 +169,7 @@ include 'includes/sidebar.php';
     </section>
 
 </main>
-
+<script src="assets/js/pelanggan.js"></script>
 <script>
     lucide.createIcons();
 </script>

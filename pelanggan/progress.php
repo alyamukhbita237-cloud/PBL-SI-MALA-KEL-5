@@ -17,9 +17,6 @@ if (!$id_pesanan) {
     exit;
 }
 
-
-
-
 // Ambil data pesanan milik pelanggan yang sedang login
 $query = "SELECT
             id_pesanan,
@@ -40,7 +37,6 @@ $stmt->execute([
     'id_pesanan' => $id_pesanan,
     'id_user' => $id_user
 ]);
-
 
 $pesanan = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -306,7 +302,7 @@ include 'includes/sidebar.php';
     </div>
 
 </main>
-
+<script src="assets/js/pelanggan.js"></script>
 <script>
     lucide.createIcons();
 </script>

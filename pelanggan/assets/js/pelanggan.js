@@ -453,3 +453,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if (hamburger && sidebar && overlay) {
+        hamburger.addEventListener('click', function () {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', function () {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    } else {
+        console.error('Elemen hamburger, sidebar, atau overlay tidak ditemukan!');
+    }
+});

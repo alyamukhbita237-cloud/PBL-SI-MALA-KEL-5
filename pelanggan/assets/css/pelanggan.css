@@ -1233,50 +1233,6 @@ a{
     font-weight: 600;
 }
 
-/* RESPONSIVE */
-
-@media (max-width: 768px) {
-    .detail-card {
-        padding: 20px 16px;
-    }
-
-    .detail-page-header h1 {
-        font-size: 23px;
-    }
-
-    .progress-step h3 {
-        font-size: 11px;
-    }
-
-    .progress-step small {
-        font-size: 9px;
-    }
-
-    .progress-circle {
-        width: 22px;
-        height: 22px;
-    }
-
-    .progress-timeline::before {
-        top: 11px;
-    }
-
-    .detail-info-item {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .detail-info-item strong {
-        text-align: left;
-    }
-
-    .detail-total h3,
-    .detail-total strong {
-        font-size: 15px;
-    }
-}
-
-
 /* ================================ */
 /* ====== PROFILE.PHP ======== */
 /* ================================ */
@@ -1411,34 +1367,6 @@ a{
 /* ================================ */
 
 
-
-/* responsive */
-@media (max-width: 900px) {
-
-    .sidebar {
-        width: 190px;
-    }
-
-    .main-content {
-        margin-left: 190px;
-        padding: 25px;
-    }
-
-    .hero {
-        padding: 30px;
-    }
-
-    .hero-image {
-        width: 200px;
-        height: 160px;
-        margin-right: 0;
-    }
-
-    .hero-content h1 {
-        font-size: 24px;
-    }
-}
-
 /* ================================
    EDIT PROFILE
 ================================ */
@@ -1551,86 +1479,6 @@ a{
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
-    .edit-profile-page {
-        padding: 22px;
-    }
-
-    .edit-profile-actions {
-        flex-direction: column-reverse;
-    }
-}
-
-@media (max-width: 700px) {
-
-    .topbar {
-        padding: 0 20px;
-    }
-
-    .sidebar {
-        position: static;
-
-        width: 100%;
-        height: auto;
-
-        border-right: none;
-        border-bottom: 1px solid #e9edf2;
-
-        padding: 10px 15px;
-    }
-
-    .sidebar-menu {
-        flex-direction: row;
-        overflow-x: auto;
-    }
-
-    .sidebar-link {
-        white-space: nowrap;
-    }
-
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
-
-    .hero {
-        flex-direction: column;
-        align-items: flex-start;
-
-        padding: 25px;
-    }
-
-    .hero-image {
-        width: 180px;
-        height: 130px;
-
-        align-self: center;
-
-        margin-top: 20px;
-    }
-
-    .progress-wrapper {
-        overflow-x: auto;
-        padding-bottom: 10px;
-    }
-
-    .progress-step {
-        min-width: 120px;
-    }
-
-    .progress-line {
-        display: none;
-    }
-
-    .history-item {
-        gap: 10px;
-    }
-
-    .history-price {
-        font-size: 13px;
-    }
-}
-
 /* FIX CONTENT DI BAWAH HEADER FIXED */
 .main-content {
     margin-left: 230px !important;
@@ -1646,4 +1494,400 @@ a{
 
 .dashboard-content {
     padding-top: 20px !important;
+}
+
+
+.hamburger {
+    display: none;
+    border: none;
+    background: transparent;
+    color: #005374;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 190px;
+    }
+
+    .main-content {
+        margin-left: 190px;
+        padding: 25px;
+    }
+
+    .hero {
+        padding: 30px;
+    }
+
+    .hero-image {
+        width: 200px;
+        height: 160px;
+        margin-right: 0;
+    }
+
+    .hero-content h1 {
+        font-size: 24px;
+    }
+}
+
+/* RESPONSIVE EDIT PROFILE DAN DETAIL */
+@media (max-width: 768px) {
+    .edit-profile-page {
+        padding: 22px;
+    }
+
+    .edit-profile-actions {
+        flex-direction: column-reverse;
+    }
+
+    .detail-card {
+        padding: 20px 16px;
+    }
+
+    .detail-page-header h1 {
+        font-size: 23px;
+    }
+
+    .progress-step h3 {
+        font-size: 11px;
+    }
+
+    .progress-step small {
+        font-size: 9px;
+    }
+
+    .progress-circle {
+        width: 22px;
+        height: 22px;
+    }
+
+    .progress-timeline::before {
+        top: 11px;
+    }
+
+    .detail-info-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .detail-info-item strong {
+        text-align: left;
+    }
+
+    .detail-total h3,
+    .detail-total strong {
+        font-size: 15px;
+    }
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 700px) {
+
+    /* HEADER */
+    .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    /* SIDEBAR DROPDOWN */
+    .sidebar {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+
+        display: block;
+        width: 100% !important;
+        height: auto;
+        max-height: 0;
+
+        margin: 0 !important;
+        padding: 0 15px;
+
+        overflow: hidden;
+        box-sizing: border-box;
+
+        background: #FFFFFF;
+        border: none;
+        border-top: 1px solid #E9EDF2;
+        box-shadow: 0 4px 10px rgba(0, 83, 116, 0.08);
+
+        z-index: 950;
+
+        transition: max-height 0.35s ease,
+                    padding 0.35s ease;
+    }
+
+    .sidebar.active {
+        max-height: 500px;
+        padding: 10px 15px;
+    }
+
+    /* MENU */
+    .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        overflow: visible;
+    }
+
+    .sidebar-link {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+
+        padding: 14px 20px;
+
+        color: #1F4C6D !important;
+        background: #FFFFFF;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        border-bottom: 1px solid #E9EDF2;
+        border-radius: 0;
+
+        white-space: normal;
+        transition: background 0.2s ease;
+    }
+
+    .sidebar-link.active {
+        background: #C1D9EC !important;
+        color: #153B56 !important;
+        font-weight: 700;
+        border-radius: 8px;
+    }
+
+    .sidebar-link:hover {
+        background: #EAF3F9;
+        color: #005374;
+    }
+
+    /* OVERLAY TIDAK DIGUNAKAN */
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    /* KONTEN UTAMA */
+    .main-content {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 20px 15px !important;
+        box-sizing: border-box;
+    }
+
+    .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+        margin-top: 0 !important;
+    }
+
+    .hero-image {
+        width: 180px;
+        height: 130px;
+        align-self: center;
+        margin-top: 20px;
+        margin-right: 0;
+    }
+
+    /* PROGRESS PESANAN */
+    .progress-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .progress-timeline {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .progress-step {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+        padding: 0 3px;
+    }
+
+    .progress-step h3 {
+        font-size: 10px;
+        overflow-wrap: break-word;
+    }
+
+    .progress-step small {
+        font-size: 8px;
+    }
+
+    .progress-circle {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .progress-line {
+        display: block;
+    }
+
+    /* RIWAYAT PESANAN */
+    .history-item {
+        gap: 10px;
+    }
+
+    .history-price {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    /* Header tidak lagi menutupi sidebar */
+    .topbar {
+        position: sticky !important;
+        top: auto;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 1000;
+    }
+
+    /* Sidebar dropdown */
+    .sidebar {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+
+        display: block;
+        width: 100% !important;
+        height: auto !important;
+
+        max-height: 0;
+        margin: 0 !important;
+        padding: 0 15px !important;
+
+        overflow: hidden;
+        box-sizing: border-box;
+
+        background: #FFFFFF;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 83, 116, 0.08);
+
+        z-index: 900;
+
+        transition: max-height 0.35s ease,
+                    padding 0.35s ease;
+    }
+
+    .sidebar.active {
+        max-height: 500px !important;
+        padding: 10px 15px !important;
+    }
+
+    .sidebar-menu {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
+        gap: 0;
+        overflow: visible !important;
+    }
+
+    .sidebar-link {
+        display: flex !important;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 20px;
+
+        color: #1F4C6D !important;
+        background: #FFFFFF;
+
+        border-bottom: 1px solid #E9EDF2;
+        border-radius: 0;
+    }
+
+    .sidebar-link.active {
+        background: #C1D9EC !important;
+        color: #153B56 !important;
+        border-radius: 8px;
+    }
+
+    /* Konten halaman */
+    .main-content {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 20px 15px !important;
+        box-sizing: border-box;
+    }
+
+    .page-title {
+        position: sticky;
+        top: 72px;
+        z-index: 800;
+        background: #F3F7FA;
+        padding: 10px 0;
+    }
+}
+
+
+/* RESPONSIVE KATALOG LAYANAN */
+@media (max-width: 700px) {
+
+    .service-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .service-grid > * {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Judul layanan */
+    .service-grid h3 {
+        font-size: 16px;
+        overflow-wrap: break-word;
+    }
+
+    /* Harga layanan */
+    .service-grid strong {
+        overflow-wrap: anywhere;
+    }
+
+    /* Keterangan layanan */
+    .service-grid p {
+        overflow-wrap: break-word;
+    }
+
+    /* Tombol pesan */
+    .service-grid button,
+    .service-grid a {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* HP dengan layar sangat kecil */
+@media (max-width: 380px) {
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
 }

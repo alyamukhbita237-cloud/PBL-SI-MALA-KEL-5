@@ -19,3 +19,5 @@
 
     </nav>
 </aside>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
