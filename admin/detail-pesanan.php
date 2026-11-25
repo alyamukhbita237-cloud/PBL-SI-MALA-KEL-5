@@ -4,7 +4,11 @@ $active_page = "kelola-pesanan";
 require_once __DIR__ . '/../includes/koneksi.php';
 
 // Mengambil ID dari URL
-$id = $_GET['id'] ?? '';
+$id_pesanan = $_GET['id_pesanan'] ?? '';
+// Jika pesanan tidak ditemukan
+if (empty($id_pesanan)) {
+    die("Pesanan tidak ditemukan.");
+}
 
 // Mengambil data pesanan dan pelanggan
 $sql = "
@@ -17,16 +21,14 @@ $sql = "
     FROM pesanan p
     JOIN users u
         ON p.id_user = u.id_user
-    WHERE p.id_pesanan = :id
+    WHERE p.id_pesanan = :id_pesanan
 ";
 
 $stmt = $pdo->prepare($sql);
-$stmt->execute(['id' => $id]);
+$stmt->execute(['id_pesanan' => $id_pesanan]);
 $pesanan = $stmt->fetch();
-
-// Jika pesanan tidak ditemukan
 if (!$pesanan) {
-    die("Pesanan tidak ditemukan.");
+    die("Data pesanan dengan ID $id_pesanan tidak ditemukan.");
 }
 
 // Mengambil rincian layanan
@@ -40,18 +42,21 @@ $sqlDetail = "
     FROM detail_pesanan d
     JOIN layanan l
         ON d.id_layanan = l.id_layanan
-    WHERE d.id_pesanan = :id
+    WHERE d.id_pesanan = :id_pesanan
 ";
 
 $stmtDetail = $pdo->prepare($sqlDetail);
-$stmtDetail->execute(['id' => $id]);
+$stmtDetail->execute(['id_pesanan' => $id_pesanan]);
 $detailLayanan = $stmtDetail->fetchAll();
 
 // Mengambil informasi pembayaran
-$sqlBayar = " SELECT * FROM pembayaran WHERE id_pesanan = :id_pesanan";
+$sqlBayar = "SELECT p.id_pesanan, p.total_harga, pm.tgl_pembayaran as tanggal_bayar,  pm.metode_pembayaran
+            FROM pesanan p
+            LEFT JOIN pembayaran pm ON pm.id_pesanan = p.id_pesanan
+            WHERE p.id_pesanan = :id_pesanan";
 
 $stmtBayar = $pdo->prepare($sqlBayar);
-$stmtBayar->execute(['id_pesanan' => $id]);
+$stmtBayar->execute(['id_pesanan' => $id_pesanan]);
 $pembayaran = $stmtBayar->fetch();
 
 include 'includes/header.php';
@@ -181,13 +186,13 @@ include 'includes/sidebar.php';
             <div class="baris-info">
                 <span>Total</span>
                 <strong>
-                    Rp<?= number_format((float)($pembayaran['jml_bayar'] ?? 0), 0, ',', '.') ?>
+                    Rp<?= number_format((float)($pembayaran['total_harga'] ?? 0), 0, ',', '.') ?>
                 </strong>
             </div>
 
             <div class="baris-info">
                 <span>Tanggal Bayar</span>
-                <strong><?= htmlspecialchars($pembayaran['tgl_pembayaran'] ?? '-') ?></strong>
+                <strong><?= htmlspecialchars($pembayaran['tanggal_bayar'] ?? '-') ?></strong>
             </div>
 
             <div class="baris-info">

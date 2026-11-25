@@ -121,7 +121,7 @@ include 'includes/sidebar.php';
                             </td>
 
                             <td style="text-align: center;">
-                                <a href="detail-pesanan.php?id=<?= urlencode($p['kode_pesanan']) ?>" class="btn-detail">Lihat Detail &gt;</a>
+                                <a href="detail-pesanan.php?id_pesanan=<?= urlencode($p['kode_pesanan']) ?>" class="btn-detail">Lihat Detail &gt;</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

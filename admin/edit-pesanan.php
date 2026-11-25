@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtTotal->execute([$id_pesanan, $id_pesanan]);
         $pdo->commit();
 
-        header('Location: edit-pesanan.php?id_pesanan=' .urlencode($id_pesanan));
+        header('Location: detail-pesanan.php?id_pesanan=' .urlencode($id_pesanan));
         exit;
     } catch (Exception $e) {
         if ($pdo->inTransaction()) {
@@ -98,7 +98,8 @@ include __DIR__ . '/includes/sidebar.php';
         </div>
     </section>
 
-    <form method="POST", onsubmit="return confirm('Apakah data sudah benar?')">
+    <form method="POST" onsubmit="return confirm('Apakah data sudah benar?')">
+        <input type="hidden" name="id_pesanan" value="<?= htmlspecialchars($id_pesanan) ?>">
         <!-- informasi pesanan -->
         <section class="kartu-detail">
             <h3>Informasi Pesanan</h3>
