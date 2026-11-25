@@ -142,14 +142,14 @@ include 'includes/header.php';
 include 'includes/sidebar.php';
 ?>
 
-<main class="main-content">
+<main class="main-content page-content pickup-page">
 
-    <div class="detail-page-header">
-        <a href="pesanan.php" class="detail-back">
+    <div class="pickup-page-header">
+        <a href="pesanan.php" class="pickup-back">
             <i data-lucide="chevron-left"></i>
         </a>
 
-        <div>
+        <div class="pickup-title">
             <h1>Progress Pesanan</h1>
             <p>Pantau pesanan dan aktivitas laundry kamu</p>
         </div>

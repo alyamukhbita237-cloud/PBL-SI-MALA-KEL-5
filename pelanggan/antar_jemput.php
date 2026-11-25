@@ -27,11 +27,16 @@ include 'includes/sidebar.php';
 
 ?>
 
-<main class="main-content page-content">
+<main class="main-content page-content pickup-page">
 
-    <div class="hero-content">
-        <h1>Pesan Antar Jemput</h1>
-        <p>Lengkapi data pelanggan dan data pesanan</p>
+    <div class="pickup-page-header">
+        <a href="dashboard.php" class="pickup-back">
+            <i data-lucide="chevron-left"></i>
+        </a>
+        <div class="pickup-title">
+            <h1>Pesan Antar Jemput</h1>
+            <p>Lengkapi data pelanggan dan data pesanan</p>
+        </div>
     </div>
 
     <form id="pickupForm" class="pickup-card" method="POST" action="proses/antarjemput_process.php">

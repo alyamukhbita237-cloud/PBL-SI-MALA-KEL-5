@@ -28,11 +28,16 @@ $stmt = $pdo->query($query);
 $layanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<main class="main-content">
+<main class="main-content page-content pickup-page">
 
-    <div class="hero-content">
-        <h1>Katalog Layanan</h1>
-        <p>Lihat katalog layanan kami dan mulai pesan</p>
+    <div class="pickup-page-header">
+        <a href="dashboard.php" class="pickup-back">
+            <i data-lucide="chevron-left"></i>
+        </a>
+        <div class="pickup-title">
+            <h1>Katalog Layanan</h1>
+            <p>Lihat katalog layanan kami dan mulai pesan</p>
+        </div>
     </div>
 
     <section class="service-grid">

@@ -31,11 +31,16 @@ include 'includes/header.php';
 include 'includes/sidebar.php';
 ?>
 
-<main class="main-content">
+<main class="main-content page-content pickup-page">
 
-    <div class="hero-content">
-        <h1>Profil Saya</h1>
-        <p>Kelola informasi akun kamu</p>
+    <div class="pickup-page-header">
+        <a href="dashboard.php" class="pickup-back">
+            <i data-lucide="chevron-left"></i>
+        </a>
+        <div class="pickup-title">
+            <h1>Profil Saya</h1>
+            <p>Kelola informasi akun kamu</p>
+        </div>
     </div>
 
     <section class="profile-page">

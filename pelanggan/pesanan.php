@@ -25,11 +25,16 @@ include 'includes/sidebar.php';
 
 ?>
 
-<main class="main-content">
+<main class="main-content page-content pickup-page">
     <!-- Hero -->
-    <div class="hero-content">
-        <h1>Pesanan Saya</h1>
-        <p>Lihat semua pesanan dan status laundry kamu.</p>
+    <div class="pickup-page-header">
+        <a href="dashboard.php" class="pickup-back">
+            <i data-lucide="chevron-left"></i>
+        </a>
+        <div class="pickup-title">
+            <h1>Pesanan Saya</h1>
+            <p>Lihat semua pesanan dan status laundry kamu.</p>
+        </div>
     </div>
 
 
