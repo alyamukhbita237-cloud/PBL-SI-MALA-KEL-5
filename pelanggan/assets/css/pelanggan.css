@@ -37,8 +37,9 @@ a{
 }
 
 .logo{
-    font-size: 26px;
-    font-weight: 800;
+    font-family: 'LogoFont', cursive;
+    font-size: 35px;
+    font-weight: normal;
     color: #005374;
 }
 
@@ -73,6 +74,12 @@ a{
     color: #005374;
 }
 
+@font-face {
+    font-family: 'LogoFont';
+    src: url('../fonts/cedar-valley.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* ====sidebar=== */
 
@@ -245,22 +252,25 @@ a{
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    gap: 12px;
     margin-bottom: 15px;
     padding: 0 10px;
-    margin-bottom: 15px;
 }
 
 .section-header h2{
     font-size: 18px;
     font-weight: 700;
     color: #252c34;
+    flex: 1;
+    min-width: 0;
 }
 
 .section-header a{
     font-size: 13px;
     font-weight: 700;
     color: #2f80ed;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .section-header a:hover{
@@ -332,7 +342,7 @@ a{
     width: 100%;
 
     margin-top: 25px;
-    padding: 0 10px;
+    padding: 2px 3px 3px;
 }
 
 .progress-line {
@@ -410,7 +420,7 @@ a{
 .progress-step.current .step-circle {
     background: #e8f3fb;
     color: #1772BD;
-    box-shadow: 0 0 8px 2px #1772BD;
+    box-shadow: 0 0 3px 2px #1772BD;
 }
 
 .progress-step.current span {
@@ -1071,6 +1081,12 @@ a{
 }
 
 /* TIMELINE */
+.progress-container {
+    width: 100%;
+    padding: 0 8px;
+    margin: 25px 0;
+    overflow: visible;
+}
 
 .progress-timeline {
     display: flex;
@@ -1134,7 +1150,7 @@ a{
 
 .progress-step.current .progress-circle {
     background: #367fb5;
-    box-shadow: 0 0 0 3px #a8d1ef;
+    box-shadow: 0 0 0 2px #a8d1ef;
 }
 
 .progress-step h3 {
@@ -1553,22 +1569,99 @@ a{
         font-size: 23px;
     }
 
-    .progress-step h3 {
-        font-size: 11px;
-    }
+    
+/* PROGRESS RESPONSIVE */
+.progress-timeline {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 
-    .progress-step small {
-        font-size: 9px;
-    }
+    width: 100%;
+    max-width: 100%;
+    padding: 0 8px;
 
-    .progress-circle {
-        width: 22px;
-        height: 22px;
-    }
+    position: relative;
+    overflow: visible;
+}
 
-    .progress-timeline::before {
-        top: 11px;
-    }
+.progress-step {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+    position: relative;
+}
+
+.progress-circle {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    background: #EEF1F4;
+    border: 2px solid #D9DEE3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    z-index: 2;
+}
+
+.progress-step h3 {
+    width: 100%;
+    font-size: 10px;
+    line-height: 1.3;
+    margin-top: 8px;
+
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.progress-step small {
+    width: 100%;
+    font-size: 9px;
+    line-height: 1.3;
+
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.progress-timeline::before {
+    top: 13px;
+}
+
+.progress-step h3,
+.progress-step small,
+.progress-step p,
+.progress-step > span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+    padding: 0 2px;
+    margin-top: 7px;
+
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: -0.2px;
+
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
 
     .detail-info-item {
         flex-direction: column;
@@ -1713,18 +1806,24 @@ a{
     }
 
     .progress-timeline {
-        width: 100%;
-        min-width: 0;
         display: flex;
+        align-items: flex-start;
         justify-content: space-between;
+        width: 100%;
+        padding: 0 5px;
         box-sizing: border-box;
+        position: relative;
+        overflow: visible;
     }
 
     .progress-step {
-        flex: 1;
+        flex: 1 1 0;
         min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
-        padding: 0 3px;
+        position: relative;
     }
 
     .progress-step h3 {
@@ -1737,8 +1836,16 @@ a{
     }
 
     .progress-circle {
-        margin-left: auto;
-        margin-right: auto;
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
     }
 
     .progress-line {
@@ -1891,3 +1998,4 @@ a{
         grid-template-columns: 1fr;
     }
 }
+
