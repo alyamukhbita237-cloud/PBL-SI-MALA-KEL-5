@@ -16,16 +16,10 @@ if (!in_array($filter, $statusList, true)) {
     $filter = 'Semua';
 }
 
-// Mengambil data pesanan, pelanggan, dan jenis layanan dari database
-$sql = "SELECT p.id_pesanan, p.id_user, p.jenis_pesanan, p.tgl_masuk, p.status_pesanan, p.total_harga, u.nama_user, COALESCE(d.nama_layanan, '-') AS jenis_layanan
-        FROM pesanan p
-        LEFT JOIN users u ON p.id_user = u.id_user
-        LEFT JOIN (SELECT dp.id_pesanan, STRING_AGG(l.jenis_layanan, ', ') AS nama_layanan
-        FROM detail_pesanan dp
-        JOIN layanan l ON dp.id_layanan = l.id_layanan
-        GROUP BY dp.id_pesanan) d
-        ON p.id_pesanan = d.id_pesanan
-        ORDER BY p.tgl_masuk DESC, p.id_pesanan DESC";
+// Mengambil data pesanan, pelanggan, dan jenis layanan dari view v_kelola_pesanan
+$sql = "SELECT * FROM v_kelola_pesanan
+        WHERE kode_pesanan IS NOT NULL
+        ORDER BY kode_pesanan DESC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -46,10 +40,12 @@ foreach ($statusList as $status) {
 $hasil = array_filter($pesanan, function ($p) use ($filter, $cari, $jenis) {
     $sesuaiStatus = ($filter === 'Semua' || $p['status_pesanan'] === $filter);
     $sesuaiJenis = ($jenis === '' || strcasecmp(trim($p['jenis_pesanan']), trim($jenis)) === 0);
-    $kode = 'LD-' . str_pad($p['id_pesanan'], 3, '0', STR_PAD_LEFT);
-    $namaPelanggan = $p['nama_user'] ?? '';
+    $kode = 'LD-' . str_pad($p['kode_pesanan'], 3, '0', STR_PAD_LEFT);
+    $namaPelanggan = $p['nama_pelanggan'] ?? '';
     $jenisLayanan = $p['jenis_layanan'] ?? '';
-    $sesuaiCari = (stripos($kode, $cari) !== false || stripos($namaPelanggan, $cari) !== false || stripos($jenisLayanan, $cari) !== false);
+    $jenisPesanan = $p['jenis_pesanan'] ?? '';
+    $sesuaiCari = (stripos($kode, trim($cari)) !== false || stripos($namaPelanggan, trim($cari)) !== false || 
+                stripos($jenisLayanan, trim($cari)) !== false || stripos($jenisPesanan, trim($cari)) !== false);
     return $sesuaiStatus && $sesuaiJenis && $sesuaiCari;
 });
 
@@ -106,18 +102,18 @@ include 'includes/sidebar.php';
                     <?php foreach ($hasil as $p): ?>
                         <?php
                         // Membuat kode pesanan
-                        $kode = 'LD-' . str_pad($p['id_pesanan'], 3, '0', STR_PAD_LEFT);
+                        $kode = 'LD-' . str_pad($p['kode_pesanan'], 3, '0', STR_PAD_LEFT);
 
                         // Membuat class status
                         $classStatus = 'status-' . strtolower(str_replace(' ', '-', $p['status_pesanan']));
 
                         // Format tanggal
-                        $tanggal = date('d M Y, H.i', strtotime($p['tgl_masuk']));
+                        $tanggal = date('d M Y, H.i', strtotime($p['tanggal_masuk']));
                         ?>
 
                         <tr>
                             <td class="kode-pesanan"> #<?= htmlspecialchars($kode) ?></td>
-                            <td><?= htmlspecialchars($p['nama_user']) ?></td>
+                            <td><?= htmlspecialchars($p['nama_pelanggan']) ?></td>
                             <td><?= htmlspecialchars($tanggal) ?></td>
                             <td><?= htmlspecialchars($p['jenis_layanan']) ?></td>
                             <td>
@@ -125,7 +121,7 @@ include 'includes/sidebar.php';
                             </td>
 
                             <td style="text-align: center;">
-                                <a href="detail-pesanan.php?id=<?= urlencode($p['id_pesanan']) ?>" class="btn-detail">Lihat Detail &gt;</a>
+                                <a href="detail-pesanan.php?id=<?= urlencode($p['kode_pesanan']) ?>" class="btn-detail">Lihat Detail &gt;</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

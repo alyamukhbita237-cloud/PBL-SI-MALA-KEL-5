@@ -98,7 +98,7 @@ include __DIR__ . '/includes/sidebar.php';
         </div>
     </section>
 
-    <form method="POST">
+    <form method="POST", onsubmit="return confirm('Apakah data sudah benar?')">
         <!-- informasi pesanan -->
         <section class="kartu-detail">
             <h3>Informasi Pesanan</h3>

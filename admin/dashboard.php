@@ -18,8 +18,7 @@ include 'includes/sidebar.php';
 $sqlDashboard = "WITH dashboard AS (
     SELECT COUNT(p.id_pesanan) AS total_pesanan, 
         COUNT(p.id_pesanan) FILTER (
-            WHERE p.status_pesanan ILIKE '%menunggu%'
-            OR p.status_pesanan ILIKE '%menunggu konfirmasi%') AS perlu_konfirmasi,
+            WHERE p.status_pesanan ILIKE '%menunggu%') AS perlu_konfirmasi,
         COUNT(p.id_pesanan) FILTER (
             WHERE p.status_pesanan ILIKE '%diproses%'
             OR p.status_pesanan ILIKE '%dijemput%') AS sedang_dikerjakan,
@@ -76,14 +75,13 @@ function formatTanggal($tanggal) {
 function warnaStatus($status) {
 
     if (
-        cekStatus($status, 'menunggu') ||
-        cekStatus($status, 'konfirmasi')
+        cekStatus($status, 'menunggu')
     ) {
         return 'status-menunggu';
     }
 
     if (
-        cekStatus($status, 'proses') ||
+        cekStatus($status, 'diproses') ||
         cekStatus($status, 'dijemput')
     ) {
         return 'status-proses';
@@ -120,13 +118,12 @@ $pesananHariIni = [];
 
 foreach ($pesanan as $p) {
 
-    $status = $p['status_pesanan'] ?? '';
+    $status = $p['status'] ?? '';
     $jenis = $p['jenis_pesanan'] ?? '';
 
     // Pesanan perlu konfirmasi
     if (in_array($status, [
-        cekStatus($status, 'menunggu') ||
-        cekStatus($status, 'konfirmasi')
+        cekStatus($status, 'menunggu')
     ])) {
         $menunggu[] = $p;
     }
@@ -397,13 +394,13 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
                                 </strong>
 
                                 <span>
-                                    <?= htmlspecialchars($p['nama_layanan']) ?>
+                                    <?= htmlspecialchars($p['jenis_pesanan']) ?>
                                 </span>
 
                             </div>
 
-                            <span class="label-status-dashboard <?= warnaStatus($p['status_pesanan']) ?>">
-                                <?= htmlspecialchars($p['status_pesanan']) ?>
+                            <span class="label-status-dashboard <?= warnaStatus($p['status']) ?>">
+                                <?= htmlspecialchars($p['status']) ?>
                             </span>
 
                             <a href="detail-pesanan.php?id=<?= urlencode($p['id_pesanan']) ?>"
@@ -459,13 +456,13 @@ $pesananTerbaru = array_slice($pesanan, 0, 5);
                                 </strong>
 
                                 <span>
-                                    <?= htmlspecialchars($p['alamat_antar_jemput'] ?? '-') ?>
+                                    <?= htmlspecialchars($p['jenis_pesanan']) ?>
                                 </span>
 
                             </div>
 
-                            <span class="label-status-dashboard status-siap">
-                                Antar-Jemput
+                            <span class="label-status-dashboard <?= warnaStatus($p['status']) ?>">
+                                <?= htmlspecialchars($p['status']) ?>
                             </span>
 
                             <a href="detail-pesanan.php?id=<?= urlencode($p['id_pesanan']) ?>"
