@@ -141,7 +141,7 @@ body{
 }
 
 /* option */
-.form-options{
+.form-option{
     margin-top: 5px;
     margin-bottom: 25px;
 
@@ -211,56 +211,6 @@ body{
 }
 
 /* responsive */
-@media (max-width: 1024px) {
-
-    .login-left {
-        padding: 45px;
-    }
-
-    .login-right {
-        padding: 35px;
-    }
-
-}
-
-
-@media (max-width: 1024px) {
-
-    .login-left {
-        min-height: 450px;
-    }
-
-    .login-right {
-        min-height: auto;
-    }
-
-}
-
-
-@media (max-width: 640px) {
-
-    .login-left {
-        padding: 30px;
-    }
-
-    .hero-text {
-        margin-top: 80px;
-        margin-bottom: 20px;
-    }
-
-    .hero-text h1 {
-        font-size: 36px;
-    }
-
-    .hero-text p {
-        font-size: 15px;
-    }
-
-    .login-right {
-        padding: 35px 25px;
-    }
-
-}
 
 @font-face {
     font-family: 'LogoFont';
@@ -300,4 +250,175 @@ body{
 .password-container i {
     width: 20px;
     height: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE LOGIN & SIGNUP
+========================= */
+
+@media (max-width: 767px) {
+
+    body {
+        background: #F3F7FA;
+    }
+
+    .login-page {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        background: #F3F7FA;
+    }
+
+    /* HEADER / BRANDING */
+
+    .login-left {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        width: 100%;
+        height: auto;
+        min-height: 230px;
+
+        padding: 25px 24px 45px;
+        gap: 18px;
+
+        background-image: url('../img/mesh-gradient.png');
+        background-size: cover;
+        background-position: center;
+
+        position: relative;
+        overflow: visible;
+    }
+
+    .brand span {
+        font-size: 34px;
+    }
+
+    .welcoming-text {
+        position: static;
+        transform: none;
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .welcoming-text h1 {
+        font-size: 25px;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+    }
+
+    .welcoming-text p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* FORM AREA */
+
+    .login-right {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+
+        width: 100%;
+        min-height: auto !important;
+        flex: 1;
+
+        padding: 35px 22px 40px;
+
+        background: #F3F7FA;
+
+        position: relative;
+        z-index: 2;
+
+        margin-top: -20px;
+        border-radius: 24px 24px 0 0;
+    }
+
+    .login-form-container {
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    /* FORM HEADER */
+
+    .form-header {
+        margin-bottom: 30px;
+    }
+
+    .form-header h2 {
+        font-size: 25px;
+    }
+
+    .form-header p {
+        font-size: 13px;
+    }
+
+    /* INPUT */
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group input {
+        padding: 14px;
+        font-size: 14px;
+        border-radius: 13px;
+        background: #E8F0FB;
+    }
+
+    /* OPTION */
+
+    .form-option {
+        margin-top: 8px;
+        margin-bottom: 20px;
+        font-size: 13px;
+    }
+
+    .form-option a {
+        font-size: 13px;
+    }
+
+    /* BUTTON */
+
+    .login-button {
+        margin-top: 25px;
+        padding: 15px;
+        border-radius: 13px;
+    }
+
+    .signup-text {
+        margin-top: 25px;
+        font-size: 13px;
+    }
+}
+
+/* HP KECIL */
+
+@media (max-width: 380px) {
+
+    .login-left {
+        min-height: 210px;
+        padding: 22px 20px 40px;
+    }
+
+    .brand span {
+        font-size: 30px;
+    }
+
+    .welcoming-text h1 {
+        font-size: 22px;
+    }
+
+    .login-right {
+        padding: 30px 18px;
+    }
 }
