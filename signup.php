@@ -15,7 +15,7 @@
     <main class="login-page flex min-h-screen flex-col lg:flex-row">
 
     <!-- left side -->
-    <section class="login-left hidden lg:flex lg:w-1/2 relative">
+    <section class="login-left lg:w-1/2 relative">
         <div class="brand flex items-center gap-3">
             <span>Si-Mala</span>
         </div>

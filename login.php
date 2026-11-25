@@ -8,15 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <main class="login-page flex min-h-screen flex-col lg:flex-row">
 
     <!-- left side -->
-    <section class="login-left hidden lg:flex lg:w-1/2 relative">
+    <section class="login-left lg:w-1/2 relative">
         <div class="brand flex items-center gap-3">
             <span>Si-Mala</span>
         </div>
