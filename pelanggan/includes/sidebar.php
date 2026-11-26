@@ -17,6 +17,19 @@
             Pesan Antar-Jemput
         </a>
 
+
+        <div class="sidebar-logout">
+
+                    <form action="../logout.php" method="POST">
+
+                        <button type="submit" class="btn-logout">
+                            <i data-lucide="log-out"></i>
+                            <span>Logout</span>
+                        </button>
+
+                    </form>
+
+                </div>
     </nav>
 </aside>
 
