@@ -35,6 +35,13 @@ a{
     color: #005374;
 }
 
+@font-face {
+    font-family: 'LogoFont';
+    src: url('../fonts/cedar-valley.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* ==== sidebar === */
 .sidebar{
     position: fixed;
@@ -3249,19 +3256,23 @@ button.btn-edit-pelanggan:hover {
     font-weight: 700;
 }
 
-.status-menunggu,
-.status-menunggu-konfirmasi {
+.status-menunggu{
     background: #FFE8A1;
     border: 1px solid #E8B206;
     color: #7D5D16;
 }
 
-.status-dijemput,
-.status-diproses,
-.status-sedang-diproses {
+.status-dijemput {
     background: #9DC6F2;
     border: 1px solid #3882D1;
     color: #1E5188;
+}
+
+.status-diproses,
+.status-sedang-diproses {
+    background: #ffc69d;
+    border: 1px solid #F97316;
+    color: #7a3b0f;
 }
 
 .status-siap-diambil,
