@@ -11,13 +11,7 @@ if (empty($id_pesanan)) {
 }
 
 // Mengambil data pesanan dan pelanggan
-$sql = "
-    SELECT
-        p.*,
-        u.nama_user,
-        u.no_hp,
-        u.email,
-        u.alamat AS alamat_pelanggan
+$sql = "SELECT p.*, u.nama_user, u.no_hp, u.email, u.alamat AS alamat_pelanggan
     FROM pesanan p
     JOIN users u
         ON p.id_user = u.id_user
@@ -31,14 +25,38 @@ if (!$pesanan) {
     die("Data pesanan dengan ID $id_pesanan tidak ditemukan.");
 }
 
+//lanjut proses lewat button 
+if (isset($_POST['lanjut_proses'])){
+    $status_skrg = $pesanan['status_pesanan'];
+
+    if ($pesanan['jenis_pesanan'] === 'Antar-Jemput'){
+        $urutan_status = ['Menunggu', 'Dijemput', 'Diproses', 'Selesai', 'Diantar'];
+    } else{
+        $urutan_status = ['Menunggu', 'Diproses', 'Selesai', 'Diambil'];
+    }
+    
+    $posisi = array_search($status_skrg, $urutan_status);
+    if ($posisi !== false && isset($urutan_status[$posisi + 1])){
+        $status_baru = $urutan_status[$posisi + 1];
+
+        $sqlUpdate = "UPDATE pesanan SET status_pesanan = :status, waktu_update_status = CURRENT_TIMESTAMP WHERE id_pesanan = :id_pesanan";
+
+        $stmtUpdate = $pdo->prepare($sqlUpdate);
+
+        $stmtUpdate->execute([
+            'status' => $status_baru,
+            'id_pesanan' => $id_pesanan
+        ]);
+
+
+        header("Location: detail-pesanan.php?id_pesanan=" . urlencode($id_pesanan));
+        exit;
+    } else{
+        $pesan = "Pesanan sudah mencapai proses terakhir";
+    }
+}
 // Mengambil rincian layanan
-$sqlDetail = "
-    SELECT
-        l.jenis_layanan,
-        l.harga_per_layanan,
-        l.satuan,
-        d.jumlah,
-        d.subtotal
+$sqlDetail = "SELECT l.jenis_layanan, l.harga_per_layanan, l.satuan, d.jumlah, d.subtotal
     FROM detail_pesanan d
     JOIN layanan l
         ON d.id_layanan = l.id_layanan
@@ -117,34 +135,24 @@ include 'includes/sidebar.php';
         <section class="kartu-detail">
             <h3>Progress Pesanan</h3>
 
-            <?php $tahapan = [
-                'Menunggu', 'Dijemput', 'Diambil', 
-                'Diproses', 'Selesai', 'Diantar'];
+            <?php 
+                if ($pesanan['jenis_pesanan'] === 'Antar-Jemput'){
+                    $tahapan = ['Menunggu', 'Dijemput', 'Diproses', 'Selesai', 'Diantar'];
+                } else{
+                    $tahapan = ['Menunggu', 'Diproses', 'Selesai', 'Diambil'];
+                }
 
                 $status = $pesanan['status_pesanan'];
-                switch ($status) {
-                    case 'Menunggu':
-                        $progressAktif = 0;
-                        break;
-                    case 'Dijemput':
-                        $progressAktif = 1;
-                        break;
-                    case 'Diproses':
-                        $progressAktif = 2;
-                        break;
-                    case 'Selesai':
-                        $progressAktif = 3;
-                        break;
-                    case 'Diantar':
-                        $progressAktif = 4;
-                        break;
-                    case 'Diambil':
-                        $progressAktif = 5;
-                        break;
-                    default:
-                        $progressAktif = 0;
-                        break;
-                } ?>
+
+                // Menentukan posisi progress berdasarkan status
+                $progressAktif = array_search($status, $tahapan);
+
+                // Jika status tidak ditemukan
+                if ($progressAktif === false) {
+                    $progressAktif = 0;
+                }
+            ?>
+            
             <div class="progress-pesanan">
 
                 <?php foreach ($tahapan as $index => $namaTahapan) : ?>
@@ -167,10 +175,13 @@ include 'includes/sidebar.php';
 
             </div>
 
-            <a href="proses-pesanan.php?kode=<?= urlencode($pesanan['id_pesanan']) ?>"
-               class="btn-lanjut-proses">
-                Lanjut Proses →
-            </a>
+            <form method="POST">
+                <button type="submit"
+                        name="lanjut_proses"
+                        class="btn-lanjut-proses">
+                    Lanjut Proses →
+                </button>
+            </form>
         </section>
 
         <!-- Pembayaran -->
