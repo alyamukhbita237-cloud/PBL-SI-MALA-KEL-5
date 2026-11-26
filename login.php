@@ -23,18 +23,21 @@
             <h1>Laundry kamu, <br>kami bantu urus 🧺</h1>
             <p>Mulai dari penjemputan hingga<br>laundry siap kembali.</p>   
         </div>
-        
-       
     </section>
 
     <!-- right side -->
-
     <section class="login-right w-full lg:w-1/2 min-h-screen flex items-center justify-center" >
         <div class="login-form-container w-full">
             <div class="form-header text-center">
                 <h2>Selamat Datang!</h2>
                 <p>Masuk kembali ke akunmu</p>
             </div>
+
+            <?php if (isset($_GET['pesan'])): ?>
+                <p style="color: <?= ($_GET['status'] ?? '') === 'berhasil' ? 'green' : 'red' ?>; text-align:center; margin-bottom:15px;">
+                    <?= htmlspecialchars($_GET['pesan'], ENT_QUOTES, 'UTF-8') ?>
+                </p>
+            <?php endif; ?>
 
             <form action="proses/login_process.php" method="POST">
                 <!-- email -->
@@ -56,24 +59,19 @@
 
                 <!-- option -->
                 <div class="form-option flex items-center justify-between">
-                    
                 <label class="remember flex items-center gap-2">
                     <input type="checkbox" name="remember">
                     <span>Ingat saya</span>
                 </label>
-
-                    <a href="#">Lupa Kata Sandi?</a>
+                    <a href="lupa-password.php">Lupa Kata Sandi?</a>
                 </div>
 
                 <!-- button -->
                 <button type="submit" class="login-button w-full">Masuk</button>
             </form>
-
-            <p class="signup-text text-center">Belum punya akun?<a href="signup.php"> Daftar Sekarang</a>
-            </p>
+            <p class="signup-text text-center">Belum punya akun?<a href="signup.php"> Daftar Sekarang</a></p>
         </div>
     </section>
-    
 </main>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="assets/js/login-signup.js"></script>

@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-
 </head>
 <body>
     <main class="login-page flex min-h-screen flex-col lg:flex-row">
@@ -24,12 +23,9 @@
             <h1>Laundry kamu, <br>kami bantu urus 🧺</h1>
             <p>Mulai dari penjemputan hingga<br>laundry siap kembali.</p>   
         </div>
-        
-       
     </section>
 
     <!-- right side -->
-
     <section class="login-right w-full lg:w-1/2 min-h-screen flex items-center justify-center" >
         <div class="login-form-container w-full">
             <div class="form-header text-center">
@@ -37,8 +33,13 @@
                 <p>Daftar untuk mulai menggunakan layanan laundry</p>
             </div>
 
+            <?php if (isset($_GET['pesan'])): ?>
+                <p style="color: <?= ($_GET['status'] ?? '') === 'berhasil' ? 'green' : 'red' ?>; text-align:center; margin-bottom:15px;">
+                    <?= htmlspecialchars($_GET['pesan'], ENT_QUOTES, 'UTF-8') ?>
+                </p>
+            <?php endif; ?>
+
             <form action="proses/signup_process.php" method="POST">
-               
 
                 <!-- password -->
                 <div class="form-group">
@@ -73,14 +74,11 @@
                 </div>
 
                 <!-- button -->
-                <button type="submit" class="login-button w-full">Masuk</button>
+                <button type="submit" class="login-button w-full">Daftar</button>
             </form>
-
-            <p class="signup-text text-center">Sudah punya akun?<a href="login.php"> Masuk Sekarang</a>
-            </p>
+            <p class="signup-text text-center">Sudah punya akun?<a href="login.php">Masuk Sekarang</a></p>
         </div>
     </section>
-    
 </main>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="assets/js/login-signup.js"></script>
