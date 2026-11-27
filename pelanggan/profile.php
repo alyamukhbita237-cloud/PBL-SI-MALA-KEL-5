@@ -32,7 +32,6 @@ include 'includes/sidebar.php';
 ?>
 
 <main class="main-content page-content pickup-page">
-
     <div class="pickup-page-header">
         <a href="dashboard.php" class="pickup-back">
             <i data-lucide="chevron-left"></i>
@@ -57,9 +56,7 @@ include 'includes/sidebar.php';
         </div>
 
         <div class="profile-divider"></div>
-
         <div class="profile-form">
-
             <div class="profile-field">
                 <label>Nama Lengkap</label>
                 <div class="profile-value">
@@ -87,7 +84,6 @@ include 'includes/sidebar.php';
                     <?= htmlspecialchars($user['alamat'] ?? '-') ?>
                 </div>
             </div>
-
         </div>
 
         <div class="profile-actions">
@@ -101,14 +97,11 @@ include 'includes/sidebar.php';
                 Ubah Profil
             </a>
         </div>
-
     </section>
-
 </main>
 <script src="assets/js/pelanggan.js"></script>
 <script>
     lucide.createIcons();
 </script>
-
 </body>
 </html>

@@ -64,9 +64,7 @@
                     <label for="password">Kata Sandi</label>
 
                     <div class="password-container">
-                        <input type="password" id="password" name="password"
-                            placeholder="Masukkan kata sandi kamu" required>
-
+                        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi kamu" minlength="8" required>
                         <button type="button" id="togglePassword">
                             <i data-lucide="eye" id="iconPassword"></i>
                         </button>

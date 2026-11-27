@@ -2046,3 +2046,38 @@ a{
     }
 }
 
+/* Input password dan tombol mata */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 45px;
+    box-sizing: border-box;
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.password-container .toggle-password:hover {
+    color: #005b7f;
+}
+
+.password-container .toggle-password svg {
+    width: 20px;
+    height: 20px;
+}
