@@ -282,7 +282,7 @@ include 'includes/sidebar.php';
 
                 <div class="baris-info">
                     <span>Estimasi Selesai</span>
-                    <strong><?= htmlspecialchars($pesanan['estimasi_selesai']) ?></strong>
+                    <strong><?= htmlspecialchars($pesanan['estimasi_selesai']??'-') ?></strong>
                 </div>
 
             <?php endif; ?>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charseat="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Si-Mala</title>
 
@@ -18,41 +18,11 @@
 </head>
 <body>
     <header class="topbar">
+        <button type="button" class="hamburger" id="hamburger">
+            <i data-lucide="menu"></i>
+        </button>
         <div class="logo">
             Si-Mala
         </div>
-        <button type="button" class="tombol-menu" id="tombolMenu"
-            aria-label="Buka menu" aria-expanded="false">
-            ☰
-        </button>
     </header>
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tombolMenu = document.getElementById('tombolMenu');
-    const sidebar = document.querySelector('.sidebar');
-
-    if (!tombolMenu || !sidebar) return;
-
-    tombolMenu.addEventListener('click', function () {
-        const terbuka = sidebar.classList.toggle('menu-terbuka');
-
-        tombolMenu.setAttribute('aria-expanded', terbuka);
-        tombolMenu.setAttribute(
-            'aria-label',
-            terbuka ? 'Tutup menu' : 'Buka menu'
-        );
-    });
-
-    sidebar.querySelectorAll('.sidebar-link').forEach(function (link) {
-        link.addEventListener('click', function () {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('menu-terbuka');
-                tombolMenu.setAttribute('aria-expanded', 'false');
-                tombolMenu.setAttribute('aria-label', 'Buka menu');
-            }
-        });
-    });
-});
-</script>
-</body>
-</html>
+<script src="assets/js/sidebar.js"></script>

@@ -15,6 +15,19 @@ a{
     color: inherit;
 }
 
+.hamburger {
+    display: none;
+    border: none;
+    background: transparent;
+    color: #005374;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
 /* === topbar === */
 .topbar{
     height: 72px;
@@ -30,8 +43,9 @@ a{
 }
 
 .logo{
-    font-size: 26px;
-    font-weight: 800;
+    font-family: 'LogoFont', cursive;
+    font-size: 35px;
+    font-weight: normal;
     color: #005374;
 }
 
@@ -83,8 +97,8 @@ a{
 }
 
 .sidebar-logout {
-    margin-top: auto;
-    padding: 16px;
+    margin-top: 5px;
+    padding: 10px 16px;
     border-top: 1px solid #e5e7eb;
 }
 
@@ -98,7 +112,7 @@ a{
     gap: 12px;
 
     width: 100%;
-    padding: 12px 16px;
+    padding: 10px 16px;
 
     border: none;
     border-radius: 10px;
@@ -369,24 +383,6 @@ a{
     text-align: center;
     color: #777;
 }
-
-/* Responsif halaman Kelola Pesanan */
-@media (max-width: 1000px) {
-    .toolbar-pesanan {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .form-cari {
-        width: 100%;
-    }
-
-    .form-cari input {
-        flex: 1;
-        min-width: 0;
-    }
-}
-
 
 /* ===== halaman tambah layanan ===== */
 .halaman-tambah {
@@ -735,35 +731,6 @@ a{
     background-color: #005374;
 }
 
-/* Tampilan HP */
-@media (max-width: 700px) {
-    .halaman-tambah {
-        padding: 20px 14px;
-    }
-
-    .halaman-tambah .form-pesanan-card {
-        padding: 18px;
-    }
-
-    .halaman-tambah .pelanggan-detail,
-    .halaman-tambah .pilihan-pembayaran {
-        grid-template-columns: 1fr;
-    }
-
-    .halaman-tambah .total-tagihan strong {
-        font-size: 19px;
-    }
-
-    .halaman-tambah .form-actions {
-        flex-wrap: wrap;
-    }
-
-    .halaman-tambah .btn-tambah-layanan {
-        width: 100%;
-        margin: 12px 0 0;
-    }
-}
-
 /* =================================
    HALAMAN EDIT PESANAN
 ================================= */
@@ -1007,175 +974,6 @@ a{
     color: #005374;
     font-size: 28px;
     cursor: pointer;
-}
-
-/* ========================================
-   RESPONSIVE
-   ======================================== */
-@media (max-width: 768px) {
-    .topbar {
-        padding: 0 18px;
-    }
-
-    .tombol-menu {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    /* Sidebar tersembunyi sampai tombol menu ditekan */
-    .sidebar {
-        display: none;
-        position: fixed;
-        top: 72px;
-        left: 0;
-        bottom: 0;
-        width: 250px;
-        max-width: 85vw;
-        height: auto;
-        padding: 20px 12px;
-        overflow-y: auto;
-        background-color: #FFFFFF;
-        border-right: 1px solid #E9EDF2;
-        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.12);
-        z-index: 1000;
-    }
-
-    .sidebar.menu-terbuka {
-        display: block;
-    }
-
-    .sidebar-menu {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .sidebar-link {
-        display: flex;
-        align-items: center;
-        padding: 12px 15px;
-        font-size: 14px;
-        white-space: normal;
-    }
-
-    /* Konten tidak menyisakan ruang untuk sidebar desktop */
-    .main-content {
-        width: 100%;
-        margin-left: 0;
-        padding: 22px 16px;
-        box-sizing: border-box;
-        min-height: calc(100vh - 72px);
-    }
-
-    .judul-halaman {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    /* Halaman Tambah Pesanan */
-    .halaman-tambah {
-        padding: 20px 14px;
-    }
-
-    .halaman-tambah .form-pesanan-card {
-        width: 100%;
-        max-width: 100%;
-        padding: 18px;
-        box-sizing: border-box;
-    }
-
-    .halaman-tambah .pelanggan-baris {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .halaman-tambah .pelanggan-baris .form-group {
-        width: 100%;
-    }
-
-    .halaman-tambah .pelanggan-detail,
-    .halaman-tambah .pilihan-pembayaran {
-        grid-template-columns: 1fr;
-    }
-
-    .halaman-tambah .tabel-layanan-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .halaman-tambah .tabel-layanan {
-        min-width: 650px;
-    }
-
-    .halaman-tambah .btn-tambah-layanan {
-        width: 100%;
-        margin: 12px 0 0;
-    }
-
-    .halaman-tambah .total-tagihan strong {
-        font-size: 19px;
-    }
-
-    .halaman-tambah .form-actions {
-        flex-direction: column-reverse;
-        gap: 10px;
-    }
-
-    .halaman-tambah .btn-batal,
-    .halaman-tambah .btn-simpan {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-    }
-
-    /* Halaman Kelola Pesanan */
-    .kartu-pesanan {
-        padding: 15px;
-    }
-
-    .toolbar-pesanan {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .form-cari {
-        width: 100%;
-    }
-
-    .form-cari input {
-        flex: 1;
-        min-width: 0;
-    }
-}
-
-@media (max-width: 400px) {
-    .topbar {
-        padding: 0 10px;
-    }
-
-    .logo {
-        font-size: 23px;
-    }
-
-    .main-content {
-        padding: 16px 10px;
-    }
-
-    .halaman-tambah .form-pesanan-card {
-        padding: 13px;
-    }
-
-    .halaman-tambah .judul-dengan-panah h1 {
-        font-size: 21px;
-    }
-
-    .halaman-tambah .total-tagihan strong {
-        font-size: 18px;
-    }
 }
 
 .judul-dengan-panah {
@@ -1538,49 +1336,6 @@ a{
     align-self: start;
 }
 
-/* Tablet */
-@media (max-width: 992px) {
-    .detail-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-/* HP */
-@media (max-width: 768px) {
-    .halaman-detail .judul-halaman {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .halaman-detail .judul-dengan-panah h1 {
-        font-size: 22px;
-    }
-
-    .halaman-detail .judul-halaman p {
-        margin-left: 0;
-    }
-
-    .detail-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .kartu-pelanggan {
-        padding: 15px;
-    }
-
-    .data-pelanggan h3 {
-        font-size: 14px;
-        overflow-wrap: anywhere;
-    }
-
-    .progress-item span {
-        font-size: 9px;
-    }
-
-    .kartu-detail {
-        padding: 16px;
-    }
-}
 
 
 /* ========================================
@@ -1779,31 +1534,6 @@ a{
     cursor: pointer;
 }
 
-/* Responsive HP */
-@media (max-width: 500px) {
-    .modal-pembayaran {
-        padding: 18px;
-    }
-
-    .modal-header h2 {
-        font-size: 18px;
-    }
-
-    .ringkasan-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .modal-actions {
-        flex-direction: column-reverse;
-    }
-
-    .btn-modal-batal,
-    .btn-modal-simpan {
-        width: 100%;
-    }
-}
-
 /* ========================================
    HALAMAN DATA PELANGGAN
    ======================================== */
@@ -1968,38 +1698,6 @@ a{
 }
 
 /* ========================================
-   RESPONSIVE DATA PELANGGAN
-   ======================================== */
-@media (max-width: 768px) {
-    .halaman-pelanggan .judul-halaman {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .halaman-pelanggan .judul-halaman h1 {
-        font-size: 22px;
-    }
-
-    .btn-tambah-pelanggan {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .kartu-tabel-pelanggan {
-        padding: 15px;
-    }
-
-    .pencarian-pelanggan input {
-        width: 100%;
-    }
-
-    .tabel-pelanggan {
-        min-width: 750px;
-    }
-}
-
-
-/* ========================================
    MODAL TAMBAH PELANGGAN
    ======================================== */
 .modal-pelanggan {
@@ -2106,26 +1804,6 @@ button.btn-tambah-pelanggan {
     border: none;
     font-family: inherit;
     cursor: pointer;
-}
-
-/* Responsive HP */
-@media (max-width: 500px) {
-    .modal-pelanggan {
-        padding: 20px 16px;
-    }
-
-    .modal-header-pelanggan h2 {
-        font-size: 17px;
-    }
-
-    .aksi-modal-pelanggan {
-        flex-direction: column-reverse;
-    }
-
-    .btn-batal-pelanggan,
-    .btn-simpan-pelanggan {
-        width: 100%;
-    }
 }
 
 button.btn-edit-pelanggan {
@@ -2258,38 +1936,6 @@ button.btn-edit-pelanggan:hover {
 
 .btn-pesan-layanan:hover {
     background: #005374;
-}
-
-/* Responsive tablet */
-@media (max-width: 1000px) {
-    .grid-layanan {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-/* Responsive HP */
-@media (max-width: 600px) {
-    .halaman-katalog .judul-halaman {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .halaman-katalog .judul-halaman h1 {
-        font-size: 22px;
-    }
-
-    .btn-tambah-layanan {
-        width: 100%;
-    }
-
-    .grid-layanan {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .kartu-layanan {
-        padding: 16px;
-    }
 }
 
 /* ==========================================
@@ -2759,76 +2405,6 @@ button.btn-edit-pelanggan:hover {
     width: 15px;
     height: 15px;
     color: #4289BD;
-}
-
-/* ==========================================
-   RESPONSIVE
-========================================== */
-@media (max-width: 1100px) {
-    .dashboard-statistik {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .dashboard-grid,
-    .dashboard-grid-bawah {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 600px) {
-    .dashboard-welcome {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .dashboard-welcome h1 {
-        font-size: 20px;
-    }
-
-    .dashboard-statistik {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
-    }
-
-    .statistik-card {
-        padding: 12px 9px;
-        gap: 8px;
-    }
-
-    .statistik-icon {
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-    }
-
-    .statistik-icon svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .statistik-card h3 {
-        font-size: 20px;
-    }
-
-    .statistik-card p {
-        font-size: 9px;
-    }
-
-    .dashboard-card {
-        padding: 14px;
-    }
-
-    .card-heading {
-        align-items: flex-start;
-    }
-
-    .daftar-item {
-        flex-wrap: wrap;
-    }
-
-    .pendapatan-card > strong {
-        font-size: 22px;
-    }
 }
 
 /* ==========================================
@@ -3412,9 +2988,301 @@ button.btn-edit-pelanggan:hover {
     height: 17px;
 }
 
+.hamburger i {
+    transition: transform 0.3s ease;
+}
+
+.hamburger.aktif i {
+    transform: rotate(90deg);
+}
+
+.hamburger svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.btn-logout svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    flex-shrink: 0;
+}
 /* ==========================================
    RESPONSIVE
 ========================================== */
+@media (max-width: 768px) {
+
+    /* TOPBAR */
+    .topbar {
+        padding: 0 18px;
+        justify-content: center;
+        position: relative;
+    }
+
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* HAMBURGER */
+    .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 12px;
+        z-index: 10;
+        background: transparent;
+        border: none;
+        color: #005374;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        display: none;
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: none;
+        padding: 12px 14px;
+        overflow: visible;
+        background: #FFFFFF;
+        border-right: none;
+        border-bottom: 1px solid #E9EDF2;
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .sidebar.menu-terbuka {
+        display: block;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        font-size: 14px;
+        white-space: normal;
+    }
+
+    /* KONTEN UTAMA */
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 22px 16px;
+        box-sizing: border-box;
+        min-height: calc(100vh - 72px);
+    }
+
+    .judul-halaman {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* HALAMAN TAMBAH PESANAN */
+    .halaman-tambah {
+        padding: 20px 14px;
+    }
+
+    .halaman-tambah .form-pesanan-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px;
+        box-sizing: border-box;
+    }
+
+    .halaman-tambah .pelanggan-baris {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .halaman-tambah .pelanggan-baris .form-group {
+        width: 100%;
+    }
+
+    .halaman-tambah .pelanggan-detail,
+    .halaman-tambah .pilihan-pembayaran {
+        grid-template-columns: 1fr;
+    }
+
+    .halaman-tambah .tabel-layanan-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .halaman-tambah .tabel-layanan {
+        min-width: 650px;
+    }
+
+    .halaman-tambah .btn-tambah-layanan {
+        width: 100%;
+        margin: 12px 0 0;
+    }
+
+    .halaman-tambah .total-tagihan strong {
+        font-size: 19px;
+    }
+
+    .halaman-tambah .form-actions {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .halaman-tambah .btn-batal,
+    .halaman-tambah .btn-simpan {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* HALAMAN KELOLA PESANAN */
+    .kartu-pesanan {
+        padding: 15px;
+    }
+
+    .toolbar-pesanan {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-cari {
+        width: 100%;
+    }
+
+    .form-cari input {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* Responsif halaman Kelola Pesanan */
+@media (max-width: 1000px) {
+    .toolbar-pesanan {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-cari {
+        width: 100%;
+    }
+
+    .form-cari input {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .topbar {
+        padding: 0 10px;
+    }
+
+    .logo {
+        font-size: 33px;
+    }
+
+    .main-content {
+        padding: 16px 10px;
+    }
+
+    .halaman-tambah .form-pesanan-card {
+        padding: 13px;
+    }
+
+    .halaman-tambah .judul-dengan-panah h1 {
+        font-size: 21px;
+    }
+
+    .halaman-tambah .total-tagihan strong {
+        font-size: 18px;
+    }
+}
+
+/* Tampilan HP */
+@media (max-width: 700px) {
+    .halaman-tambah {
+        padding: 20px 14px;
+    }
+
+    .halaman-tambah .form-pesanan-card {
+        padding: 18px;
+    }
+
+    .halaman-tambah .pelanggan-detail,
+    .halaman-tambah .pilihan-pembayaran {
+        grid-template-columns: 1fr;
+    }
+
+    .halaman-tambah .total-tagihan strong {
+        font-size: 19px;
+    }
+
+    .halaman-tambah .form-actions {
+        flex-wrap: wrap;
+    }
+
+    .halaman-tambah .btn-tambah-layanan {
+        width: 100%;
+        margin: 12px 0 0;
+    }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* HP */
+@media (max-width: 768px) {
+    .halaman-detail .judul-halaman {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .halaman-detail .judul-dengan-panah h1 {
+        font-size: 22px;
+    }
+
+    .halaman-detail .judul-halaman p {
+        margin-left: 0;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kartu-pelanggan {
+        padding: 15px;
+    }
+
+    .data-pelanggan h3 {
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .progress-item span {
+        font-size: 9px;
+    }
+
+    .kartu-detail {
+        padding: 16px;
+    }
+}
+
 @media (max-width: 1200px) {
     .laporan-statistik {
         grid-template-columns: repeat(2, 1fr);
@@ -3493,5 +3361,183 @@ button.btn-edit-pelanggan:hover {
 
     .riwayat-transaksi {
         padding: 13px;
+    }
+}
+
+/* Responsive HP */
+@media (max-width: 500px) {
+    .modal-pembayaran {
+        padding: 18px;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+    }
+
+    .ringkasan-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .btn-modal-batal,
+    .btn-modal-simpan {
+        width: 100%;
+    }
+}
+
+/* Responsive tablet */
+@media (max-width: 1000px) {
+    .grid-layanan {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Responsive HP */
+@media (max-width: 600px) {
+    .halaman-katalog .judul-halaman {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .halaman-katalog .judul-halaman h1 {
+        font-size: 22px;
+    }
+
+    .btn-tambah-layanan {
+        width: 100%;
+    }
+
+    .grid-layanan {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .kartu-layanan {
+        padding: 16px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE DATA PELANGGAN
+   ======================================== */
+@media (max-width: 768px) {
+    .halaman-pelanggan .judul-halaman {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .halaman-pelanggan .judul-halaman h1 {
+        font-size: 22px;
+    }
+
+    .btn-tambah-pelanggan {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .kartu-tabel-pelanggan {
+        padding: 15px;
+    }
+
+    .pencarian-pelanggan input {
+        width: 100%;
+    }
+
+    .tabel-pelanggan {
+        min-width: 750px;
+    }
+}
+
+/* Responsive HP */
+@media (max-width: 500px) {
+    .modal-pelanggan {
+        padding: 20px 16px;
+    }
+
+    .modal-header-pelanggan h2 {
+        font-size: 17px;
+    }
+
+    .aksi-modal-pelanggan {
+        flex-direction: column-reverse;
+    }
+
+    .btn-batal-pelanggan,
+    .btn-simpan-pelanggan {
+        width: 100%;
+    }
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+@media (max-width: 1100px) {
+    .dashboard-statistik {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid,
+    .dashboard-grid-bawah {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-welcome {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 20px;
+    }
+
+    .dashboard-statistik {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .statistik-card {
+        padding: 12px 9px;
+        gap: 8px;
+    }
+
+    .statistik-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+    }
+
+    .statistik-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .statistik-card h3 {
+        font-size: 20px;
+    }
+
+    .statistik-card p {
+        font-size: 9px;
+    }
+
+    .dashboard-card {
+        padding: 14px;
+    }
+
+    .card-heading {
+        align-items: flex-start;
+    }
+
+    .daftar-item {
+        flex-wrap: wrap;
+    }
+
+    .pendapatan-card > strong {
+        font-size: 22px;
     }
 }

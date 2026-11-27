@@ -278,6 +278,5 @@ include __DIR__ . '/includes/sidebar.php';
 </main>
 
 <script src="assets/js/data-pelanggan.js"></script>
-
 </body>
 </html>
